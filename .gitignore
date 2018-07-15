@@ -9,3 +9,5 @@ public/
 yarn-error.log
 
 .tmuxinator.yml
+
+.env
