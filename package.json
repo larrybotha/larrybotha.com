@@ -8,6 +8,7 @@
     "commit": "git-cz",
     "dev": "gatsby develop",
     "start": "gatsby serve",
+    "storybook": "start-storybook -p 9001 -c .storybook",
     "test": "jest --coverage",
     "watch:test": "jest --watch",
     "watch:test:debug": "node --inspect $(npm bin)/jest --watch"
@@ -25,18 +26,23 @@
   "dependencies": {
     "gatsby-link": "^1.6.28",
     "gatsby-plugin-react-helmet": "^1.0.8",
-    "gatsby-plugin-typescript": "^1.4.10"
+    "gatsby-plugin-typescript": "^1.4.10",
+    "normalize.css": "8.0.0"
   },
   "devDependencies": {
+    "@storybook/react": "3.4.8",
     "@types/node": "^8.0.7",
     "@types/react": "15.0.21",
     "@types/react-dom": "0.14.23",
-    "gatsby": "^1.9.119",
-    "prettier": "1.13.7",
+    "@types/react-helmet": "5.0.6",
+    "babel-core": "6.26.3",
     "commitizen": "^2.10.1",
     "conventional-changelog": "^2.0.0",
     "conventional-changelog-cli": "^2.0.0",
-    "cz-conventional-changelog": "^2.1.0"
+    "cz-conventional-changelog": "^2.1.0",
+    "gatsby": "^1.9.119",
+    "gatsby-plugin-sass": "1.0.26",
+    "prettier": "1.13.7"
   },
   "config": {
     "commitizen": {
