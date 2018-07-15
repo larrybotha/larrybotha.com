@@ -1,4 +1,4 @@
-name: larrybotha.com
+name: larrybotha
 root: <%= Dir.pwd %>
 
 windows:
