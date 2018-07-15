@@ -1,0 +1,12 @@
+name: larrybotha.com
+root: <%= Dir.pwd %>
+
+windows:
+  - ui:
+      root: <%= Dir.pwd %>
+      layout: 339b,272x55,0,0{150x55,0,0,0,121x55,151,0[121x17,151,0,3,121x17,151,18,8,121x19,151,36,9]}
+      panes:
+        - vim
+        - npm run dev
+        - npm run watch:test
+        - npm run watch:lint
