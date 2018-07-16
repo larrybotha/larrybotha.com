@@ -13,7 +13,7 @@ interface IndexPageProps {
   };
 }
 
-export default class extends React.Component<IndexPageProps, {}> {
+class IndexPage extends React.Component<IndexPageProps, {}> {
   constructor(props: IndexPageProps, context: any) {
     super(props, context);
   }
@@ -36,7 +36,7 @@ export default class extends React.Component<IndexPageProps, {}> {
 }
 
 export const pageQuery = graphql`
-  query IndexQuery {
+  query IndexPageQuery {
     site {
       siteMetadata {
         title
@@ -44,3 +44,5 @@ export const pageQuery = graphql`
     }
   }
 `;
+
+export default IndexPage;
