@@ -8,7 +8,6 @@
     "commit": "git-cz",
     "dev": "gatsby develop",
     "start": "gatsby serve",
-    "storybook": "start-storybook -p 9001 -c .storybook",
     "test": "jest --coverage",
     "watch:test": "jest --watch",
     "watch:test:debug": "node --inspect $(npm bin)/jest --watch"
@@ -31,7 +30,6 @@
     "normalize.css": "8.0.0"
   },
   "devDependencies": {
-    "@storybook/react": "3.4.8",
     "@types/node": "^8.0.7",
     "@types/react": "15.0.21",
     "@types/react-dom": "0.14.23",
