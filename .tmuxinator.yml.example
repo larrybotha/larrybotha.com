@@ -10,3 +10,7 @@ windows:
         - npm run dev
         - npm run watch:test
         - npm run watch:lint
+  - storybook:
+      root: <%= Dir.pwd %>/storybook
+      panes:
+        - npm run storybook
