@@ -23,7 +23,7 @@ class ArticleTemplate extends React.Component<ArticleProps, {}> {
 
           <div
             dangerouslySetInnerHTML={{
-              __html: post.body.body,
+              __html: post.body.childMarkdownRemark.html,
             }}
           />
         </div>
@@ -46,7 +46,9 @@ export const pageQuery = graphql`
       title
       pubDate(formatString: "MMMM Do, YYYY")
       body {
-        body
+        childMarkdownRemark {
+          html
+        }
       }
     }
   }
