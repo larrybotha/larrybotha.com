@@ -20,6 +20,7 @@ module.exports = {
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-typescript`,
     `gatsby-transformer-remark`,
+    `gatsby-plugin-react-next`,
     {
       resolve: `gatsby-plugin-sass`,
       options: {
