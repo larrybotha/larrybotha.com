@@ -5,8 +5,6 @@ import Article from '../src/templates/Article';
 
 describe('Article', () => {
   test('-> dynamically loads rendered scripts', () => {
-    debugger;
-    const spy = jest.fn();
     const data = {
       site: {
         siteMetadata: {
@@ -16,15 +14,15 @@ describe('Article', () => {
       contentfulArticle: {
         body: {
           childMarkdownRemark: {
-            html: `<script>spy()</script> `,
+            html: `<script src="./foo.js"></script> `,
           },
         },
       },
     };
-    // const {container, getByTestId} = render(<Article data={data} />);
-    const {container, getByTestId} = render(<div />);
-    debugger;
+    const {container, getByTestId} = render(<Article data={data} />);
+    const headScripts = window.document.head.querySelector('script');
+    const scripts = headScripts ? [].slice.call(headScripts, 0) : 0;
 
-    expect(spy).toHaveBeenCalledTimes(1);
+    expect(scripts.length).toEqual(1);
   });
 });
