@@ -1,30 +1,29 @@
 import * as React from 'react';
 import Helmet from 'react-helmet';
 import Link from 'gatsby-link';
-import loadScript from 'load-script';
 
 interface ArticleProps {
   data: any;
 }
 
-class ArticleTemplate extends React.Component<ArticleProps, {}> {
+interface ArticleState {
+  scripts: HTMLScriptElement[];
+}
+
+class ArticleTemplate extends React.Component<ArticleProps, ArticleState> {
   private contentRef: HTMLDivElement;
 
   public constructor(props: ArticleProps) {
     super(props);
     this.contentRef = null;
+
+    this.state = {scripts: []};
   }
 
   public componentDidMount() {
     const scripts = this.contentRef.querySelectorAll('script');
-    [].slice.call(scripts, 0).map(async (s: any) => {
-      const res = await loadScript(s.getAttribute('src'), (err: any, script: any) => {
-        if (err) return console.log(err);
 
-        console.log(script);
-      });
-      debugger;
-    });
+    this.setState({scripts: [].slice.call(scripts, 1)});
   }
 
   private setContentRef = (el: HTMLDivElement) => {
@@ -32,15 +31,25 @@ class ArticleTemplate extends React.Component<ArticleProps, {}> {
   };
 
   public render() {
+    const {scripts} = this.state;
     const {data} = this.props;
     const post = data.contentfulArticle;
     const siteTitle = data.site.siteMetadata.title;
 
     return (
       <div>
-        <Helmet title={`${post.title} | ${siteTitle}`} />
+        <Helmet>
+          <title>{`${post.title} | ${siteTitle}`}</title>
+
+          {scripts.map((script: HTMLScriptElement, i: number) => (
+            <script key={i} src={script.src} type="text/javascript" async defer>
+              {eval(script.textContent)}
+            </script>
+          ))}
+        </Helmet>
 
         <div>
+          <Link to="/">home</Link>
           <h1>{post.title}</h1>
 
           <p>{post.pubDate}</p>
@@ -48,7 +57,7 @@ class ArticleTemplate extends React.Component<ArticleProps, {}> {
           <div
             ref={this.setContentRef}
             dangerouslySetInnerHTML={{
-              __html: post.body.childMarkdownRemark.html,
+              __html: `${post.body.childMarkdownRemark.html} <script>console.log('hey')</script>`,
             }}
           />
         </div>
