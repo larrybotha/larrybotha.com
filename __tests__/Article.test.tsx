@@ -3,6 +3,12 @@ import {cleanup, fireEvent, render} from 'react-testing-library';
 
 import Article from '../src/templates/Article';
 
+jest.mock('gatsby-link', () => {
+  const React = require('react');
+
+  return <div />;
+});
+
 describe('Article', () => {
   test('-> dynamically loads rendered scripts', () => {
     const data = {
