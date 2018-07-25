@@ -57,7 +57,7 @@ class ArticleTemplate extends React.Component<ArticleProps, ArticleState> {
           <div
             ref={this.setContentRef}
             dangerouslySetInnerHTML={{
-              __html: `${post.body.childMarkdownRemark.html} <script>console.log('hey')</script>`,
+              __html: post.body.childMarkdownRemark.html,
             }}
           />
         </div>
