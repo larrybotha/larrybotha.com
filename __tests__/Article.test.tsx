@@ -1,10 +1,8 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import {cleanup, fireEvent, render} from 'react-testing-library';
+import * as ReactTestUtils from 'react-dom/test-utils';
+import {cleanup, render} from 'react-testing-library';
 
 import Article from '../src/templates/Article';
-
-const container = document.createElement('div');
 
 jest.mock('gatsby-link', () => {
   return {
@@ -14,6 +12,8 @@ jest.mock('gatsby-link', () => {
     },
   };
 });
+
+afterEach(cleanup);
 
 describe('Article', () => {
   test('-> renders content', () => {
@@ -56,7 +56,7 @@ describe('Article', () => {
       },
     };
 
-    ReactDOM.render(<Article data={data} />, container);
+    const root = render(<Article data={data} />);
 
     requestAnimationFrame(() => {
       expect(window.document.title).toContain(postTitle);
@@ -65,7 +65,7 @@ describe('Article', () => {
     });
   });
 
-  test('-> dynamically loads rendered scripts', done => {
+  test('-> loads external scripts in content into head', done => {
     const data = {
       site: {
         siteMetadata: {
@@ -76,21 +76,43 @@ describe('Article', () => {
         body: {
           childMarkdownRemark: {
             html: `
-              <div>
-                <script src="./foo.js"></script>
-              </div>
+                <script src="./foo.js" type="text/javascript"></script>
             `,
           },
         },
       },
     };
-    const ArticleTemplate = ReactDOM.render(<Article data={data} />, container);
     const root = render(<Article data={data} />);
 
     requestAnimationFrame(() => {
-      const {container} = root;
-      const headScripts = window.document.querySelector('script');
-      const scripts = headScripts ? [].slice.call(headScripts, 0) : 0;
+      const scripts = window.document.head.querySelectorAll('script');
+
+      expect(scripts.length).toEqual(1);
+      done();
+    });
+  });
+
+  test('-> loads inline scripts in content into head', done => {
+    const data = {
+      site: {
+        siteMetadata: {
+          title: 'foo',
+        },
+      },
+      contentfulArticle: {
+        body: {
+          childMarkdownRemark: {
+            html: `
+                <script type="text/javascript">{foo: 'bar'}</script>
+            `,
+          },
+        },
+      },
+    };
+    const root = render(<Article data={data} />);
+
+    requestAnimationFrame(() => {
+      const scripts = window.document.head.querySelectorAll('script');
 
       expect(scripts.length).toEqual(1);
       done();
