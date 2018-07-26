@@ -23,7 +23,7 @@ class ArticleTemplate extends React.Component<ArticleProps, ArticleState> {
   public componentDidMount() {
     const scripts = this.contentRef.querySelectorAll('script');
 
-    this.setState({scripts: [].slice.call(scripts, 1)});
+    this.setState({scripts: [].slice.call(scripts, 0)});
   }
 
   private setContentRef = (el: HTMLDivElement) => {
