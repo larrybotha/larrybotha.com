@@ -1,8 +1,12 @@
 // injects into all stories - quite likely a bug in Storybook
-import '../../src/assets/scss/style.scss';
+import '../styles/style.scss';
 
-// import logo from '../src/img/svg-sprite/burger.svg';
+const svgXhr =
+  typeof window !== 'undefined' ? require('webpack-svgstore-plugin/src/helpers/svgxhr') : () => {};
 
-// const svgModules = require.context('../src/img/svg-sprite', false, /\.svg$/);
+const __svg__ = {
+  path: '../../src/assets/img/svg-sprite/*.svg',
+  name: 'assets/svg/[hash].icons.svg',
+};
 
-// svgModules.keys().forEach(svgModules);
+svgXhr(__svg__);

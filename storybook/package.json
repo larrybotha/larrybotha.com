@@ -9,18 +9,29 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@storybook/addon-info": "3.4.8",
-    "@storybook/react": "3.4.8",
+    "@storybook/addon-actions": "^4.0.0-alpha.3",
+    "@storybook/addon-info": "^4.0.0-alpha.3",
+    "@storybook/addon-links": "^4.0.0-alpha.3",
+    "@storybook/addons": "^4.0.0-alpha.3",
+    "@storybook/react": "^4.0.0-alpha.3",
     "autoprefixer": "9.0.0",
+    "awesome-typescript-loader": "5.2.0",
     "babel-core": "6.26.3",
     "css-loader": "1.0.0",
+    "node-sass": "4.9.2",
     "postcss-loader": "2.1.6",
     "react": "16.4.1",
+    "react-docgen-typescript-webpack-plugin": "1.1.0",
     "react-dom": "16.4.1",
+    "react-storybook-addon-props-combinations": "1.0.1",
     "sass-loader": "7.0.3",
-    "style-loader": "0.21.0"
+    "sass-variable-loader": "0.1.2",
+    "storybook-readme": "3.3.0",
+    "style-loader": "0.21.0",
+    "webpack-svgstore-plugin": "4.0.3"
   },
   "dependencies": {
-    "normalize.css": "8.0.0"
+    "normalize.css": "8.0.0",
+    "react-show-styles": "1.0.1"
   }
 }
