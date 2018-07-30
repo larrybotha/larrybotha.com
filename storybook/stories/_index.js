@@ -5,7 +5,7 @@ const svgXhr =
   typeof window !== 'undefined' ? require('webpack-svgstore-plugin/src/helpers/svgxhr') : () => {};
 
 const __svg__ = {
-  path: '../../src/assets/img/svg-sprite/*.svg',
+  path: '../../../src/assets/img/svg-sprite/*.svg',
   name: 'assets/svg/[hash].icons.svg',
 };
 

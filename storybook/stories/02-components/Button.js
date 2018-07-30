@@ -3,11 +3,13 @@ import * as React from 'react';
 import {action} from '@storybook/addon-actions';
 import {withInfo} from '@storybook/addon-info';
 import {storiesOf} from '@storybook/react';
+import StoryRouter from 'storybook-react-router';
 import withPropsCombinations from 'react-storybook-addon-props-combinations';
 
 import Button from '../../../src/components/Button';
 
 storiesOf('Components/Button', module)
+  .addDecorator(StoryRouter())
   .add(
     'usage: as button',
     withInfo({inline: true})(() => <Button onClick={action('clicked')}>button</Button>),

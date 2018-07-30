@@ -1,8 +1,8 @@
 const path = require('path');
 const autoprefixer = require('autoprefixer');
+const SvgStore = require('webpack-svgstore-plugin');
 const glob = require('glob').sync;
 const TSDocgenPlugin = require('react-docgen-typescript-webpack-plugin');
-const SvgStore = require('webpack-svgstore-plugin');
 
 const resolve = dir => {
   return path.join(__dirname, '../../..', dir);
@@ -58,10 +58,7 @@ module.exports = (baseConfig, env, config) => {
     ],
   });
 
-  config.resolve.alias = {
-    ...config.resolve.alias,
-    '@': resolve('src'),
-  };
+  config.resolve.alias['@'] = resolve('src');
 
   return config;
 };
