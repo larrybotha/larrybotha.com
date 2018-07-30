@@ -4,19 +4,21 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "storybook": "start-storybook -p 9001 -c .config"
+    "start": "start-storybook -p 9001 -c .storybook"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@storybook/addon-actions": "^4.0.0-alpha.3",
-    "@storybook/addon-info": "^4.0.0-alpha.3",
-    "@storybook/addon-links": "^4.0.0-alpha.3",
-    "@storybook/addons": "^4.0.0-alpha.3",
-    "@storybook/react": "^4.0.0-alpha.3",
+    "@dump247/storybook-state": "1.5.0",
+    "@storybook/addon-actions": "4.0.0-alpha.3",
+    "@storybook/addon-backgrounds": "3.4.8",
+    "@storybook/addon-info": "4.0.0-alpha.3",
+    "@storybook/addon-viewport": "4.0.0-alpha.3",
+    "@storybook/react": "4.0.0-alpha.3",
+    "@types/storybook__react": "3.0.8",
     "autoprefixer": "9.0.0",
     "awesome-typescript-loader": "5.2.0",
-    "babel-core": "6.26.3",
+    "babel-loader": "7.1.5",
     "css-loader": "1.0.0",
     "node-sass": "4.9.2",
     "postcss-loader": "2.1.6",
@@ -25,13 +27,14 @@
     "react-dom": "16.4.1",
     "react-storybook-addon-props-combinations": "1.0.1",
     "sass-loader": "7.0.3",
-    "sass-variable-loader": "0.1.2",
+    "storybook-react-router": "1.0.1",
     "storybook-readme": "3.3.0",
     "style-loader": "0.21.0",
     "webpack-svgstore-plugin": "4.0.3"
   },
   "dependencies": {
     "normalize.css": "8.0.0",
-    "react-show-styles": "1.0.1"
+    "react-show-styles": "1.0.1",
+    "sass-variable-loader": "0.1.2"
   }
 }
