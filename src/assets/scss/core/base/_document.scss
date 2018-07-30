@@ -14,7 +14,7 @@ html {
 
 html, body, button, input, select, textarea {
   font-family: $font-base-stack;
-  color: $base-ui-color;
+  color: $clr-base;
 }
 
 /**
@@ -34,12 +34,12 @@ body {
  * These selection declarations have to be separate
  */
 ::-moz-selection {
-  background: $selection-color;
+  background: $clr-selection;
   color: #fff;
   text-shadow: none;
 }
 ::selection {
-  background: $selection-color;
+  background: $clr-selection;
   color: #fff;
   text-shadow: none;
 }

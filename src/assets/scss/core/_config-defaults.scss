@@ -28,7 +28,7 @@ $base-font-family:  sans-serif!default;
 /**
  * Default colour for objects’ borders etc.
  */
-$base-ui-color:   #ccc!default;
+$clr-base:   #ccc!default;
 
 
 
@@ -212,20 +212,13 @@ $close-quote:   null;
 
 
 
-
 /*------------------------------------*\
   $BRAND
 \*------------------------------------*/
 /**
  * Brand stuff
  */
-$brand-color:     #4a8ec2!default;
-$brand-face:    "Helvetica Neue", sans-serif!default;
-
-/**
- * How big would you like round corners to be by default?
- */
-$brand-round:    4px!default;
+$clr-brand:     #4a8ec2!default;
 
 
 
@@ -234,7 +227,8 @@ $brand-round:    4px!default;
 /*------------------------------------*\
   $COLORS
 \*------------------------------------*/
-$selection-color: $brand-color!default;
+$clr-selection: $clr-brand!default;
+
 
 
 
@@ -250,8 +244,3 @@ $use-grids:              false!default;
 $use-ckeditor:           false!default;
 $use-print:              false!default;
 $use-tinymce:            false!default;
-
-
-
-
-
