@@ -13,4 +13,4 @@ windows:
   - storybook:
       root: <%= Dir.pwd %>/storybook
       panes:
-        - npm run storybook
+        - npm start
