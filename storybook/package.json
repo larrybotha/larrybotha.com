@@ -17,7 +17,6 @@
     "@storybook/react": "4.0.0-alpha.3",
     "@types/storybook__react": "3.0.8",
     "autoprefixer": "9.0.0",
-    "awesome-typescript-loader": "5.2.0",
     "babel-loader": "7.1.5",
     "css-loader": "1.0.0",
     "node-sass": "4.9.2",
@@ -30,6 +29,7 @@
     "storybook-react-router": "1.0.1",
     "storybook-readme": "3.3.0",
     "style-loader": "0.21.0",
+    "ts-loader": "4.4.2",
     "webpack-svgstore-plugin": "4.0.3"
   },
   "dependencies": {

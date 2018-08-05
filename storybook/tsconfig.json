@@ -1,23 +1,23 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "outDir": "build/lib",
-    "module": "commonjs",
-    "target": "es5",
-    "lib": ["es5", "es6", "es7", "es2017", "dom"],
-    "sourceMap": true,
     "allowJs": true,
-    "jsx": "react",
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
+    "jsx": "react",
+    "lib": ["dom", "esnext"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
-    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "outDir": "build/lib",
+    "sourceMap": true,
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
-    "noUnusedLocals": true,
-    "allowSyntheticDefaultImports": true,
-    "experimentalDecorators": true
+    "target": "es5"
   },
-  "include": ["./stories/**/*"],
-  "exclude": ["node_modules"]
+  "include": ["./stories/**/*"]
 }
