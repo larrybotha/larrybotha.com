@@ -31,13 +31,15 @@
     "normalize.css": "8.0.0"
   },
   "devDependencies": {
+    "@babel/core": "7.2.2",
     "@types/jest": "23.3.0",
     "@types/node": "^8.0.7",
     "@types/react": "16.4.7",
     "@types/react-dom": "16.0.6",
     "@types/react-helmet": "5.0.6",
     "@types/react-router": "4.0.29",
-    "babel-core": "6.26.3",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "23.6.0",
     "commitizen": "^2.10.1",
     "conventional-changelog": "^2.0.0",
     "conventional-changelog-cli": "^2.0.0",
@@ -46,9 +48,14 @@
     "gatsby": "^1.9.277",
     "gatsby-plugin-sass": "1.0.26",
     "gatsby-source-contentful": "1.3.54",
-    "jest": "22.4.4",
+    "jest": "23.6.0",
+    "jest-dom": "3.0.0",
+    "jest-runner-eslint": "0.7.1",
+    "jest-watch-select-projects": "0.1.1",
+    "jest-watch-typeahead": "0.2.0",
     "prettier": "1.13.7",
     "react-testing-library": "4.1.3",
+    "regenerator-runtime": "0.13.1",
     "ts-jest": "22.4.6"
   },
   "config": {
