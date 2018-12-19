@@ -1,19 +1,20 @@
-import * as React from 'react';
-import * as ReactTestUtils from 'react-dom/test-utils';
-import {cleanup, render} from 'react-testing-library';
+import 'jest-dom/extend-expect';
+import 'react-testing-library/cleanup-after-each';
 
-import Article from '../src/templates/Article';
+import * as React from 'react';
+import {render, wait} from 'react-testing-library';
+
+import Article from './Article';
 
 jest.mock('gatsby-link', () => {
   return {
     default() {
       const React = require('react');
+
       return <div />;
     },
   };
 });
-
-afterEach(cleanup);
 
 describe('Article', () => {
   test('-> renders content', () => {
@@ -37,7 +38,7 @@ describe('Article', () => {
     expect(container.innerHTML).toContain(html);
   });
 
-  test('-> renders title', done => {
+  test('-> renders title', async () => {
     const siteTitle = 'site title';
     const postTitle = 'post title';
     const data = {
@@ -56,16 +57,15 @@ describe('Article', () => {
       },
     };
 
-    const root = render(<Article data={data} />);
+    render(<Article data={data} />);
 
-    requestAnimationFrame(() => {
-      expect(window.document.title).toContain(postTitle);
-      expect(window.document.title).toContain(siteTitle);
-      done();
-    });
+    await wait();
+
+    expect(window.document.title).toContain(postTitle);
+    expect(window.document.title).toContain(siteTitle);
   });
 
-  test('-> loads external scripts in content into head', done => {
+  test('-> loads external scripts in content into head', async () => {
     const data = {
       site: {
         siteMetadata: {
@@ -82,17 +82,16 @@ describe('Article', () => {
         },
       },
     };
-    const root = render(<Article data={data} />);
+    render(<Article data={data} />);
 
-    requestAnimationFrame(() => {
-      const scripts = window.document.head.querySelectorAll('script');
+    await wait();
 
-      expect(scripts.length).toEqual(1);
-      done();
-    });
+    const scripts = window.document.head.querySelectorAll('script');
+
+    expect(scripts.length).toEqual(1);
   });
 
-  test('-> loads inline scripts in content into head', done => {
+  test('-> loads inline scripts in content into head', async () => {
     const data = {
       site: {
         siteMetadata: {
@@ -109,13 +108,12 @@ describe('Article', () => {
         },
       },
     };
-    const root = render(<Article data={data} />);
+    render(<Article data={data} />);
 
-    requestAnimationFrame(() => {
-      const scripts = window.document.head.querySelectorAll('script');
+    await wait();
 
-      expect(scripts.length).toEqual(1);
-      done();
-    });
+    const scripts = window.document.head.querySelectorAll('script');
+
+    expect(scripts.length).toEqual(1);
   });
 });
