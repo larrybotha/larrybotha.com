@@ -1,6 +1,8 @@
 import * as React from 'react';
 import Helmet from 'react-helmet';
-import Link from 'gatsby-link';
+import {graphql, Link} from 'gatsby';
+
+import {Layout} from '../components/layout';
 
 interface ArticleProps {
   data: any;
@@ -37,7 +39,7 @@ class ArticleTemplate extends React.Component<ArticleProps, ArticleState> {
     const siteTitle = data.site.siteMetadata.title;
 
     return (
-      <div>
+      <Layout>
         <Helmet>
           <title>{`${post.title} | ${siteTitle}`}</title>
 
@@ -61,7 +63,7 @@ class ArticleTemplate extends React.Component<ArticleProps, ArticleState> {
             }}
           />
         </div>
-      </div>
+      </Layout>
     );
   }
 }
