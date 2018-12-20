@@ -3,6 +3,8 @@ const path = require('path');
 module.exports = {
   rootDir: path.join(__dirname, '../..'),
 
+  roots: ['<rootDir>', '<rootDir>/config/tests'],
+
   testEnvironment: 'jest-environment-jsdom',
 
   moduleFileExtensions: ['js', 'jsx', 'json', 'ts', 'tsx'],
@@ -12,7 +14,7 @@ module.exports = {
   moduleNameMapper: {
     '.+\\.(css|styl|less|sass|scss)$': 'identity-obj-proxy',
     '.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': require.resolve(
-      './fileMock.js',
+      './file-mock.js',
     ),
   },
 
