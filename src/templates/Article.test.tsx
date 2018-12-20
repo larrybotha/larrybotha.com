@@ -6,30 +6,16 @@ import {render, wait} from 'react-testing-library';
 
 import Article from './Article';
 
-jest.mock('gatsby-link', () => {
-  return {
-    default() {
-      const React = require('react');
-
-      return <div />;
-    },
-  };
-});
-
 describe('Article', () => {
   test('-> renders content', () => {
     const html = `<div>foo</div>`;
     const data = {
       site: {
-        siteMetadata: {
-          title: 'site title',
-        },
+        siteMetadata: {title: 'site title'},
       },
       contentfulArticle: {
         body: {
-          childMarkdownRemark: {
-            html,
-          },
+          childMarkdownRemark: {html},
         },
       },
     };
