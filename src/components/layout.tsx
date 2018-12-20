@@ -1,18 +1,8 @@
 import * as React from 'react';
-import {Link} from 'gatsby';
 import Helmet from 'react-helmet';
 
 import '../assets/scss/style.scss';
-
-const Header = () => (
-  <div>
-    <Link to="/">Gatsby</Link>
-    <Link to="/about">About</Link>
-    <Link to="/articles">Articles</Link>
-    <Link to="/contact">Contact</Link>
-    <Link to="/404">404</Link>
-  </div>
-);
+import {Header} from './header';
 
 interface LayoutProps extends React.Props<any> {
   children: any;
