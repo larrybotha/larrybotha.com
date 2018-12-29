@@ -29,16 +29,12 @@ describe('Article', () => {
     const postTitle = 'post title';
     const data = {
       site: {
-        siteMetadata: {
-          title: siteTitle,
-        },
+        siteMetadata: {title: siteTitle},
       },
       contentfulArticle: {
         title: postTitle,
         body: {
-          childMarkdownRemark: {
-            html: '',
-          },
+          childMarkdownRemark: {html: ''},
         },
       },
     };
@@ -54,9 +50,7 @@ describe('Article', () => {
   test('-> loads external scripts in content into head', async () => {
     const data = {
       site: {
-        siteMetadata: {
-          title: 'foo',
-        },
+        siteMetadata: {title: 'foo'},
       },
       contentfulArticle: {
         body: {
@@ -79,11 +73,7 @@ describe('Article', () => {
 
   test('-> loads inline scripts in content into head', async () => {
     const data = {
-      site: {
-        siteMetadata: {
-          title: 'foo',
-        },
-      },
+      site: {siteMetadata: {title: 'foo'}},
       contentfulArticle: {
         body: {
           childMarkdownRemark: {
