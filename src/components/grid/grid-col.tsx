@@ -6,7 +6,7 @@ export enum ColModifiers {
   tall = 'tall',
 }
 
-export interface IGridColViewports {
+export interface GridColViewports {
   desk: string;
   lap: string;
   palm: string;
@@ -14,19 +14,19 @@ export interface IGridColViewports {
   [key: string]: any;
 }
 
-export interface IGridColProps {
+export interface GridColProps extends React.HTMLAttributes<HTMLElement> {
   className?: string;
   modifiers?: ColModifiers[];
   tagName?: string;
-  viewports?: IGridColViewports;
+  viewports?: GridColViewports;
   [key: string]: any;
 }
 
-const getVpClasses = (vps: IGridColProps['viewports']) =>
+const getVpClasses = (vps: GridColProps['viewports']) =>
   vps ? Object.keys(vps).map(key => `g-${key}-${vps[key]}`) : [];
 
-class GridCol extends React.Component<IGridColProps> {
-  public static defaultProps: Partial<IGridColProps> = {
+class GridCol extends React.Component<GridColProps> {
+  public static defaultProps: Partial<GridColProps> = {
     baseWidth: '',
     className: '',
     modifiers: [],
@@ -35,7 +35,15 @@ class GridCol extends React.Component<IGridColProps> {
   };
 
   public render() {
-    const {baseWidth, children, className, modifiers, tagName, viewports} = this.props;
+    const {
+      baseWidth,
+      children,
+      className,
+      modifiers,
+      tagName,
+      viewports,
+      ...restProps
+    } = this.props;
     const modClasses = (modifiers as ColModifiers[]).map(m => `g--${m}`);
     const viewportClasses = getVpClasses(viewports);
     const baseWidthClassName = baseWidth ? `g-${baseWidth}` : '';
@@ -43,10 +51,14 @@ class GridCol extends React.Component<IGridColProps> {
       .concat(modClasses)
       .concat(viewportClasses)
       .concat(baseWidthClassName)
+      .filter(Boolean)
       .join(' ');
-    const CustomTagName: React.ReactChild = tagName as string;
 
-    return <CustomTagName className={`g ${classes}`}>{children}</CustomTagName>;
+    return React.createElement(tagName, {
+      className: `g ${classes}`,
+      children,
+      ...restProps,
+    });
   }
 }
 

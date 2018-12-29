@@ -1,8 +1,7 @@
 import * as React from 'react';
 import {Link} from '@reach/router';
 
-export interface IButtonProps {
-  className?: string;
+export interface ButtonProps extends React.HTMLAttributes<HTMLAnchorElement | HTMLButtonElement> {
   onClick?: React.MouseEventHandler<any>;
   modifierBaseClassName?: string;
   modifiers?: string[];
@@ -10,7 +9,7 @@ export interface IButtonProps {
   [key: string]: any;
 }
 
-const Button: React.SFC<IButtonProps> = ({
+const Button: React.SFC<ButtonProps> = ({
   modifierBaseClassName,
   children,
   className,

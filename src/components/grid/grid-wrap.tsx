@@ -1,17 +1,16 @@
 import * as React from 'react';
 
-export interface IGridWrapProps {
-  className?: string;
+export interface GridWrapProps extends React.HTMLAttributes<HTMLElement> {
   modifierBaseClassName?: string;
   modifiers?: string[];
   tagName?: string;
   [key: string]: any;
 }
 
-class GridWrap extends React.Component<IGridWrapProps> {
+class GridWrap extends React.Component<GridWrapProps> {
   public static displayName = 'GridWrap';
 
-  public static defaultProps: Partial<IGridWrapProps> = {
+  public static defaultProps: Partial<GridWrapProps> = {
     className: '',
     modifierBaseClassName: 'gw',
     modifiers: [],
@@ -32,13 +31,12 @@ class GridWrap extends React.Component<IGridWrapProps> {
       .concat(className)
       .filter(Boolean)
       .join(' ');
-    const CustomTagName: React.ReactChild = tagName as string;
 
-    return (
-      <CustomTagName className={`gw ${gwClassName}`} {...restProps}>
-        {children}
-      </CustomTagName>
-    );
+    return React.createElement(tagName, {
+      children,
+      className: `gw ${gwClassName}`,
+      ...restProps,
+    });
   }
 }
 

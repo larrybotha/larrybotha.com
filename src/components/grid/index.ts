@@ -1,2 +1,2 @@
-export {default as GridWrap} from './GridWrap';
-export {default as GridCol, ColModifiers} from './GridCol';
+export {default as GridWrap} from './grid-wrap';
+export {default as GridCol, ColModifiers} from './grid-col';
