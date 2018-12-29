@@ -8,7 +8,7 @@ windows:
       panes:
         - vim
         - npm run dev
-        - npm run watch:test:debug
+        - npm test
   - storybook:
       root: <%= Dir.pwd %>/storybook
       panes:

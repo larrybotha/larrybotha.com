@@ -8,7 +8,8 @@
     "commit": "git-cz",
     "dev": "gatsby develop",
     "start": "gatsby serve",
-    "test": "jest --coverage",
+    "test": "is-ci 'test:ci' 'watch:test:debug'",
+    "test:ci": "jest --coverage",
     "watch:test": "jest --watch",
     "watch:test:debug": "node --inspect $(npm bin)/jest --watch"
   },
@@ -54,6 +55,7 @@
     "gatsby-plugin-sass": "2.0.7",
     "gatsby-source-contentful": "2.0.20",
     "identity-obj-proxy": "3.0.0",
+    "is-ci-cli": "1.1.1",
     "jest": "23.6.0",
     "jest-dom": "3.0.0",
     "jest-runner-eslint": "0.7.1",
