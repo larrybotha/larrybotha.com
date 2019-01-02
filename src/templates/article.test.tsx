@@ -4,11 +4,12 @@ import 'react-testing-library/cleanup-after-each';
 import * as React from 'react';
 import {render, wait} from 'react-testing-library';
 
-import Article from './Article';
+import Article from './article';
 
 describe('Article', () => {
   test('-> renders content', () => {
-    const html = `<div>foo</div>`;
+    const content = 'foo';
+    const html = `<div>${content}</div>`;
     const data = {
       site: {
         siteMetadata: {title: 'site title'},
@@ -21,10 +22,10 @@ describe('Article', () => {
     };
     const {container} = render(<Article data={data} />);
 
-    expect(container.innerHTML).toContain(html);
+    expect(container).toHaveTextContent(content);
   });
 
-  test('-> renders title', async () => {
+  test.only('-> renders title', async () => {
     const siteTitle = 'site title';
     const postTitle = 'post title';
     const data = {
@@ -39,10 +40,11 @@ describe('Article', () => {
       },
     };
 
-    render(<Article data={data} />);
+    const {container} = render(<Article data={data} />);
 
     await wait();
 
+    expect(container).toHaveTextContent(postTitle);
     expect(window.document.title).toContain(postTitle);
     expect(window.document.title).toContain(siteTitle);
   });
