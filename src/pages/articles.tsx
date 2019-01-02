@@ -1,15 +1,28 @@
 import * as React from 'react';
-import {Link} from 'gatsby';
+import {graphql, Link} from 'gatsby';
 
 import {Wrap} from '../components/wrap';
 import {Layout} from '../components/layout';
 
-class ArticleList extends React.Component {
+interface ArticlesProps {
+  data: any;
+}
+
+class ArticleList extends React.Component<ArticlesProps> {
   public render() {
+    const {data} = this.props;
+    const articles = data.allContentfulArticle.edges.map(({node}: any) => node);
+
     return (
       <Layout>
         <Wrap>
           <h1>Article list</h1>
+
+          {articles.map((article: any) => (
+            <div key={article.id}>
+              <Link to={`/articles/${article.slug}`}>{article.title}</Link>
+            </div>
+          ))}
 
           <Link to="/">Go back to the homepage</Link>
         </Wrap>
@@ -19,3 +32,17 @@ class ArticleList extends React.Component {
 }
 
 export default ArticleList;
+
+export const pageQuery = graphql`
+  query {
+    allContentfulArticle {
+      edges {
+        node {
+          id
+          slug
+          title
+        }
+      }
+    }
+  }
+`;
