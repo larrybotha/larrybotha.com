@@ -2,7 +2,7 @@ import 'jest-dom/extend-expect';
 import 'react-testing-library/cleanup-after-each';
 
 import * as React from 'react';
-import {render, wait} from 'react-testing-library';
+import {render, waitForElement} from 'react-testing-library';
 
 import Article from './article';
 
@@ -25,7 +25,7 @@ describe('Article', () => {
     expect(container).toHaveTextContent(content);
   });
 
-  test.only('-> renders title', async () => {
+  test('-> renders title', async () => {
     const siteTitle = 'site title';
     const postTitle = 'post title';
     const data = {
@@ -42,14 +42,16 @@ describe('Article', () => {
 
     const {container} = render(<Article data={data} />);
 
-    await wait();
-
     expect(container).toHaveTextContent(postTitle);
+
+    await waitForElement(() => window.document.querySelector('title'));
+
     expect(window.document.title).toContain(postTitle);
     expect(window.document.title).toContain(siteTitle);
   });
 
   test('-> loads external scripts in content into head', async () => {
+    const scriptSrc = './foo.src';
     const data = {
       site: {
         siteMetadata: {title: 'foo'},
@@ -58,7 +60,7 @@ describe('Article', () => {
         body: {
           childMarkdownRemark: {
             html: `
-                <script src="./foo.js" type="text/javascript"></script>
+                <script src="${scriptSrc}" type="text/javascript"></script>
             `,
           },
         },
@@ -66,21 +68,23 @@ describe('Article', () => {
     };
     render(<Article data={data} />);
 
-    await wait();
+    await waitForElement(() => window.document.querySelector('head'));
 
-    const scripts = window.document.head.querySelectorAll('script');
+    const customScript = window.document.querySelector(`script[src="${scriptSrc}"]`);
 
-    expect(scripts.length).toEqual(1);
+    expect(customScript).toBeInTheDocument();
   });
 
-  test('-> loads inline scripts in content into head', async () => {
+  test('-> runs inline scripts in content', () => {
+    const propName = 'foo';
+    const propVal = 'bar';
     const data = {
       site: {siteMetadata: {title: 'foo'}},
       contentfulArticle: {
         body: {
           childMarkdownRemark: {
             html: `
-                <script type="text/javascript">{foo: 'bar'}</script>
+                <script type="text/javascript">window["${propName}"] = "${propVal}"</script>
             `,
           },
         },
@@ -88,10 +92,6 @@ describe('Article', () => {
     };
     render(<Article data={data} />);
 
-    await wait();
-
-    const scripts = window.document.head.querySelectorAll('script');
-
-    expect(scripts.length).toEqual(1);
+    expect((window as any)[propName]).toBe(propVal);
   });
 });
