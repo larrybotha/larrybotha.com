@@ -3,4 +3,4 @@
 
   publish = "__sapper__/export/"
 
-  command = "npm run build && ls -la packages/website/__sapper__/export"
+  command = "npm run build && pwd"
