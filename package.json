@@ -1,76 +1,7 @@
 {
-  "name": "larrybotha.com",
-  "version": "0.0.0",
-  "description": "My site: https://larrybotha.com",
-  "main": "index.js",
-  "scripts": {
-    "build": "gatsby build",
-    "commit": "git-cz",
-    "dev": "gatsby develop",
-    "start": "gatsby serve",
-    "test": "is-ci 'test:ci' 'watch:test:debug'",
-    "test:ci": "jest --coverage",
-    "watch:test": "jest --watch",
-    "watch:test:debug": "node --inspect $(npm bin)/jest --watch"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/larrybotha/larrybotha.com.git"
-  },
-  "author": "",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/larrybotha/larrybotha.com/issues"
-  },
-  "homepage": "https://github.com/larrybotha/larrybotha.com#readme",
-  "dependencies": {
-    "@reach/router": "1.2.1",
-    "core-js": "2.6.1",
-    "gatsby-plugin-react-helmet": "3.0.5",
-    "gatsby-plugin-typescript": "2.0.3",
-    "gatsby-transformer-remark": "2.1.17",
-    "normalize.css": "8.0.1",
-    "react": "16.7.0",
-    "react-dom": "16.7.0",
-    "react-helmet": "5.2.0"
-  },
+  "name": "root",
+  "private": true,
   "devDependencies": {
-    "@babel/core": "7.2.2",
-    "@babel/preset-env": "7.2.3",
-    "@types/jest": "23.3.10",
-    "@types/node": "10.12.18",
-    "@types/react": "16.7.18",
-    "@types/react-dom": "16.0.11",
-    "@types/react-helmet": "5.0.7",
-    "babel-core": "7.0.0-bridge.0",
-    "babel-jest": "23.6.0",
-    "babel-preset-gatsby": "0.1.6",
-    "commitizen": "^3.0.5",
-    "conventional-changelog": "3.0.5",
-    "conventional-changelog-cli": "2.0.11",
-    "cz-conventional-changelog": "^2.1.0",
-    "dotenv": "6.2.0",
-    "gatsby": "^2.0.77",
-    "gatsby-cli": "2.4.8",
-    "gatsby-plugin-sass": "2.0.7",
-    "gatsby-source-contentful": "2.0.22",
-    "identity-obj-proxy": "3.0.0",
-    "is-ci-cli": "1.1.1",
-    "jest": "23.6.0",
-    "jest-dom": "3.0.0",
-    "jest-runner-eslint": "0.7.1",
-    "jest-watch-select-projects": "0.1.1",
-    "jest-watch-typeahead": "0.2.0",
-    "node-sass": "4.11.0",
-    "prettier": "1.15.3",
-    "react-testing-library": "5.4.2",
-    "regenerator-runtime": "0.13.1",
-    "ts-jest": "23.10.5",
-    "typescript": "3.2.2"
-  },
-  "config": {
-    "commitizen": {
-      "path": "node_modules/cz-conventional-changelog"
-    }
+    "lerna": "^3.19.0"
   }
 }
