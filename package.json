@@ -1,6 +1,10 @@
 {
   "name": "root",
   "private": true,
+  "scripts": {
+    "dev:website": "npm run dev --prefix packages/website",
+    "dev:food": "npm run dev --prefix packages/project-food"
+  },
   "devDependencies": {
     "lerna": "^3.19.0"
   }
