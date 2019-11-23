@@ -3,4 +3,4 @@
 
   publish = "__sapper__/export/"
 
-  command = "npm run build && npm i tree-cli && $(npm bin)/tree"
+  command = "npm run build && npm i tree-cli && $(npm bin)/tree -l 3"
