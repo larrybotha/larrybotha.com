@@ -4,12 +4,8 @@ root: <%= Dir.pwd %>
 windows:
   - ui:
       root: <%= Dir.pwd %>
-      layout: f030,181x43,0,0{105x43,0,0,0,75x43,106,0[75x21,106,0,2,75x21,106,22,5]}
+      layout: main-vertical
       panes:
         - vim
-        - npm run dev
-        - npm test
-  - storybook:
-      root: <%= Dir.pwd %>/storybook
-      panes:
-        - npm start
+        - npm run dev:website
+        -
