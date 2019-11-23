@@ -5,5 +5,7 @@
 <h1>Projects</h1>
 
 <ul>
-  <li>Diet app</li>
+  <li>
+    <a href="https://food.larrybotha.com">Food nutrition</a>
+  </li>
 </ul>
