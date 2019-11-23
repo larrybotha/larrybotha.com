@@ -1,6 +1,6 @@
 [build]
   base = "packages/website"
 
-  publish = "packages/website/__sapper__/export"
+  publish = "./packages/website/__sapper__/export"
 
   command = "npm run build"
