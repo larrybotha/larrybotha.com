@@ -68,8 +68,14 @@
 
 <script>
   export let items = []
+  export let filteredItems = [...items]
   export let data = {}
-      console.log(data)
+
+  function handleInput(event) {
+    const {value} = event.currentTarget;
+    const regExp = new RegExp(value, 'i')
+    filteredItems = value ? items.filter(item => regExp.test(item.title)) : items;
+  }
 </script>
 
 <svelte:head>
@@ -78,8 +84,10 @@
 
 <h1>Banting food list</h1>
 
+<input on:input={handleInput} />
+
 <ul>
-	{#each items as item}
+	{#each filteredItems as item}
     <li>
       <h2>
         {item.title}
