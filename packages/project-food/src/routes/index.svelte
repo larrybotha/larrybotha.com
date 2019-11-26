@@ -1,9 +1,4 @@
 <style>
-	h1, figure, p {
-		text-align: center;
-		margin: 0 auto;
-	}
-
 	h1 {
 		font-size: 2.8em;
 		text-transform: uppercase;
@@ -26,6 +21,16 @@
 			font-size: 4em;
 		}
 	}
+
+  .color {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+  }
+
+  .color--red { background-color: red;}
+  .color--green { background-color: green;}
+  .color--orange { background-color: orange;}
 </style>
 
 <script context="module">
@@ -90,27 +95,19 @@
 	{#each filteredItems as item}
     <li>
       <h2>
+        <span class={`color color--${item.colorGroup.slug}`}>
+        </span>
         {item.title}
+        <small>({item.foodGroup.title})</small>
       </h2>
 
-      <dl>
-        <dt>food group:</dt>
-        <dd>{item.foodGroup.title}</dd>
-
-        <dt>colour:</dt>
-        <dd>{item.colorGroup.title}</dd>
-
-        <dt>tags:</dt>
-        <dd>
-          <ul>
-            {#each item.tags as tag}
-            <li>
-              {tag.title}
-            </li>
-            {/each}
-          </ul>
-        </dd>
-      </dl>
+      <ul>
+        {#each item.tags as tag}
+          <li>
+            {tag.title}
+          </li>
+        {/each}
+      </ul>
     </li>
 	{/each}
 </ul>
