@@ -28,14 +28,14 @@
     height: 1em;
   }
 
-  .color--red { background-color: red;}
-  .color--green { background-color: green;}
-  .color--orange { background-color: orange;}
+  .color[data-css-cats*=red]{ background-color: red;}
+  .color[data-css-cats*=orange]{ background-color: orange;}
+  .color[data-css-cats*=green]{ background-color: green;}
 </style>
 
 <script context="module">
   import {globals} from '../globals'
-  import {CONTENT_TYPE} from '../constants/contentful'
+  import {DIET_CATEGORY_CONTENT_TYPE} from '../constants/contentful'
 
   const {spaceId, accessToken} = globals.contentful;
 
@@ -44,26 +44,57 @@
   /*   accessToken: 'J-bMzk2MrDm-zAjjeOlru2s7PqBeYRwqnfSGTUi2RAU'*/
   /* })*/
 
+  const findInIncludes = (includes, id) => {
+    return includes.find(include => include.sys.id === id);
+  }
+
+  const filterInIncludes = (includes, id) => {
+    return includes.filter(include => include.sys.id === id);
+  }
+
+  const getIncludesByTypeId = (includes, id) => {
+    return includes.filter(include => include.sys.contentType.sys.id === id);
+  }
+
+  const getNormalizedFoodItems = (includes, cats) => {
+    const foodItems = getIncludesByTypeId(includes, 'foodItem');
+
+    return foodItems.map(item => {
+      const {fields} = item;
+      const dietCategoryIds = cats.filter(cat => cat.fields.foodItems.find(fItem => fItem.sys.id === item.sys.id))
+                                .map(cat => cat.fields.slug);
+      const foodGroup = findInIncludes(includes, fields.foodGroup.sys.id);
+      const tags =  (fields.tags || []).map(tag => findInIncludes(includes, tag.sys.id)).map(include => include.fields)
+
+      return {
+        ...fields,
+        id: item.sys.id,
+        dietCategoryIds,
+        foodGroup: foodGroup.fields,
+        tags,
+      }
+    })
+  }
+
 	export async function preload({ params, query }) {
-    const url = `https://cdn.contentful.com/spaces/${spaceId}/entries?content_type=${CONTENT_TYPE}&access_token=${accessToken}&include=1`
+    const url = `https://cdn.contentful.com/spaces/${spaceId}/entries?content_type=${DIET_CATEGORY_CONTENT_TYPE}&access_token=${accessToken}&include=2`
     const res = await this.fetch(url)
     const data = await res.json();
 
 		if (res.status === 200) {
+      const {items: dietCats} = data;
       const {includes: incs} = data;
       const {Entry: includes} = incs
-
+      const dietCategories = dietCats.map(({fields, sys}) => ({...fields, id: sys.id}));
+      const foodItems = getNormalizedFoodItems(includes, dietCats)
+      const foodGroups = getIncludesByTypeId(includes, 'foodGroup').map(({fields, sys}) => ({...fields, id: sys.id}))
+      const tags = getIncludesByTypeId(includes, 'tag').map(({fields, sys}) => ({...fields, id: sys.id}))
 
       return {
-        data,
-        items: data.items.map(({fields})=> {
-          return {
-            ...fields,
-            foodGroup: includes.find(entry => entry.sys.id === fields.foodGroup.sys.id).fields,
-            colorGroup: includes.find(entry => entry.sys.id === fields.colorGroup.sys.id).fields,
-            tags: (fields.tags || []).map(tag => includes.find(entry => entry.sys.id === tag.sys.id).fields),
-          }
-        })
+        dietCategories,
+        foodGroups,
+        foodItems,
+        tags,
       };
 		} else {
 			this.error(res.status, data.message);
@@ -72,14 +103,50 @@
 </script>
 
 <script>
-  export let items = []
-  export let filteredItems = [...items]
-  export let data = {}
+  import { quintOut } from 'svelte/easing';
+  import { crossfade } from 'svelte/transition';
+  import { flip } from 'svelte/animate';
+
+
+  const [send, receive] = crossfade({
+    duration: d => Math.sqrt(d * 200),
+
+    fallback(node, params) {
+      const style = getComputedStyle(node);
+      const transform = style.transform === 'none' ? '' : style.transform;
+
+      return {
+        duration: 600,
+        easing: quintOut,
+        css: t => `
+          transform: ${transform} scale(${t});
+          opacity: ${t}
+        `
+      };
+    }
+  });
+
+  export let foodItems = []
+  export let foodGroups = []
+  export let dietCategories = []
+  $: filteredItems = [...foodItems]
+  $: cats = dietCategories.map(cat => {
+    const catItems = filteredItems.filter(item => item.dietCategoryIds.indexOf(cat.slug) > -1);
+    const groups = foodGroups.filter(group => catItems.some(item => item.foodGroup.slug === group.slug))
+                    .map(group => ({
+                      ...group,
+                      items: catItems.filter(item => item.foodGroup.slug === group.slug)
+                    }));
+
+    return { ...cat, groups }
+  })
+
 
   function handleInput(event) {
     const {value} = event.currentTarget;
     const regExp = new RegExp(value, 'i')
-    filteredItems = value ? items.filter(item => regExp.test(item.title)) : items;
+
+    filteredItems = value ? foodItems.filter(item => regExp.test(item.title)) : foodItems;
   }
 </script>
 
@@ -91,23 +158,42 @@
 
 <input on:input={handleInput} />
 
-<ul>
-	{#each filteredItems as item}
-    <li>
-      <h2>
-        <span class={`color color--${item.colorGroup.slug}`}>
-        </span>
-        {item.title}
-        <small>({item.foodGroup.title})</small>
-      </h2>
+{#each cats as cat, i (cat.id)}
+  <div
+    in:receive="{{key: cat.id}}"
+    out:send="{{key: cat.id}}"
+    animate:flip
+  >
+    <h2>{cat.title}</h2>
 
-      <ul>
-        {#each item.tags as tag}
-          <li>
-            {tag.title}
-          </li>
-        {/each}
-      </ul>
-    </li>
-	{/each}
-</ul>
+    {#each cat.groups as foodGroup, i (foodGroup.id)}
+      <div>
+        <h3>{foodGroup.title}</h3>
+
+        <ul>
+          {#each foodGroup.items as item, i (item.id)}
+            <li
+              in:receive="{{key: item.id}}"
+              out:send="{{key: item.id}}"
+              animate:flip
+              >
+              <h2>
+                <span class={`color`} data-css-cats={item.dietCategoryIds.join(' ')}>
+                </span>
+              {item.title}
+              </h2>
+
+              {#if item.tags.length}
+                <p>
+                  <small>
+                    {item.tags.map(({title}) => title).join(', ')} <br />
+                  </small>
+                </p>
+              {/if}
+            </li>
+          {/each}
+        </ul>
+      </div>
+    {/each}
+  </div>
+{/each}
