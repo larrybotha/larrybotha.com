@@ -132,7 +132,8 @@
   $: filteredItems = [...foodItems]
   $: cats = dietCategories.map(cat => {
     const catItems = filteredItems.filter(item => item.dietCategoryIds.indexOf(cat.slug) > -1);
-    const groups = foodGroups.filter(group => catItems.some(item => item.foodGroup.slug === group.slug))
+    const groups = foodGroups
+      /* .filter(group => catItems.some(item => item.foodGroup.slug === group.slug))*/
                     .map(group => ({
                       ...group,
                       items: catItems.filter(item => item.foodGroup.slug === group.slug)
@@ -168,7 +169,9 @@
 
     {#each cat.groups as foodGroup, i (foodGroup.id)}
       <div>
-        <h3>{foodGroup.title}</h3>
+        {#if foodGroup.items.length}
+          <h3>{foodGroup.title}</h3>
+        {/if}
 
         <ul>
           {#each foodGroup.items as item, i (item.id)}
