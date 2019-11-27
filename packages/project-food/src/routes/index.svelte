@@ -61,15 +61,16 @@
 
     return foodItems.map(item => {
       const {fields} = item;
-      const dietCategoryIds = cats.filter(cat => cat.fields.foodItems.find(fItem => fItem.sys.id === item.sys.id))
-                                .map(cat => cat.fields.slug);
+      const dietCategories = cats.filter(cat => cat.fields.foodItems.find(fItem => fItem.sys.id === item.sys.id))
+        .map(({fields, sys}) => ({...fields, id: sys.id}))
       const foodGroup = findInIncludes(includes, fields.foodGroup.sys.id);
-      const tags =  (fields.tags || []).map(tag => findInIncludes(includes, tag.sys.id)).map(include => include.fields)
+      const tags =  (fields.tags || []).map(tag => findInIncludes(includes, tag.sys.id))
+                      .map(include => include.fields)
 
       return {
         ...fields,
         id: item.sys.id,
-        dietCategoryIds,
+        dietCategories,
         foodGroup: foodGroup.fields,
         tags,
       }
@@ -85,7 +86,7 @@
       const {items: dietCats} = data;
       const {includes: incs} = data;
       const {Entry: includes} = incs
-      const dietCategories = dietCats.map(({fields, sys}) => ({...fields, id: sys.id}));
+      const dietCategories = dietCats.map(({fields, sys}) => ({...fields, id: sys.id}))
       const foodItems = getNormalizedFoodItems(includes, dietCats)
       const foodGroups = getIncludesByTypeId(includes, 'foodGroup').map(({fields, sys}) => ({...fields, id: sys.id}))
       const tags = getIncludesByTypeId(includes, 'tag').map(({fields, sys}) => ({...fields, id: sys.id}))
@@ -107,7 +108,6 @@
   import { crossfade } from 'svelte/transition';
   import { flip } from 'svelte/animate';
 
-
   const [send, receive] = crossfade({
     duration: d => Math.sqrt(d * 200),
 
@@ -127,14 +127,30 @@
   });
 
   export let foodItems = []
+  export let tags = []
   export let foodGroups = []
   export let dietCategories = []
+  let tagFilters = []
+  let foodGroupFilters = []
+  let dietCategoryFilters = []
+  let textFilter = '';
+  $: textFilterRegexp = new RegExp(textFilter, 'i')
   $: filteredItems = [...foodItems]
+    .filter(item => textFilter ? textFilterRegexp.test(item.title) : true)
+    .filter(item => {
+      return tagFilters.length ? item.tags.some(tag => tagFilters.indexOf(tag.slug) > -1) : true;
+    })
+    .filter(item => {
+      return dietCategoryFilters.length ? item.dietCategories.some(dc => dietCategoryFilters.indexOf(dc.slug) > -1) : true;
+    })
+    .filter(item => {
+      return foodGroupFilters.length ? foodGroupFilters.indexOf(item.foodGroup.slug) > -1  : true;
+    })
   $: cats = dietCategories.map(cat => {
-    const catItems = filteredItems.filter(item => item.dietCategoryIds.indexOf(cat.slug) > -1);
-    const groups = foodGroups
-      /* .filter(group => catItems.some(item => item.foodGroup.slug === group.slug))*/
-                    .map(group => ({
+    const catItems = filteredItems.filter(item => {
+      return item.dietCategories.map(({slug}) => slug).indexOf(cat.slug) > -1;
+    })
+    const groups = foodGroups.map(group => ({
                       ...group,
                       items: catItems.filter(item => item.foodGroup.slug === group.slug)
                     }));
@@ -142,13 +158,46 @@
     return { ...cat, groups }
   })
 
+  function handleTagFiltersInput(event) {
+    const {currentTarget} = event;
+    const {checked} = currentTarget;
+    const slug = currentTarget.getAttribute('data-slug')
 
-  function handleInput(event) {
-    const {value} = event.currentTarget;
-    const regExp = new RegExp(value, 'i')
-
-    filteredItems = value ? foodItems.filter(item => regExp.test(item.title)) : foodItems;
+    if (checked) {
+      tagFilters = tagFilters.concat(slug)
+    } else {
+      tagFilters = tagFilters.filter(s => s !== slug)
+    }
   }
+
+  function handleFoodGroupFiltersInput(event) {
+    const {currentTarget} = event;
+    const {checked} = currentTarget;
+    const slug = currentTarget.getAttribute('data-slug')
+
+    if (checked) {
+      foodGroupFilters = foodGroupFilters.concat(slug)
+    } else {
+      foodGroupFilters = foodGroupFilters.filter(s => s !== slug)
+    }
+  }
+
+  function handleDietCatFiltersInput(event) {
+    const {currentTarget} = event;
+    const {checked} = currentTarget;
+    const slug = currentTarget.getAttribute('data-slug')
+
+    if (checked) {
+      dietCategoryFilters = dietCategoryFilters.concat(slug)
+    } else {
+      dietCategoryFilters = dietCategoryFilters.filter(s => s !== slug)
+    }
+  }
+
+  function handleTextInput(event) {
+    textFilter = event.currentTarget.value;
+  }
+
 </script>
 
 <svelte:head>
@@ -157,7 +206,75 @@
 
 <h1>Banting food list</h1>
 
-<input on:input={handleInput} />
+<p>
+  <label for="text-filter">Filter by name</label> <br />
+
+  <input id="text-filter" on:input={handleTextInput} />
+</p>
+
+{#if dietCategories.length > 1}
+  <div>
+    <h3>Categories</h3>
+
+    {#each dietCategories as cat}
+      <label for={`category-${cat.slug}`}>
+        <input
+          on:input={handleDietCatFiltersInput}
+          data-slug={cat.slug}
+          id={`category-${cat.slug}`}
+          name={cat.slug}
+          type="checkbox"
+        />
+
+        {cat.title}
+      </label>
+    {/each}
+  </div>
+{/if}
+
+{#if foodGroups.length > 1}
+  <div>
+    <h3>Food Groups</h3>
+
+    {#each foodGroups as group}
+      <label for={`food-group-${group.slug}`}>
+        <input
+          on:input={handleFoodGroupFiltersInput}
+          id={`food-group-${group.slug}`}
+          type="checkbox"
+          name={group.slug}
+          data-slug={group.slug}
+        />
+
+        {group.title}
+      </label>
+    {/each}
+    <br />
+    <br />
+  </div>
+{/if}
+
+{#if tags.length > 1}
+  <div>
+    <h3>Attributes</h3>
+
+    {#each tags as tag}
+      <label for={`tag-${tag.slug}`}>
+        <input
+          on:input={handleTagFiltersInput}
+          id={`tag-${tag.slug}`}
+          type="checkbox"
+          name={tag.slug}
+          data-slug={tag.slug}
+        />
+
+        {tag.title}
+      </label>
+    {/each}
+    <br />
+    <br />
+  </div>
+{/if}
 
 {#each cats as cat, i (cat.id)}
   <div
@@ -181,7 +298,7 @@
               animate:flip
               >
               <h2>
-                <span class={`color`} data-css-cats={item.dietCategoryIds.join(' ')}>
+                <span class={`color`} data-css-cats={item.dietCategories.map(({slug}) => slug).join(' ')}>
                 </span>
               {item.title}
               </h2>
