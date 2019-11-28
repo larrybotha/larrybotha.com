@@ -164,7 +164,7 @@
 
 {#if dietCategories.length > 1}
   <div>
-    <h3>Categories</h3>
+    <h2>Categories</h2>
 
     {#each dietCategories as cat}
       <label for={`category-${cat.slug}`}>
@@ -185,7 +185,7 @@
 
 {#if foodGroups.length > 1}
   <div>
-    <h3>Food Groups</h3>
+    <h2>Food Groups</h2>
 
     {#each foodGroups as group}
       <label for={`food-group-${group.slug}`}>
@@ -207,7 +207,7 @@
 
 {#if tags.length > 1}
   <div>
-    <h3>Attributes</h3>
+    <h2>Attributes</h2>
 
     {#each tags as tag}
       <label for={`tag-${tag.slug}`}>
@@ -247,18 +247,15 @@
               out:send="{{key: item.id}}"
               animate:flip
               >
-              <h2>
                 <span class={`color`} data-css-cats={item.dietCategories.map(({slug}) => slug).join(' ')}>
                 </span>
               {item.title}
-              </h2>
 
               {#if item.tags.length}
-                <p>
-                  <small>
-                    {item.tags.map(({title}) => title).join(', ')} <br />
-                  </small>
-                </p>
+                <br />
+                <small>
+                  {item.tags.map(({title}) => title).join(', ')} <br />
+                </small>
               {/if}
             </li>
           {/each}
