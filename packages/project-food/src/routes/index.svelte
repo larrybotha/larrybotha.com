@@ -39,11 +39,6 @@
 
   const {spaceId, accessToken} = globals.contentful;
 
-  /* const client = contentful.createClient({*/
-  /*   space: 'iiyfp9eo2b2x',*/
-  /*   accessToken: 'J-bMzk2MrDm-zAjjeOlru2s7PqBeYRwqnfSGTUi2RAU'*/
-  /* })*/
-
   const findInIncludes = (includes, id) => {
     return includes.find(include => include.sys.id === id);
   }
