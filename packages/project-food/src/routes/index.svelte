@@ -112,14 +112,10 @@
     duration: d => Math.sqrt(d * 200),
 
     fallback(node, params) {
-      const style = getComputedStyle(node);
-      const transform = style.transform === 'none' ? '' : style.transform;
-
       return {
-        duration: 600,
+        duration: 400,
         easing: quintOut,
         css: t => `
-          transform: ${transform} scale(${t});
           opacity: ${t}
         `
       };
@@ -157,47 +153,6 @@
 
     return { ...cat, groups }
   })
-
-  function handleTagFiltersInput(event) {
-    const {currentTarget} = event;
-    const {checked} = currentTarget;
-    const slug = currentTarget.getAttribute('data-slug')
-
-    if (checked) {
-      tagFilters = tagFilters.concat(slug)
-    } else {
-      tagFilters = tagFilters.filter(s => s !== slug)
-    }
-  }
-
-  function handleFoodGroupFiltersInput(event) {
-    const {currentTarget} = event;
-    const {checked} = currentTarget;
-    const slug = currentTarget.getAttribute('data-slug')
-
-    if (checked) {
-      foodGroupFilters = foodGroupFilters.concat(slug)
-    } else {
-      foodGroupFilters = foodGroupFilters.filter(s => s !== slug)
-    }
-  }
-
-  function handleDietCatFiltersInput(event) {
-    const {currentTarget} = event;
-    const {checked} = currentTarget;
-    const slug = currentTarget.getAttribute('data-slug')
-
-    if (checked) {
-      dietCategoryFilters = dietCategoryFilters.concat(slug)
-    } else {
-      dietCategoryFilters = dietCategoryFilters.filter(s => s !== slug)
-    }
-  }
-
-  function handleTextInput(event) {
-    textFilter = event.currentTarget.value;
-  }
-
 </script>
 
 <svelte:head>
@@ -209,7 +164,7 @@
 <p>
   <label for="text-filter">Filter by name</label> <br />
 
-  <input id="text-filter" on:input={handleTextInput} />
+  <input id="text-filter" bind:value={textFilter} />
 </p>
 
 {#if dietCategories.length > 1}
@@ -219,7 +174,8 @@
     {#each dietCategories as cat}
       <label for={`category-${cat.slug}`}>
         <input
-          on:input={handleDietCatFiltersInput}
+          bind:group={dietCategoryFilters}
+          value={cat.slug}
           data-slug={cat.slug}
           id={`category-${cat.slug}`}
           name={cat.slug}
@@ -239,11 +195,11 @@
     {#each foodGroups as group}
       <label for={`food-group-${group.slug}`}>
         <input
-          on:input={handleFoodGroupFiltersInput}
+          bind:group={foodGroupFilters}
+          value={group.slug}
           id={`food-group-${group.slug}`}
           type="checkbox"
           name={group.slug}
-          data-slug={group.slug}
         />
 
         {group.title}
@@ -261,11 +217,11 @@
     {#each tags as tag}
       <label for={`tag-${tag.slug}`}>
         <input
-          on:input={handleTagFiltersInput}
+          bind:group={tagFilters}
+          value={tag.slug}
           id={`tag-${tag.slug}`}
           type="checkbox"
           name={tag.slug}
-          data-slug={tag.slug}
         />
 
         {tag.title}
@@ -280,7 +236,6 @@
   <div
     in:receive="{{key: cat.id}}"
     out:send="{{key: cat.id}}"
-    animate:flip
   >
     <h2>{cat.title}</h2>
 
