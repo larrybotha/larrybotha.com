@@ -52,7 +52,8 @@
   }
 
   const getNormalizedFoodItems = (includes, cats) => {
-    const foodItems = getIncludesByTypeId(includes, 'foodItem');
+    const foodItems = getIncludesByTypeId(includes, 'foodItem')
+      .sort((a, b) => a.fields.title > b.fields.title ? 1 : -1 );
 
     return foodItems.map(item => {
       const {fields} = item;
