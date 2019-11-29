@@ -100,24 +100,6 @@
 </script>
 
 <script>
-  import { quintOut } from 'svelte/easing';
-  import { crossfade } from 'svelte/transition';
-  import { flip } from 'svelte/animate';
-
-  const [send, receive] = crossfade({
-    duration: d => Math.sqrt(d * 200),
-
-    fallback(node, params) {
-      return {
-        duration: 400,
-        easing: quintOut,
-        css: t => `
-          opacity: ${t}
-        `
-      };
-    }
-  });
-
   export let foodItems = []
   export let tags = []
   export let foodGroups = []
@@ -243,13 +225,9 @@
 
         <ul>
           {#each foodGroup.items as item, i (item.id)}
-            <li
-              in:receive="{{key: item.id}}"
-              out:send="{{key: item.id}}"
-              animate:flip
-              >
-                <span class={`color`} data-css-cats={item.dietCategories.map(({slug}) => slug).join(' ')}>
-                </span>
+            <li>
+              <span class={`color`} data-css-cats={item.dietCategories.map(({slug}) => slug).join(' ')}>
+              </span>
               {item.title}
 
               {#if item.tags.length}
