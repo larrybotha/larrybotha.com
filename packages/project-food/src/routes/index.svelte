@@ -29,7 +29,7 @@
 
 <script context="module">
   import {globals} from '../globals'
-  import {DIET_CATEGORY_CONTENT_TYPE} from '../constants/contentful'
+  import {DIET_CONTENT_TYPE} from '../constants/contentful'
 
   const {spaceId, accessToken} = globals.contentful;
 
@@ -68,20 +68,23 @@
   }
 
 	export async function preload({ params, query }) {
-    const url = `https://cdn.contentful.com/spaces/${spaceId}/entries?content_type=${DIET_CATEGORY_CONTENT_TYPE}&access_token=${accessToken}&include=2`
+    const url = `https://cdn.contentful.com/spaces/${spaceId}/entries?content_type=${DIET_CONTENT_TYPE}&access_token=${accessToken}&include=3`
     const res = await this.fetch(url)
     const data = await res.json();
 
 		if (res.status === 200) {
-      const {items: dietCats} = data;
+      const {items: rawDiets} = data;
       const {includes: incs} = data;
       const {Entry: includes} = incs
-      const dietCategories = dietCats.map(({fields, sys}) => ({...fields, id: sys.id}))
-      const foodItems = getNormalizedFoodItems(includes, dietCats)
+      const diets = rawDiets.map(({fields, sys}) => ({...fields, id: sys.id}))
+      const rawDietCategories = getIncludesByTypeId(includes, 'dietCategory')
+      const foodItems = getNormalizedFoodItems(includes, rawDietCategories)
+      const dietCategories = rawDietCategories.map(({fields, sys}) => ({...fields, id: sys.id}))
       const foodGroups = getIncludesByTypeId(includes, 'foodGroup').map(({fields, sys}) => ({...fields, id: sys.id}))
       const tags = getIncludesByTypeId(includes, 'tag').map(({fields, sys}) => ({...fields, id: sys.id}))
 
       return {
+        diets,
         dietCategories,
         foodGroups,
         foodItems,
@@ -94,6 +97,7 @@
 </script>
 
 <script>
+  export let diets = []
   export let foodItems = []
   export let tags = []
   export let foodGroups = []
