@@ -1,2 +1,1 @@
-export const DIET_CATEGORY_CONTENT_TYPE = 'dietCategory';
-export const DIET_SLUG = 'banting';
+export const DIET_CONTENT_TYPE = 'diet';
