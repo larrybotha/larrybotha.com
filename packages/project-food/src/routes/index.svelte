@@ -33,9 +33,13 @@
 
   const {spaceId, accessToken} = globals.contentful;
 
+  const findInIncludes = (includes, id) => {
+    return includes.find(include => include.sys.id === id);
+  }
+
 	export async function preload({params}) {
     const query = {
-      content_type: DIET_CONTENT_TYPE,
+      content_type: 'dietList',
       access_token: accessToken,
     };
     const queryString = Object.keys(query).map(k => `${k}=${query[k]}`).join('&');
@@ -44,8 +48,15 @@
     const data = await res.json();
 
 		if (res.status === 200) {
-      const {items: rawDiets} = data;
-      const diets = rawDiets.map(({fields}) => fields)
+      const {items, includes: incs} = data;
+      const {Entry: includes} = incs;
+      const dietList = items.length ? items[0] : undefined;
+      const diets = dietList
+        ? dietList.fields.diets.map(diet => {
+            return findInIncludes(includes, diet.sys.id);
+          })
+        .map(({fields}) => fields)
+        : []
 
       return {diets};
 		} else {
