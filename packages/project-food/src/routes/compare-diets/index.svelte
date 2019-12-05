@@ -37,54 +37,41 @@
 </style>
 
 <script context="module">
-  import {globals} from '../../globals'
-  import {DIET_CONTENT_TYPE} from '../../constants/contentful'
-
-  const {spaceId, accessToken} = globals.contentful;
-
-  const findInIncludes = (includes, id) => {
-    return includes.find(include => include.sys.id === id);
-  }
-
-  const filterInIncludes = (includes, id) => {
-    return includes.filter(include => include.sys.id === id);
-  }
-
-  const getIncludesByTypeId = (includes, id) => {
-    return includes.filter(include => include.sys.contentType.sys.id === id);
-  }
-
-  const getNormalizedFoodItems = (includes, cats) => {
-    const foodItems = getIncludesByTypeId(includes, 'foodItem')
-      .sort((a, b) => a.fields.title > b.fields.title ? 1 : -1 );
-
-    return foodItems.map(item => {
-      const {fields} = item;
-      const dietCategories = cats.filter(cat => cat.fields.foodItems.find(fItem => fItem.sys.id === item.sys.id))
-        .map(({fields, sys}) => ({...fields, id: sys.id}))
-      const foodGroup = findInIncludes(includes, fields.foodGroup.sys.id);
-      const tags =  (fields.tags || []).map(tag => findInIncludes(includes, tag.sys.id))
-                      .map(include => include.fields)
-
-      return {
-        ...fields,
-        id: item.sys.id,
-        dietCategories,
-        foodGroup: foodGroup.fields,
-        tags,
-      }
-    })
-  }
+  import {DIET_CONTENT_TYPE, FOOD_GROUP_LIST_CONTENT_TYPE} from '../../constants/contentful'
+  import {
+    filterInIncludes,
+    findInIncludes,
+    getContentfulEntriesUrl,
+    getIncludesByTypeId,
+    getNormalizedFoodItems,
+  } from '../../helpers/contentful'
 
 	export async function preload({ params, query }) {
-    const url = `https://cdn.contentful.com/spaces/${spaceId}/entries?content_type=${DIET_CONTENT_TYPE}&access_token=${accessToken}&include=3`
-    const res = await this.fetch(url)
-    const data = await res.json();
+    const dietsUrl = getContentfulEntriesUrl({
+      content_type: DIET_CONTENT_TYPE,
+      include: 3,
+    });
+    const foodGroupsListUrl = getContentfulEntriesUrl({
+      content_type: FOOD_GROUP_LIST_CONTENT_TYPE,
+    });
+    const tagsListUrl = getContentfulEntriesUrl({
+      content_type: 'tagList',
+    });
+    const dietResponse = await this.fetch(dietsUrl)
+    const dietData = await dietResponse.json();
+    const tagListResponse = await this.fetch(tagsListUrl)
+    const tagListData = await tagListResponse.json();
+    const foodGroupsListResponse = await this.fetch(foodGroupsListUrl)
+    const foodGroupsListData = await foodGroupsListResponse.json();
+    const errorResponse = [dietResponse, foodGroupsListResponse, tagListResponse].find(res => res.status !== 200);
 
-		if (res.status === 200) {
-      const {items: rawDiets} = data;
-      const {includes: incs} = data;
+    if (!errorResponse) {
+      const {items: rawDiets} = dietData;
+      const {items: tagList} = tagListData;
+      const {items: foodGroupLists} = foodGroupsListData;
+      const {includes: incs} = dietData;
       const {Entry: includes} = incs
+      const foodGroupList = foodGroupLists.find(Boolean);
       const diets = rawDiets.map(({fields, sys}) => ({...fields, id: sys.id}))
         .map(diet => ({
           ...diet,
@@ -95,10 +82,14 @@
               return {...includedCat.fields, id: cat.sys.id};
             })
         }));
+      const rawTags = tagList.find(Boolean) ? tagList.find(Boolean).fields.tags : [];
       const rawDietCategories = getIncludesByTypeId(includes, 'dietCategory')
       const foodItems = getNormalizedFoodItems(includes, rawDietCategories)
-      const foodGroups = getIncludesByTypeId(includes, 'foodGroup').map(({fields, sys}) => ({...fields, id: sys.id}))
-      const tags = getIncludesByTypeId(includes, 'tag').map(({fields, sys}) => ({...fields, id: sys.id}))
+      const foodGroups = foodGroupList.fields.foodGroups
+                          .map(fg => findInIncludes(includes, fg.sys.id))
+                          .map(({fields, sys}) => ({...fields, id: sys.id}))
+      const tags = rawTags.map(tag => findInIncludes(includes, tag.sys.id))
+                    .map(({fields, sys}) => ({...fields, id: sys.id}))
 
       return {
         diets,
@@ -107,7 +98,7 @@
         tags,
       };
 		} else {
-			this.error(res.status, data.message);
+      this.error(errorResponse.status, dietData.message, foodGroupsListData.message, tagListData.message);
 		}
   }
 </script>
