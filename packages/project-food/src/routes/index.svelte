@@ -15,36 +15,14 @@
 			font-size: 4em;
 		}
 	}
-
-  .color {
-    display: inline-block;
-    width: 1em;
-    height: 1em;
-  }
-
-  .color[data-css-cats*=red]{ background-color: red;}
-  .color[data-css-cats*=orange]{ background-color: orange;}
-  .color[data-css-cats*=green]{ background-color: green;}
 </style>
 
 <script context="module">
-  import {globals} from '../globals'
-  import {DIET_CONTENT_TYPE} from '../constants/contentful'
-
-  const {spaceId, accessToken} = globals.contentful;
-
-  const findInIncludes = (includes, id) => {
-    return includes.find(include => include.sys.id === id);
-  }
+  import {getContentfulEntriesUrl, findInIncludes} from '../helpers/contentful'
 
 	export async function preload({params}) {
-    const query = {
-      content_type: 'dietList',
-      access_token: accessToken,
-    };
-    const queryString = Object.keys(query).map(k => `${k}=${query[k]}`).join('&');
-    const url = `https://cdn.contentful.com/spaces/${spaceId}/entries?${queryString}`
-    const res = await this.fetch(url)
+    const dietListUrl = getContentfulEntriesUrl({content_type: 'dietList'});
+    const res = await this.fetch(dietListUrl)
     const data = await res.json();
 
 		if (res.status === 200) {
@@ -52,10 +30,8 @@
       const {Entry: includes} = incs;
       const dietList = items.length ? items[0] : undefined;
       const diets = dietList
-        ? dietList.fields.diets.map(diet => {
-            return findInIncludes(includes, diet.sys.id);
-          })
-        .map(({fields}) => fields)
+        ? dietList.fields.diets.map(diet => findInIncludes(includes, diet.sys.id))
+            .map(({fields}) => fields)
         : []
 
       return {diets};
