@@ -45,19 +45,26 @@
     const foodGroupsListUrl = getContentfulEntriesUrl({
       content_type: FOOD_GROUP_LIST_CONTENT_TYPE,
     });
+    const tagsListUrl = getContentfulEntriesUrl({
+      content_type: 'tagList',
+    });
     const dietResponse = await this.fetch(dietsUrl)
     const dietData = await dietResponse.json();
+    const tagListResponse = await this.fetch(tagsListUrl)
+    const tagListData = await tagListResponse.json();
     const foodGroupsListResponse = await this.fetch(foodGroupsListUrl)
     const foodGroupsListData = await foodGroupsListResponse.json();
-    const errorResponse = [dietResponse, foodGroupsListResponse].find(res => res.status !== 200);
+    const errorResponse = [dietResponse, foodGroupsListResponse, tagListResponse].find(res => res.status !== 200);
 
     if (!errorResponse) {
       const {items: diets} = dietData;
+      const {items: tagList} = tagListData;
       const {items: foodGroupLists} = foodGroupsListData;
       const foodGroupList = foodGroupLists.find(Boolean);
       const otherDiets = diets.filter(({fields}) => fields.slug !== params.slug)
                           .map(({fields}) => fields)
       const rawPageDiet = diets.find(({fields}) => fields.slug === params.slug);
+      const rawTags = tagList.find(Boolean) ? tagList.find(Boolean).fields.tags : [];
       const {includes: incs} = dietData;
       const {Entry: includes} = incs
       const rawDietCategories = getIncludesByTypeId(includes, 'dietCategory');
@@ -70,8 +77,9 @@
       const foodGroups = foodGroupList.fields.foodGroups
                           .map(fg => findInIncludes(includes, fg.sys.id))
                           .map(({fields, sys}) => ({...fields, id: sys.id}))
-      const tags = getIncludesByTypeId(includes, 'tag').map(({fields, sys}) => ({...fields, id: sys.id}))
       const diet = rawPageDiet ? rawPageDiet.fields : undefined
+      const tags = rawTags.map(tag => findInIncludes(includes, tag.sys.id))
+                    .map(({fields, sys}) => ({...fields, id: sys.id}))
 
       return {
         diet,
@@ -82,7 +90,7 @@
         tags,
       };
     } else {
-      this.error(errorResponse.status, dietData.message, foodGroupsListData.message);
+      this.error(errorResponse.status, dietData.message, foodGroupsListData.message, tagListData.message);
     }
   }
 </script>
