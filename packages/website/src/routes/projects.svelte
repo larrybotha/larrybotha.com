@@ -6,6 +6,6 @@
 
 <ul>
   <li>
-    <a href="https://food.larrybotha.com">Food nutrition</a>
+    <a href="https://pickyeater.app">The Picky Eater</a>
   </li>
 </ul>
