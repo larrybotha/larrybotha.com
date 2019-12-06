@@ -7,5 +7,5 @@ windows:
       layout: main-vertical
       panes:
         - vim
-        - npm run dev:website
+        - npm run dev
         -
