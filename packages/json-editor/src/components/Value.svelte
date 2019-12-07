@@ -12,13 +12,13 @@
 
 <script>
   export let service;
-  export let valueTransition;
+  export let valueTransition = undefined;
   export let state = service.machine.initialState;
-  export let value = state.context.value;
+  $: value = state.context.value;
 
-  export const handleChange = () => service.send(valueTransition);
-  export const handleValueChange = (ev) => service.send('SET_VALUE', ev.currentTarget.value);
-
+  export const transitionPropType = () => service.send(valueTransition);
+  export const setPropertyValue = (ev) => service.send('SET_VALUE', {data: ev.currentTarget.value});
+  export const sendPropertyName = id => (ev) => service.send('SEND_PROPERTY_NAME', {refId: id, data: ev.currentTarget.value});
   export const addInput = () => service.send('ADD_VALUE')
 
   export const removeInput = (id) => {
@@ -28,11 +28,7 @@
   service.onTransition(s => state = s)
 </script>
 
-<pre>
-  {JSON.stringify(state.context, null, 2)}
-</pre>
-
-<select bind:value={valueTransition} on:change={handleChange}>
+<select bind:value={valueTransition} on:change={transitionPropType}>
   <option value="" disabled selected={state.matches('unknown')}>choose a type</option>
   <option value="SELECT_PRIMITIVE">primitive</option>
   <option value="SELECT_ARRAY">array</option>
@@ -44,7 +40,12 @@
     {#each state.context.values as value, i (value.ref.id)}
       <div key={value.ref.id}>
         <button on:click={() => removeInput(value.ref.id)}>-</button>
-        <input type="text" placeholder="name" />: <svelte:self service={value.ref} />
+        <input
+          type="text"
+          placeholder="name"
+          on:change={sendPropertyName(value.ref.id)}
+          value={value.ref.state.context.name || ''}
+        />: <svelte:self service={value.ref} />
       </div>
     {/each}
   {/if}
@@ -65,6 +66,6 @@
   {/if}
 
   {#if state.matches('primitive')}
-    <input type="text" on:change={handleValueChange} value={value} />
+    <input type="text" on:change={setPropertyValue} value={value ? value : ''} />
   {/if}
 </div>
