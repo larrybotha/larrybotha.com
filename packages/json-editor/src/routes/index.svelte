@@ -32,15 +32,19 @@
 	}
 </style>
 
+<script>
+  import {interpret} from 'xstate'
+  import {valueMachine} from '../machines/value';
+
+  import Value from '../components/Value.svelte'
+
+  export const valueService = interpret(valueMachine);
+
+  valueService.start()
+</script>
+
 <svelte:head>
 	<title>Json editor</title>
 </svelte:head>
 
-<h1>Great success!</h1>
-
-<figure>
-	<img alt='Borat' src='great-success.png'>
-	<figcaption>HIGH FIVE!</figcaption>
-</figure>
-
-<p><strong>Try editing this file (src/routes/index.svelte) to test live reloading.</strong></p>
+<Value service={valueService} />
