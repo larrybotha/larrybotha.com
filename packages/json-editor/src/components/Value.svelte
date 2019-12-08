@@ -32,9 +32,9 @@
 
 <select bind:value={valueTransition} on:change={transitionPropType}>
   <option value="" disabled selected={state.matches('unknown')}>choose a type</option>
-  <option value="SELECT_PRIMITIVE">primitive</option>
-  <option value="SELECT_ARRAY">array</option>
-  <option value="SELECT_OBJECT">object</option>
+  <option selected={state.matches('primitive')} value="SELECT_PRIMITIVE">primitive</option>
+  <option selected={state.matches('array')} value="SELECT_ARRAY">array</option>
+  <option selected={state.matches('object')} value="SELECT_OBJECT">object</option>
 </select>
 
 <div class="value" data-state={state.value}>
@@ -75,8 +75,6 @@
       <option selected={state.matches('primitive.null')} value="SELECT_NULL">null</option>
       <option selected={state.matches('primitive.undefined')} value="SELECT_UNDEFINED">undefined</option>
     </select>
-
-    {value}
 
     {#if state.matches('primitive.string')}
       <input type="text" on:input={setPropertyValue} value={value ? value : ''} />
