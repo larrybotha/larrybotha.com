@@ -24,13 +24,13 @@ const valueMachine = Machine(
 
       array: {
         on: {
-          ADD_VALUE: {
+          ADD_ACTOR: {
             target: '.',
-            actions: ['spawnValue'],
+            actions: ['spawnActor'],
           },
-          REMOVE_VALUE: {
+          REMOVE_ACTOR: {
             target: '.',
-            actions: ['removeValue'],
+            actions: ['removeActor'],
           },
         },
       },
@@ -41,39 +41,60 @@ const valueMachine = Machine(
             target: '.',
             actions: ['sendPropertyName'],
           },
-          ADD_VALUE: {
+          ADD_ACTOR: {
             target: '.',
-            actions: ['spawnValue'],
+            actions: ['spawnActor'],
           },
-          REMOVE_VALUE: {
+          REMOVE_ACTOR: {
             target: '.',
-            actions: ['removeValue'],
+            actions: ['removeActor'],
           },
         },
       },
 
       primitive: {
-        initial: 'unknown',
+        initial: 'string',
+
+        on: {
+          SELECT_STRING: 'primitive.string',
+          SELECT_NUMBER: 'primitive.number',
+          SELECT_BOOLEAN: 'primitive.boolean',
+          SELECT_NULL: 'primitive.null',
+          SELECT_UNDEFINED: 'primitive.undefined',
+        },
 
         states: {
-          on: {
-            SELECT_STRING: 'string',
-            SELECT_NUMBER: 'number',
-            SELECT_BOOLEAN: 'boolean',
-            SET_VALUE: {
-              actions: 'setValue',
-              // target: 'primitive.',
-              internal: false,
+          string: {
+            on: {
+              SET_VALUE: {
+                actions: 'setValue',
+              },
             },
           },
 
-          unknown: {},
+          number: {
+            on: {
+              SET_VALUE: {
+                actions: 'setValue',
+              },
+            },
+          },
 
-          string: {},
+          boolean: {
+            on: {
+              SET_VALUE: {
+                actions: 'setBooleanValue',
+              },
+            },
+          },
 
-          number: {},
+          null: {
+            entry: 'setNullValue',
+          },
 
-          boolean: {},
+          undefined: {
+            entry: 'setUndefinedValue',
+          },
         },
       },
     },
@@ -86,12 +107,6 @@ const valueMachine = Machine(
         },
       }),
 
-      // sendPropertyName: send(({values}, {refId, data}) => ({
-      //   data,
-      //   to: values.find(({ref}) => ref.id === refId).ref,
-      //   type: 'SET_PROPERTY_NAME',
-      // })),
-
       sendPropertyName: send(
         (_, {data}) => {
           return {type: 'SET_PROPERTY_NAME', data};
@@ -103,7 +118,15 @@ const valueMachine = Machine(
 
       setValue: assign({value: (_, {data}) => data}),
 
-      spawnValue: assign({
+      setBooleanValue: assign({
+        value: (_, {data}) => Boolean(data),
+      }),
+
+      setNullValue: assign({value: null}),
+
+      setUndefinedValue: assign({value: undefined}),
+
+      spawnActor: assign({
         values: ({values}) => [
           ...values,
           {
@@ -112,7 +135,7 @@ const valueMachine = Machine(
         ],
       }),
 
-      removeValue: assign({
+      removeActor: assign({
         values: ({values}, {data}) => values.filter(({ref}) => ref.id !== data.id),
       }),
     },

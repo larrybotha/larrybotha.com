@@ -17,12 +17,14 @@
   $: value = state.context.value;
 
   export const transitionPropType = () => service.send(valueTransition);
-  export const setPropertyValue = (ev) => service.send('SET_VALUE', {data: ev.currentTarget.value});
+  export const transitionPrimitiveType = (ev) => service.send(ev.currentTarget.value);
+  export const setPropertyValue = (ev) => service.send('SET_VALUE', {data: ev.currentTarget.value})
+  export const setBooleanPropertyValue = (ev) => service.send('SET_VALUE', {data: ev.currentTarget.checked})
   export const sendPropertyName = id => (ev) => service.send('SEND_PROPERTY_NAME', {refId: id, data: ev.currentTarget.value});
-  export const addInput = () => service.send('ADD_VALUE')
+  export const addInput = () => service.send('ADD_ACTOR')
 
   export const removeInput = (id) => {
-    service.send('REMOVE_VALUE', {data:{id}})
+    service.send('REMOVE_ACTOR', {data:{id}})
   }
 
   service.onTransition(s => state = s)
@@ -41,9 +43,9 @@
       <div key={value.ref.id}>
         <button on:click={() => removeInput(value.ref.id)}>-</button>
         <input
-          type="text"
-          placeholder="name"
           on:change={sendPropertyName(value.ref.id)}
+          placeholder="name"
+          type="text"
           value={value.ref.state.context.name || ''}
         />: <svelte:self service={value.ref} />
       </div>
@@ -66,6 +68,30 @@
   {/if}
 
   {#if state.matches('primitive')}
-    <input type="text" on:change={setPropertyValue} value={value ? value : ''} />
+    <select  on:change={transitionPrimitiveType}>
+      <option selected={state.matches('primitive.string')} value="SELECT_STRING">string</option>
+      <option selected={state.matches('primitive.number')} value="SELECT_NUMBER">number</option>
+      <option selected={state.matches('primitive.boolean')} value="SELECT_BOOLEAN">boolean</option>
+      <option selected={state.matches('primitive.null')} value="SELECT_NULL">null</option>
+      <option selected={state.matches('primitive.undefined')} value="SELECT_UNDEFINED">undefined</option>
+    </select>
+
+    {value}
+
+    {#if state.matches('primitive.string')}
+      <input type="text" on:input={setPropertyValue} value={value ? value : ''} />
+    {/if}
+
+    {#if state.matches('primitive.number')}
+      <input type="number" on:input={setPropertyValue} value={value ? value : ''} />
+    {/if}
+
+    {#if state.matches('primitive.boolean')}
+      <input type="checkbox" on:change={setBooleanPropertyValue} checked={value} />
+    {/if}
+
+    {#if state.matches('primitive.null') || state.matches('primitive.undefined')}
+      {JSON.stringify(value)}
+    {/if}
   {/if}
 </div>
