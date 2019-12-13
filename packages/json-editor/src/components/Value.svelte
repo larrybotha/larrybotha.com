@@ -19,10 +19,12 @@
   $: value = state.context.value;
 
   const sendPropertyName = id => (ev) => service.send('SEND_PROPERTY_NAME', {refId: id, data: ev.currentTarget.value});
-  const addInput = () => service.send('ADD_ACTOR');
-  const removeInput = (id) => service.send('REMOVE_ACTOR', {data:{id}});
+
   const setPropertyValue = (ev) => service.send('SET_VALUE', {data: ev.currentTarget.value})
   const setBooleanPropertyValue = (ev) => service.send('SET_VALUE', {data: ev.currentTarget.checked})
+
+  const addInput = () => service.send('ADD_ACTOR');
+  const removeInput = (id) => service.send('REMOVE_ACTOR', {data:{id}});
 
   service.onTransition(s => state = s)
 </script>
@@ -34,6 +36,7 @@
     {#each state.context.values as value, i (value.ref.id)}
       <div key={value.ref.id}>
         <button on:click={() => removeInput(value.ref.id)}>-</button>
+
         <input
           on:change={sendPropertyName(value.ref.id)}
           placeholder="name"
