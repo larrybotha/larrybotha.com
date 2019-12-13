@@ -1,35 +1,44 @@
+<script>
+  import ValueTypeSelector from './ValueTypeSelector.svelte';
+  import PrimitiveTypeSelector from './PrimitiveTypeSelector.svelte';
+
+  export let service;
+  export let state = service.machine.initialState;
+  $: value = state.context.value;
+
+  const sendPropertyName = id => ev =>
+    service.send('SEND_PROPERTY_NAME', {refId: id, data: ev.currentTarget.value});
+
+  const setPropertyValue = ev => service.send('SET_VALUE', {data: ev.currentTarget.value});
+  const setBooleanPropertyValue = ev => service.send('SET_VALUE', {data: ev.currentTarget.checked});
+
+  const addInput = () => service.send('ADD_ACTOR');
+  const removeInput = id => service.send('REMOVE_ACTOR', {data: {id}});
+
+  service.onTransition(s => (state = s));
+</script>
+
 <style>
   .value {
     display: inline-block;
     padding-left: 1em;
   }
 
-  .value[data-state="object"]:before { content: "{" }
-  .value[data-state="object"]:after { content: "}" }
-  .value[data-state="array"]:before { content: "[" }
-  .value[data-state="array"]:after { content: "]" }
+  .value[data-state='object']:before {
+    content: '{';
+  }
+  .value[data-state='object']:after {
+    content: '}';
+  }
+  .value[data-state='array']:before {
+    content: '[';
+  }
+  .value[data-state='array']:after {
+    content: ']';
+  }
 </style>
 
-<script>
-  import ValueTypeSelector from './ValueTypeSelector.svelte'
-  import PrimitiveTypeSelector from './PrimitiveTypeSelector.svelte'
-
-  export let service;
-  export let state = service.machine.initialState;
-  $: value = state.context.value;
-
-  const sendPropertyName = id => (ev) => service.send('SEND_PROPERTY_NAME', {refId: id, data: ev.currentTarget.value});
-
-  const setPropertyValue = (ev) => service.send('SET_VALUE', {data: ev.currentTarget.value})
-  const setBooleanPropertyValue = (ev) => service.send('SET_VALUE', {data: ev.currentTarget.checked})
-
-  const addInput = () => service.send('ADD_ACTOR');
-  const removeInput = (id) => service.send('REMOVE_ACTOR', {data:{id}});
-
-  service.onTransition(s => state = s)
-</script>
-
-<ValueTypeSelector service={service} state={state} />
+<ValueTypeSelector {service} {state} />
 
 <div class="value" data-state={state.value}>
   {#if state.matches('object')}
@@ -41,8 +50,9 @@
           on:change={sendPropertyName(value.ref.id)}
           placeholder="name"
           type="text"
-          value={value.ref.state.context.name || ''}
-        />: <svelte:self service={value.ref} />
+          value={value.ref.state.context.name || ''} />
+        :
+        <svelte:self service={value.ref} />
       </div>
     {/each}
   {/if}
@@ -63,7 +73,7 @@
   {/if}
 
   {#if state.matches('primitive')}
-    <PrimitiveTypeSelector service={service} state={state} />
+    <PrimitiveTypeSelector {service} {state} />
 
     {#if state.matches('primitive.string')}
       <input type="text" on:input={setPropertyValue} value={value ? value : ''} />
