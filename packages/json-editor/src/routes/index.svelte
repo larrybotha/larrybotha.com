@@ -30,6 +30,14 @@
 			font-size: 4em;
 		}
 	}
+
+  .flex-context {
+    display: flex;
+  }
+
+  .flex-context__item {
+    flex: 1;
+  }
 </style>
 
 <script>
@@ -37,6 +45,7 @@
   import {valueMachine} from '../machines/value';
 
   import Value from '../components/Value.svelte'
+  import JsonOutput from '../components/JsonOutput.svelte'
 
   export const valueService = interpret(valueMachine);
 
@@ -47,4 +56,13 @@
 	<title>Json editor</title>
 </svelte:head>
 
-<Value service={valueService} />
+
+<div class="flex-context">
+  <div class="flex-context__item">
+    <Value service={valueService} />
+  </div>
+
+  <div class="flex-context__item">
+    <JsonOutput service={valueService} />
+  </div>
+</div>
