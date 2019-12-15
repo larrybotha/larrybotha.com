@@ -1,18 +1,14 @@
 <script>
+  import Button from './Button.svelte';
   export let service;
-  export let state = service.machine.initialState;
 
-  let valueTransition;
-  const transitionType = () => service.send(valueTransition);
+  const handleClick = eventType => service.send(eventType);
 </script>
 
-<select bind:value={valueTransition} on:change={transitionType}>
-  <option value="" disabled selected={state.matches('unknown')}>choose a type</option>
-  <option selected={state.matches('primitive')} value="SELECT_PRIMITIVE">x</option>
-  <option selected={state.matches('array')} value="SELECT_ARRAY">
-    {@html '[  ]'}
-  </option>
-  <option selected={state.matches('object')} value="SELECT_OBJECT">
-    {@html '{  }'}
-  </option>
-</select>
+<Button on:click={() => handleClick('SELECT_PRIMITIVE')}>x</Button>
+<Button on:click={() => handleClick('SELECT_ARRAY')}>
+  {@html '[ ]'}
+</Button>
+<Button on:click={() => handleClick('SELECT_OBJECT')}>
+  {@html '{ }'}
+</Button>

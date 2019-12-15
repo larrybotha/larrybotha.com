@@ -1,4 +1,5 @@
 <script>
+  import Button from './Button.svelte';
   import ValueTypeSelector from './ValueTypeSelector.svelte';
   import PrimitiveTypeSelector from './PrimitiveTypeSelector.svelte';
 
@@ -44,7 +45,7 @@
   {#if state.matches('object')}
     {#each state.context.values as value, i (value.ref.id)}
       <div key={value.ref.id}>
-        <button on:click={() => removeInput(value.ref.id)}>-</button>
+        <Button on:click={() => removeInput(value.ref.id)}>-</Button>
 
         <input
           on:input={sendPropertyKey(value.ref.id)}
@@ -60,7 +61,7 @@
   {#if state.matches('array')}
     {#each state.context.values as value, i (value.ref.id)}
       <div key={value.ref.id}>
-        <button on:click={() => removeInput(value.ref.id)}>-</button>
+        <Button on:click={() => removeInput(value.ref.id)}>-</Button>
         <svelte:self service={value.ref} />
       </div>
     {/each}
@@ -68,7 +69,7 @@
 
   {#if state.matches('object') || state.matches('array')}
     <div>
-      <button on:click={addInput}>+</button>
+      <Button on:click={addInput}>+</Button>
     </div>
   {/if}
 
@@ -76,19 +77,15 @@
     <PrimitiveTypeSelector {service} {state} />
 
     {#if state.matches('primitive.string')}
-      <input type="text" on:input={setPropertyValue} value={value ? value : ''} />
+      <input type="text" on:input={setPropertyValue} value />
     {/if}
 
     {#if state.matches('primitive.number')}
-      <input type="number" on:input={setPropertyValue} value={value ? value : ''} />
+      <input type="number" on:input={setPropertyValue} value />
     {/if}
 
     {#if state.matches('primitive.boolean')}
       <input type="checkbox" on:change={setBooleanPropertyValue} checked={value} />
-    {/if}
-
-    {#if state.matches('primitive.null') || state.matches('primitive.undefined')}
-      {JSON.stringify(value)}
     {/if}
   {/if}
 </div>
