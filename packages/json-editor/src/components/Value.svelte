@@ -6,8 +6,8 @@
   export let state = service.machine.initialState;
   $: value = state.context.value;
 
-  const sendPropertyName = id => ev =>
-    service.send('SEND_PROPERTY_NAME', {refId: id, data: ev.currentTarget.value});
+  const sendPropertyKey = id => ev =>
+    service.send('SEND_PROPERTY_KEY', {refId: id, data: ev.currentTarget.value});
 
   const setPropertyValue = ev => service.send('SET_VALUE', {data: ev.currentTarget.value});
   const setBooleanPropertyValue = ev => service.send('SET_VALUE', {data: ev.currentTarget.checked});
@@ -47,10 +47,10 @@
         <button on:click={() => removeInput(value.ref.id)}>-</button>
 
         <input
-          on:change={sendPropertyName(value.ref.id)}
-          placeholder="name"
+          on:input={sendPropertyKey(value.ref.id)}
+          placeholder="key"
           type="text"
-          value={value.ref.state.context.name || ''} />
+          value={value.ref.state.context.key || ''} />
         :
         <svelte:self service={value.ref} />
       </div>
