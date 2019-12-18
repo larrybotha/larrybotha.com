@@ -1,8 +1,20 @@
 <script>
+  import Button from './Button.svelte';
+  export let buttonContent = '+';
   let isActive = false;
 
-  const handleClick = () => {
+  const handleClick = ev => {
+    ev.stopPropagation();
+
     isActive = !isActive;
+  };
+  const deactivateSelector = () => {
+    isActive = false;
+  };
+  const closeSelector = () => {
+    if (isActive) {
+      isActive = false;
+    }
   };
 </script>
 
@@ -23,17 +35,20 @@
 
   .selector__content[aria-hidden='true'] {
     opacity: 0;
-    height: 0;
+    z-index: -5;
   }
 
   .selector__content[aria-hidden='false'] {
-    opacity: 1;
     height: auto;
+    opacity: 1;
+    z-index: 5;
   }
 </style>
 
+<svelte:body on:click={isActive ? closeSelector : () => {}} />
+
 <div class="selector">
-  <button class="selector__btn" on:click={handleClick}>+</button>
+  <Button class="selector__btn" on:click={handleClick}>{buttonContent}</Button>
 
   <div class="selector__content" aria-hidden={!isActive}>
     <slot />
