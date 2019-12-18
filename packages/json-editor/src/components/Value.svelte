@@ -22,7 +22,7 @@
 <style>
   .value {
     display: inline-block;
-    padding-left: 1em;
+    vertical-align: top;
   }
 
   .value[data-state='object']:before {
@@ -37,6 +37,11 @@
   .value[data-state='array']:after {
     content: ']';
   }
+
+  .value__item {
+    vertical-align: top;
+    padding-left: 1em;
+  }
 </style>
 
 <ValueTypeSelector {service} {state} />
@@ -44,7 +49,7 @@
 <div class="value" data-state={state.value}>
   {#if state.matches('object')}
     {#each state.context.values as value, i (value.ref.id)}
-      <div key={value.ref.id}>
+      <div class="value__item" key={value.ref.id}>
         <Button on:click={() => removeInput(value.ref.id)}>-</Button>
 
         <input
@@ -60,7 +65,7 @@
 
   {#if state.matches('array')}
     {#each state.context.values as value, i (value.ref.id)}
-      <div key={value.ref.id}>
+      <div class="value__item" key={value.ref.id}>
         <Button on:click={() => removeInput(value.ref.id)}>-</Button>
         <svelte:self service={value.ref} />
       </div>
