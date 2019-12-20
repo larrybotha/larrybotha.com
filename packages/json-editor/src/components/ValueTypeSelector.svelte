@@ -1,10 +1,23 @@
 <script>
   import Button from './Button.svelte';
   import * as props from './Button.svelte';
-  debugger;
   import Selector from './Selector.svelte';
   export let service;
   export let state;
+  let buttonProps = [
+    {
+      text: 'x',
+      handler: () => handleClick('SELECT_PRIMITIVE'),
+    },
+    {
+      text: '[ ]',
+      handler: () => handleClick('SELECT_ARRAY'),
+    },
+    {
+      text: '{ }',
+      handler: () => handleClick('SELECT_OBJECT'),
+    },
+  ];
 
   const handleClick = eventType => service.send(eventType);
   $: getButtonContent = () => {
@@ -21,12 +34,6 @@
   };
 </script>
 
-<Selector buttonContent={getButtonContent()}>
-  <Button on:click={() => handleClick('SELECT_PRIMITIVE')}>x</Button>
-  <Button on:click={() => handleClick('SELECT_ARRAY')}>
-    {@html '[ ]'}
-  </Button>
-  <Button on:click={() => handleClick('SELECT_OBJECT')}>
-    {@html '{ }'}
-  </Button>
+<Selector buttonContent={getButtonContent()} let:item items={buttonProps}>
+  <Button on:click={item.handler}>{item.text}</Button>
 </Selector>

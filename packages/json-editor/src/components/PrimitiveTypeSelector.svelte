@@ -3,6 +3,28 @@
   import Selector from './Selector.svelte';
   export let service;
   export let state;
+  let buttonProps = [
+    {
+      text: 'string',
+      handler: () => handleClick('SELECT_STRING'),
+    },
+    {
+      text: 'number',
+      handler: () => handleClick('SELECT_NUMBER'),
+    },
+    {
+      text: 'boolean',
+      handler: () => handleClick('SELECT_BOOLEAN'),
+    },
+    {
+      text: 'undefined',
+      handler: () => handleClick('SELECT_UNDEFINED'),
+    },
+    {
+      text: 'null',
+      handler: () => handleClick('SELECT_NULL'),
+    },
+  ];
 
   const handleClick = eventType => service.send(eventType);
   $: getButtonContent = () => {
@@ -23,10 +45,6 @@
   };
 </script>
 
-<Selector buttonContent={getButtonContent()}>
-  <Button on:click={() => handleClick('SELECT_STRING')}>string</Button>
-  <Button on:click={() => handleClick('SELECT_NUMBER')}>number</Button>
-  <Button on:click={() => handleClick('SELECT_BOOLEAN')}>boolean</Button>
-  <Button on:click={() => handleClick('SELECT_NULL')}>null</Button>
-  <Button on:click={() => handleClick('SELECT_UNDEFINED')}>undefined</Button>
+<Selector buttonContent={getButtonContent()} items={buttonProps} let:item>
+  <Button on:click={item.handler}>{item.text}</Button>
 </Selector>
