@@ -31,6 +31,7 @@
     position: absolute;
     top: 100%;
     left: 100%;
+    transform: translateY(-50%);
   }
 
   .selector__content[aria-hidden='true'] {
