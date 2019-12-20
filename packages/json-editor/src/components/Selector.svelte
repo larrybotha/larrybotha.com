@@ -3,8 +3,10 @@
   import {fade} from 'svelte/transition';
 
   import Button from './Button.svelte';
+
   export let buttonContent = '+';
   export let items = [];
+
   let itemCoords = spring(items.map(() => ({x: 0, y: 0})), {
     stiffness: 0.1,
     damping: 0.25,
