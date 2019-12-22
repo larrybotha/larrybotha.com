@@ -38,9 +38,8 @@
       case state.matches('primitive.null'):
         return 'null';
       case state.matches('primitive.string'):
-        return 'undefined';
       default:
-        return;
+        return 'undefined';
     }
   };
 </script>
