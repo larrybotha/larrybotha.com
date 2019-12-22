@@ -1,7 +1,6 @@
 import {assign, Machine, send, spawn} from 'xstate';
 
 const getTransitionTypeFromStateValue = state => {
-  debugger;
   switch (state) {
     case 'primitive':
       return 'SELECT_PRIMITIVE';
@@ -169,7 +168,7 @@ const valueMachine = Machine(
           const events = prevActor.ref.state
             .toStrings()
             .map(getTransitionTypeFromStateValue)
-            .map(type => ({type: type === undefined ? undefined : type}));
+            .map(type => ({type}));
 
           newActor.ref.send(events);
         }
