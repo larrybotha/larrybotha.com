@@ -6,29 +6,42 @@
 
   export let buttonContent = '+';
   export let items = [];
+  const SCALAR = 12;
 
-  let itemCoords = spring(items.map(() => ({x: 0, y: 0})), {
-    stiffness: 0.1,
-    damping: 0.25,
-  });
-  let isActive = false;
+  let itemCoords = spring(
+    items.map((_, i, {length}) => ({
+      x: SCALAR / 2,
+      y: -Math.floor(i - length) * SCALAR * 2 - (length + 1) * SCALAR,
+    })),
+    {
+      stiffness: 0.1,
+      damping: 0.25,
+    },
+  );
+  let isActive = true;
 
   const setCoords = async () => {
     return await itemCoords.set(
       items.map((_, i) => {
         const {length} = items;
         const pos = Math.floor(i - length / 4);
-        const angle = (pos * (Math.PI * 0.8)) / length;
-        const radius = items.length * 12;
-        const x = radius * Math.cos(angle);
-        const y = radius * Math.sin(angle);
+        const angle = pos * (Math.PI * 0.25);
+        const radius = items.length * SCALAR;
+        const x = (radius / length) * 1.5 * Math.cos(angle);
+        const y = (radius / length) * Math.sin(angle);
 
         return {x, y};
       }),
     );
   };
 
-  const resetCoords = async () => await itemCoords.set(items.map(() => ({x: 0, y: 0})));
+  const resetCoords = async () =>
+    await itemCoords.set(
+      items.map((_, i, {length}) => ({
+        x: SCALAR / 2,
+        y: -Math.floor(i - length) * SCALAR * 2 - (length + 1) * SCALAR,
+      })),
+    );
 
   const handleClick = async ev => {
     ev.stopPropagation();
@@ -56,8 +69,8 @@
 
   .selector__content {
     position: absolute;
-    top: 0%;
-    left: 0%;
+    top: 50%;
+    left: 50%;
     transform: translate3d(-50%, -50%, 0);
   }
 
@@ -74,8 +87,7 @@
 
   .selector__item {
     display: inline-block;
-    position: absolute;
-    left: 100%;
+    /* left: 100%;*/
   }
 </style>
 
