@@ -6,42 +6,40 @@
 
   export let buttonContent = '+';
   export let items = [];
+  const {length: numItems} = items;
   const SCALAR = 12;
 
-  let itemCoords = spring(
-    items.map((_, i, {length}) => ({
-      x: SCALAR / 2,
-      y: -Math.floor(i - length) * SCALAR * 2 - (length + 1) * SCALAR,
-    })),
-    {
-      stiffness: 0.1,
-      damping: 0.25,
-    },
-  );
-  let isActive = true;
+  function getBaseCoords(index, totalItems) {
+    return {
+      x: 0,
+      y: SCALAR * (totalItems - 2 * index - 1),
+    };
+  }
 
-  const setCoords = async () => {
+  let itemCoords = spring(items.map((_, i, {length}) => getBaseCoords(i, length)), {
+    stiffness: 0.1,
+    damping: 0.25,
+  });
+  let isActive = false;
+
+  async function setCoords() {
     return await itemCoords.set(
       items.map((_, i) => {
         const {length} = items;
         const pos = Math.floor(i - length / 4);
         const angle = pos * (Math.PI * 0.25);
-        const radius = items.length * SCALAR;
-        const x = (radius / length) * 1.5 * Math.cos(angle);
-        const y = (radius / length) * Math.sin(angle);
+        const radius = 18;
+        const x = radius + radius * Math.cos(angle);
+        const y = radius * Math.sin(angle);
 
         return {x, y};
       }),
     );
-  };
+  }
 
-  const resetCoords = async () =>
-    await itemCoords.set(
-      items.map((_, i, {length}) => ({
-        x: SCALAR / 2,
-        y: -Math.floor(i - length) * SCALAR * 2 - (length + 1) * SCALAR,
-      })),
-    );
+  async function resetCoords() {
+    return await itemCoords.set(items.map((_, i, {length}) => getBaseCoords(i, length)));
+  }
 
   const handleClick = async ev => {
     ev.stopPropagation();
@@ -70,8 +68,8 @@
   .selector__content {
     position: absolute;
     top: 50%;
-    left: 50%;
-    transform: translate3d(-50%, -50%, 0);
+    left: 0;
+    transform: translate3d(0%, -50%, 0);
   }
 
   .selector__content[aria-hidden='true'] {
@@ -87,7 +85,6 @@
 
   .selector__item {
     display: inline-block;
-    /* left: 100%;*/
   }
 </style>
 
