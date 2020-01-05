@@ -3,13 +3,14 @@
   "description": "TODO",
   "version": "0.0.1",
   "scripts": {
-    "dev": "sapper dev",
+    "dev": "dotenv -- node --inspect node_modules/sapper/dist/cli.js dev --ext '.svx .svelte'",
     "build": "sapper build --legacy",
-    "export": "sapper export --legacy",
+    "export:local": "dotenv -- sapper export --legacy --ext '.svx .svelte'",
     "start": "node __sapper__/build",
     "cy:run": "cypress run",
     "cy:open": "cypress open",
-    "test": "run-p --race dev cy:run"
+    "test": "run-p --race dev cy:run",
+    "migrate:one": "dotenv -e .env -- node migrations/run-one"
   },
   "dependencies": {
     "compression": "^1.7.1",
