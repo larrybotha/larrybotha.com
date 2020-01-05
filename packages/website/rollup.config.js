@@ -98,4 +98,8 @@ export default {
 
 		onwarn,
 	}
+	'process.env.CONTENTFUL_SPACE_ID': JSON.stringify(process.env.CONTENTFUL_SPACE_ID),
+	'process.env.CONTENTFUL_ACCESS_TOKEN': JSON.stringify(process.env.CONTENTFUL_ACCESS_TOKEN),
+	'process.env.CONTENTFUL_MANAGEMENT_ACCESS_TOKEN': JSON.stringify(
+	  process.env.CONTENTFUL_MANAGEMENT_ACCESS_TOKEN,
 };
