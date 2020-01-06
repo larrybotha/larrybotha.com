@@ -20,7 +20,8 @@ const onwarn = (warning, onwarn) =>
 const dedupe = importee => importee === 'svelte' || importee.startsWith('svelte/');
 
 const svx = mdsvex({
-  layout: './src/routes/_layout.svelte',
+  // layout: './src/routes/_layout.svelte',
+  extension: '.svx',
 });
 
 export default {
