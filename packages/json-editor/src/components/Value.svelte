@@ -4,19 +4,19 @@
   import PrimitiveTypeSelector from './PrimitiveTypeSelector.svelte';
 
   export let service;
-  export let state = service.machine.initialState;
-  $: value = state.context.value;
+
+  let inputEl;
+
+  const {send} = service;
 
   const sendPropertyKey = id => ev =>
-    service.send('SEND_PROPERTY_KEY', {refId: id, data: ev.currentTarget.value});
+    send('SEND_PROPERTY_KEY', {refId: id, data: ev.currentTarget.value});
 
-  const setPropertyValue = ev => service.send('SET_VALUE', {data: ev.currentTarget.value});
-  const setBooleanPropertyValue = ev => service.send('SET_VALUE', {data: ev.currentTarget.checked});
+  const setPropertyValue = ev => send('SET_VALUE', {data: ev.currentTarget.value});
+  const setBooleanPropertyValue = ev => send('SET_VALUE', {data: ev.currentTarget.checked});
 
-  const addInput = () => service.send('ADD_ACTOR');
-  const removeInput = id => service.send('REMOVE_ACTOR', {data: {id}});
-
-  service.onTransition(s => (state = s));
+  const addInput = () => send('ADD_VALUE');
+  const removeInput = id => send('REMOVE_VALUE', {data: {id}});
 </script>
 
 <style>
@@ -44,11 +44,11 @@
   }
 </style>
 
-<ValueTypeSelector {service} {state} />
+<ValueTypeSelector {service} />
 
-<div class="value" data-state={state.value}>
-  {#if state.matches('object')}
-    {#each state.context.values as value, i (value.ref.id)}
+<div class="value" data-state={$service.value}>
+  {#if $service.matches('object')}
+    {#each $service.context.values as value, i (value.ref.id)}
       <div class="value__item" key={value.ref.id}>
         <Button on:click={() => removeInput(value.ref.id)}>-</Button>
 
@@ -63,8 +63,8 @@
     {/each}
   {/if}
 
-  {#if state.matches('array')}
-    {#each state.context.values as value, i (value.ref.id)}
+  {#if $service.matches('array')}
+    {#each $service.context.values as value, i (value.ref.id)}
       <div class="value__item" key={value.ref.id}>
         <Button on:click={() => removeInput(value.ref.id)}>-</Button>
         <svelte:self service={value.ref} />
@@ -72,25 +72,37 @@
     {/each}
   {/if}
 
-  {#if state.matches('object') || state.matches('array')}
+  {#if $service.matches('object') || $service.matches('array')}
     <div>
       <Button on:click={addInput}>+</Button>
     </div>
   {/if}
 
-  {#if state.matches('primitive')}
-    <PrimitiveTypeSelector {service} {state} />
+  {#if $service.matches('primitive')}
+    <PrimitiveTypeSelector {service} />
 
-    {#if state.matches('primitive.string')}
-      <input type="text" on:input={setPropertyValue} value />
+    {#if $service.matches('primitive.string')}
+      <input
+        this={inputEl}
+        on:input={setPropertyValue}
+        type="text"
+        value={$service.context.value} />
     {/if}
 
-    {#if state.matches('primitive.number')}
-      <input type="number" on:input={setPropertyValue} value />
+    {#if $service.matches('primitive.number')}
+      <input
+        this={inputEl}
+        on:input={setPropertyValue}
+        type="number"
+        value={$service.context.value} />
     {/if}
 
-    {#if state.matches('primitive.boolean')}
-      <input type="checkbox" on:change={setBooleanPropertyValue} checked={value} />
+    {#if $service.matches('primitive.boolean')}
+      <input
+        this={inputEl}
+        type="checkbox"
+        on:change={setBooleanPropertyValue}
+        checked={$service.context.value} />
     {/if}
   {/if}
 </div>

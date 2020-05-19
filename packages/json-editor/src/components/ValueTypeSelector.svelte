@@ -2,8 +2,9 @@
   import Button from './Button.svelte';
   import * as props from './Button.svelte';
   import Selector from './Selector.svelte';
+
   export let service;
-  export let state;
+
   let buttonProps = [
     {
       text: 'x',
@@ -20,13 +21,14 @@
   ];
 
   const handleClick = eventType => service.send(eventType);
+
   $: getButtonContent = () => {
     switch (true) {
-      case state.matches('primitive'):
+      case $service.matches('primitive'):
         return 'x';
-      case state.matches('object'):
+      case $service.matches('object'):
         return '{ }';
-      case state.matches('array'):
+      case $service.matches('array'):
         return '[ ]';
       default:
         return;

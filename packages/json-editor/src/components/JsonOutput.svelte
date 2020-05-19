@@ -1,9 +1,7 @@
 <script>
   export let service;
-  let {state} = service;
-  $: context = state.context;
 
-  service.onTransition(s => (state = s));
+  $: context = $service.context;
 </script>
 
 <style>
@@ -12,7 +10,7 @@
   }
 </style>
 
-{#if state.matches('object')}
+{#if $service.matches('object')}
   <code>
     {@html '{'}
   </code>
@@ -30,7 +28,7 @@
   </code>
 {/if}
 
-{#if state.matches('array')}
+{#if $service.matches('array')}
   <code>
     {@html '['}
   </code>
@@ -47,11 +45,11 @@
   </code>
 {/if}
 
-{#if state.matches('primitive')}
+{#if $service.matches('primitive')}
   <code>
-    {#if state.matches('primitive.boolean')}
+    {#if $service.matches('primitive.boolean')}
       {Boolean(context.value)}
-    {:else if state.matches('primitive.string')}
+    {:else if $service.matches('primitive.string')}
       {context.value !== undefined ? `"${context.value}"` : context.value}
     {:else}{context.value}{/if}
   </code>

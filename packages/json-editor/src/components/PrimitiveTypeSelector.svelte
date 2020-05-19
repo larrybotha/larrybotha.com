@@ -1,8 +1,10 @@
 <script>
   import Button from './Button.svelte';
   import Selector from './Selector.svelte';
+
   export let service;
-  export let state;
+  let {send} = service;
+
   let buttonProps = [
     {
       text: 'string',
@@ -26,18 +28,23 @@
     },
   ];
 
-  const handleClick = eventType => service.send(eventType);
+  const handleClick = eventType => send(eventType);
+
   $: getButtonContent = () => {
     switch (true) {
-      case state.matches('primitive.string'):
+      case $service.matches('primitive.string'):
         return 'string';
-      case state.matches('primitive.number'):
+
+      case $service.matches('primitive.number'):
         return 'number';
-      case state.matches('primitive.boolean'):
+
+      case $service.matches('primitive.boolean'):
         return 'boolean';
-      case state.matches('primitive.null'):
+
+      case $service.matches('primitive.null'):
         return 'null';
-      case state.matches('primitive.string'):
+
+      case $service.matches('primitive.string'):
       default:
         return 'undefined';
     }
