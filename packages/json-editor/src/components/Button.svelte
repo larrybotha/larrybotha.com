@@ -1,5 +1,6 @@
 <script>
-  export let className = '';
+  let klass = '';
+  export {klass as class};
   export const classModifiers = {
     round: 'btn--round',
   };
@@ -44,6 +45,6 @@
   }
 </style>
 
-<button class={`btn ${className}`} on:click>
+<button class="btn {klass}" on:click>
   <slot />
 </button>
