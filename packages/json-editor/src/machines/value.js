@@ -175,7 +175,15 @@ const valueMachine = Machine(
       },
 
       removeActor: assign({
-        values: ({values}, {data}) => values.filter(({ref}) => ref.id !== data.id),
+	values: ({values}, {data}) => {
+	  const valueToRemove = values.find(({ref}) => ref.id === data.id);
+
+	  if (valueToRemove) {
+	    valueToRemove.ref.stop();
+	  }
+
+	  return values.filter(({ref}) => ref.id !== data.id);
+	},
       }),
     },
   },
