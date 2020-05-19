@@ -47,11 +47,11 @@ const valueMachine = Machine(
 
       array: {
         on: {
-          ADD_ACTOR: {
+          ADD_VALUE: {
             target: '.',
             actions: ['spawnActor', 'setNewActorState'],
           },
-          REMOVE_ACTOR: {
+          REMOVE_VALUE: {
             target: '.',
             actions: ['removeActor'],
           },
@@ -65,12 +65,12 @@ const valueMachine = Machine(
             external: true,
             target: '.',
           },
-          ADD_ACTOR: {
+          ADD_VALUE: {
             actions: ['spawnActor', 'setNewActorState'],
             external: true,
             target: '.',
           },
-          REMOVE_ACTOR: {
+          REMOVE_VALUE: {
             actions: ['removeActor'],
             external: true,
             target: '.',
@@ -154,7 +154,7 @@ const valueMachine = Machine(
       setUndefinedValue: assign({value: undefined}),
 
       spawnActor: assign({
-        values: ({values}) => [...values, {ref: spawn(valueMachine, {sync: true})}],
+        values: ({values}) => [...values, {ref: spawn(valueMachine, {sync: false})}],
       }),
 
       setNewActorState: ctx => {
@@ -175,15 +175,15 @@ const valueMachine = Machine(
       },
 
       removeActor: assign({
-	values: ({values}, {data}) => {
-	  const valueToRemove = values.find(({ref}) => ref.id === data.id);
+        values: ({values}, {data}) => {
+          const valueToRemove = values.find(({ref}) => ref.id === data.id);
 
-	  if (valueToRemove) {
-	    valueToRemove.ref.stop();
-	  }
+          if (valueToRemove) {
+            valueToRemove.ref.stop();
+          }
 
-	  return values.filter(({ref}) => ref.id !== data.id);
-	},
+          return values.filter(({ref}) => ref.id !== data.id);
+        },
       }),
     },
   },
