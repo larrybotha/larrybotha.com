@@ -1,5 +1,6 @@
 <script context="module">
   import {getContentfulEntriesUrl, findInIncludes} from '../../helpers/contentful';
+  import Body from './Body.svx';
 
   export async function preload({params}) {
     const articlesRequestUrl = getContentfulEntriesUrl({
@@ -75,8 +76,11 @@
 {/if}
 
 <h1>{article.title}</h1>
-<span>{article.publishDate}</span>
 
-<div class="content">
-  {@html article.body}
-</div>
+<span>{article.datePublished}</span>
+
+<Body>
+  <div class="content">
+    {@html article.body}
+  </div>
+</Body>
