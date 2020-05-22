@@ -5,10 +5,10 @@ import svelte from 'rollup-plugin-svelte';
 import babel from 'rollup-plugin-babel';
 import {terser} from 'rollup-plugin-terser';
 import config from 'sapper/config/rollup.js';
-import {mdsvex} from 'mdsvex';
-import path from 'path';
 
 import pkg from './package.json';
+
+import svelteConfig from './svelte.config';
 
 const mode = process.env.NODE_ENV;
 const dev = mode === 'development';
@@ -18,11 +18,6 @@ const onwarn = (warning, onwarn) =>
   (warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message)) ||
   onwarn(warning);
 const dedupe = importee => importee === 'svelte' || importee.startsWith('svelte/');
-
-const svx = mdsvex({
-  // layout: './src/routes/_layout.svelte',
-  extension: '.svx',
-});
 
 export default {
   client: {
@@ -41,11 +36,9 @@ export default {
       }),
 
       svelte({
-        extensions: ['.svelte', '.md', '.svx'],
-        dev,
         hydratable: true,
         emitCss: true,
-        preprocess: [svx],
+        ...svelteConfig,
       }),
 
       resolve({
@@ -78,10 +71,7 @@ export default {
           ],
         }),
 
-      !dev &&
-        terser({
-          module: true,
-        }),
+      !dev && terser({module: true}),
     ],
 
     onwarn,
@@ -97,15 +87,11 @@ export default {
       }),
 
       svelte({
-        extensions: ['.svelte', '.md', '.svx'],
         generate: 'ssr',
-        dev,
-        preprocess: svx,
+        ...svelteConfig,
       }),
 
-      resolve({
-        dedupe,
-      }),
+      resolve({dedupe}),
       commonjs(),
     ],
     external: Object.keys(pkg.dependencies).concat(
