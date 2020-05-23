@@ -15,9 +15,13 @@ const dev = mode === 'development';
 const legacy = !!process.env.SAPPER_LEGACY_BUILD;
 
 const onwarn = (warning, onwarn) =>
-  (warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message)) ||
+  (warning.code === 'CIRCULAR_DEPENDENCY' &&
+    /[/\\]@sapper[/\\]/.test(warning.message)) ||
   onwarn(warning);
-const dedupe = importee => importee === 'svelte' || importee.startsWith('svelte/');
+const dedupe = importee =>
+  importee === 'svelte' || importee.startsWith('svelte/');
+
+const commonPlugins = [commonjs()];
 
 export default {
   client: {
@@ -28,24 +32,22 @@ export default {
         'process.browser': true,
         'process.env.NODE_ENV': JSON.stringify(mode),
 
-        'process.env.CONTENTFUL_SPACE_ID': JSON.stringify(process.env.CONTENTFUL_SPACE_ID),
-        'process.env.CONTENTFUL_ACCESS_TOKEN': JSON.stringify(process.env.CONTENTFUL_ACCESS_TOKEN),
+        'process.env.CONTENTFUL_SPACE_ID': JSON.stringify(
+          process.env.CONTENTFUL_SPACE_ID,
+        ),
+        'process.env.CONTENTFUL_ACCESS_TOKEN': JSON.stringify(
+          process.env.CONTENTFUL_ACCESS_TOKEN,
+        ),
         'process.env.CONTENTFUL_MANAGEMENT_ACCESS_TOKEN': JSON.stringify(
           process.env.CONTENTFUL_MANAGEMENT_ACCESS_TOKEN,
         ),
       }),
 
-      svelte({
-        hydratable: true,
-        emitCss: true,
-        ...svelteConfig,
-      }),
+      svelte({hydratable: true, emitCss: true, ...svelteConfig}),
 
-      resolve({
-        browser: true,
-        dedupe,
-      }),
-      commonjs(),
+      resolve({browser: true, dedupe}),
+
+      ...commonPlugins,
 
       legacy &&
         babel({
@@ -86,16 +88,15 @@ export default {
         'process.env.NODE_ENV': JSON.stringify(mode),
       }),
 
-      svelte({
-        generate: 'ssr',
-        ...svelteConfig,
-      }),
+      svelte({generate: 'ssr', ...svelteConfig}),
 
       resolve({dedupe}),
-      commonjs(),
+
+      ...commonPlugins,
     ],
     external: Object.keys(pkg.dependencies).concat(
-      require('module').builtinModules || Object.keys(process.binding('natives')),
+      require('module').builtinModules ||
+        Object.keys(process.binding('natives')),
     ),
 
     onwarn,
