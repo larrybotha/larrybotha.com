@@ -1,7 +1,10 @@
 import autoprefixer from 'autoprefixer';
-import hljs from 'highlight.js';
 import preprocess from 'svelte-preprocess';
 import {mdsvex} from 'mdsvex';
+import markdownItPrism from 'markdown-it-prism';
+
+// this is magically inserted into the Prism instance
+import 'prism-svelte';
 
 const production = !process.env.ROLLUP_WATCH;
 const mode = process.env.NODE_ENV;
@@ -10,19 +13,7 @@ const dev = mode === 'development';
 const svx = mdsvex({
   // layout: './src/routes/_layout.svelte',
   extension: '.svx',
-  markdownOptions: {
-    typographer: true,
-    linkify: true,
-    highlight: function(str, lang) {
-      if (lang && hljs.getLanguage(lang)) {
-        try {
-          return hljs.highlight(lang, str).value;
-        } catch (__) {}
-      }
-
-      return '';
-    },
-  },
+  parser: md => md.use(markdownItPrism),
 });
 
 const config = {
