@@ -79,7 +79,7 @@
 
 <span>{article.datePublished}</span>
 
-<Body>
+<Body text={article.body}>
   <div class="content">
     {@html article.body}
   </div>
