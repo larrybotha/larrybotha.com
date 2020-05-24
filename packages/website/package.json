@@ -48,7 +48,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "./scripts/merge-master-into-content.sh"
+      "pre-push": "echo 'hey'"
     }
   }
 }
