@@ -8,8 +8,8 @@
     "export:local": "dotenv -- sapper export --legacy --ext '.svx .svelte'",
     "export": "sapper export --legacy --ext '.svx .svelte'",
     "start": "node __sapper__/build",
-    "cy:run": "cypress run",
     "cy:open": "cypress open",
+    "cy:run": "cypress run",
     "test": "run-p --race dev cy:run",
     "migrate:one": "dotenv -e .env -- node migrations/run-one"
   },
