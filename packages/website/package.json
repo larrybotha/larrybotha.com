@@ -48,7 +48,7 @@
   },
   "husky": {
     "hooks": {
-      "post-commit": "./scripts/merge-master-into-blog.sh"
+      "pre-push": "./scripts/merge-master-into-blog.sh"
     }
   }
 }
