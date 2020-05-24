@@ -1,0 +1,67 @@
+---
+title: 'some title'
+---
+
+```js exec
+import Test from './_test.svelte'
+
+export let text
+export const title = _metadata.title
+
+const code = "## variable"
+```
+
+I am a sentence with an inline `{ code, snippet}` and i do not break either.
+
+# {_metadata.title}
+
+Some `code` here
+
+```js
+const var = 1
+```
+
+```svelte
+<div>
+how about this
+</div>
+
+<script>
+
+export let num
+
+function something() {
+  return 'nothing';
+}
+</script>
+
+<style>
+body {
+  background-color: red;
+}
+</style>
+
+<button>a button</button>
+
+<div>
+Dolor dolorem tempora mollitia ratione quidem? Soluta at adipisci quod quaerat sequi
+. Quia explicabo saepe cum cumque natus praesentium? Nobis non saepe commodi quam
+fuga, ut Voluptatem iure doloribus quia
+</div>
+```
+
+
+```css
+/* css */
+body {
+  background-color: red;
+}
+```
+
+Adipisicing impedit ullam vel similique modi! Vitae veniam labore repudiandae cupiditate ea. Lorem nobis non voluptas beatae esse! Elit vel reprehenderit ullam rerum harum Corporis magnam neque accusantium reprehenderit repellendus
+
+<slot />
+
+{@html text}
+
+<Test />
