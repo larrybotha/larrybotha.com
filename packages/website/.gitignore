@@ -6,3 +6,6 @@ yarn-error.log
 /__sapper__/
 
 .env
+
+# ignore blog articles so that Google does not index content on master
+!src/routes/blog/**
