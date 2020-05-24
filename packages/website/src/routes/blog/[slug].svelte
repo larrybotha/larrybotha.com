@@ -1,6 +1,8 @@
 <script context="module">
-  import {getContentfulEntriesUrl, findInIncludes} from '../../helpers/contentful';
-  import Body from './Body.svx';
+  import {
+    getContentfulEntriesUrl,
+    findInIncludes,
+  } from '../../helpers/contentful';
 
   export async function preload({params}) {
     const articlesRequestUrl = getContentfulEntriesUrl({
@@ -33,6 +35,7 @@
 
 <script>
   export let article;
+  let title;
 </script>
 
 <style>
@@ -72,15 +75,15 @@
 </svelte:head>
 
 {#if article.bannerImage}
-  <img src={article.bannerImage.file.url} alt={article.bannerImage.file.fileName} />
+  <img
+    src={article.bannerImage.file.url}
+    alt={article.bannerImage.file.fileName} />
 {/if}
 
 <h1>{article.title}</h1>
 
 <span>{article.datePublished}</span>
 
-<Body text={article.body}>
-  <div class="content">
-    {@html article.body}
-  </div>
-</Body>
+<div class="content">
+  {@html article.body}
+</div>
