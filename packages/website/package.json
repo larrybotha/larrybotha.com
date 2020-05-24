@@ -49,7 +49,7 @@
   },
   "husky": {
     "hooks": {
-      "post-commit": "./scripts/merge-master-into-blog.sh"
+      "post-commit": "echo 'hey'"
     }
   }
 }
