@@ -1,4 +1,4 @@
-name: primary-website
+name: larrybotha.com
 root: <%= Dir.pwd %>
 
 windows:
