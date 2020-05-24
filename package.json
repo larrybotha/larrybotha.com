@@ -6,6 +6,7 @@
     "dev:food": "npm run dev --prefix packages/project-food"
   },
   "devDependencies": {
+    "husky": "^4.2.5",
     "lerna": "^3.19.0"
   }
 }
