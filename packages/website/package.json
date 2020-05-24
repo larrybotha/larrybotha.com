@@ -48,7 +48,7 @@
   },
   "husky": {
     "hooks": {
-      "prepush": "./scripts/merge-master-into-content.sh"
+      "pre-push": "./scripts/merge-master-into-content.sh"
     }
   }
 }
