@@ -1,6 +1,4 @@
 ```js exec
-import Test from './_test.svelte'
-
 export let text
 
 const code = "## variable"
@@ -58,5 +56,3 @@ Adipisicing impedit ullam vel similique modi! Vitae veniam labore repudiandae cu
 <slot />
 
 {@html text}
-
-<Test />
