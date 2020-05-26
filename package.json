@@ -1,12 +1,56 @@
 {
-  "name": "root",
+  "name": "larrybotha.com",
+  "description": "Larry Botha's website",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev:website": "npm run dev --prefix packages/website",
-    "dev:food": "npm run dev --prefix packages/project-food"
+    "dev": "dotenv -- node --inspect node_modules/sapper/dist/cli.js dev --ext '.svx .svelte'",
+    "build": "sapper build --legacy",
+    "export:local": "dotenv -- sapper export --legacy --ext '.svx .svelte'",
+    "export": "sapper export --legacy --ext '.svx .svelte'",
+    "start": "node __sapper__/build",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "test": "run-p --race dev cy:run",
+    "migrate:one": "dotenv -e .env -- node migrations/run-one"
+  },
+  "dependencies": {
+    "compression": "^1.7.1",
+    "normalize.css": "^8.0.1",
+    "polka": "next",
+    "sirv": "^0.4.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/runtime": "^7.0.0",
+    "@rollup/plugin-replace": "^2.2.0",
+    "autoprefixer": "^9.8.0",
+    "contentful-migration": "^1.0.7",
+    "doctoc": "^1.4.0",
+    "dotenv-cli": "^3.1.0",
+    "highlight.js": "^10.0.3",
+    "markdown-it-prism": "^2.0.5",
+    "mdsvex": "^0.4.0",
+    "npm-run-all": "^4.1.5",
+    "prism-svelte": "^0.4.6",
+    "rollup": "^1.12.0",
+    "rollup-plugin-babel": "^4.0.2",
+    "rollup-plugin-commonjs": "^10.0.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-svelte": "^5.0.1",
+    "rollup-plugin-terser": "^4.0.4",
+    "sapper": "^0.27.0",
+    "sass": "^1.26.5",
     "husky": "^4.2.5",
-    "lerna": "^3.19.0"
+    "svelte": "^3.0.0",
+    "svelte-preprocess": "^3.7.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "./scripts/merge-master-into-content.sh"
+    }
   }
 }
