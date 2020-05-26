@@ -12,6 +12,7 @@ then
   echo "merging master into content"
   git checkout content
   git merge --no-ff master
-  echo "changes merged"
+  git push
+  echo "changes merged and pushed"
   git checkout ${current_branch}
 fi
