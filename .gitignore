@@ -1,15 +1,10 @@
-# Project dependencies
-# https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
-node_modules
-.cache/
-
-# Build directory
-public/
-coverage/
-build/
 .DS_Store
+/node_modules/
+/src/node_modules/@sapper/
 yarn-error.log
+/cypress/screenshots/
+/__sapper__/
 
-.tmuxinator.yml
-
-.env
+# ignore blog articles so that Google does not index content on master
+src/routes/blog/*
+!src/routes/blog/*.svelte
