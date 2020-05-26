@@ -7,7 +7,7 @@ latest_master_commit_hash=$(git log --pretty=oneline -1 HEAD | awk  '{print $1}'
 current_branch=$(git rev-parse --abbrev-ref HEAD)
 
 # if last commit was on master
-if [ "$latest_master_commit_hash" == "$latest_master_commit_hash" ];
+if [ "$latest_master_commit_hash" == "$latest_master_commit_hash" ] && [ "$current_branch" == "master" ];
 then
   echo "merging master into content"
   git checkout content
