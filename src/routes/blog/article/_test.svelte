@@ -3,4 +3,7 @@
 </script>
 
 <h1>{count}</h1>
-<button on:click={() => count++}>inc</button>
+
+<p>
+  <button on:click={() => count++}>inc</button>
+</p>

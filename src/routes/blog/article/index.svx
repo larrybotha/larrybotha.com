@@ -2,18 +2,17 @@
 title: 'some title'
 ---
 
-```js exec
+<script>
 import Test from './_test.svelte'
-
-export let text
-export const title = _metadata.title
+import NoWrap from './_no-wrap.svelte'
 
 const code = "## variable"
-```
+</script>
 
-I am a sentence with an inline `{ code, snippet}` and i do not break either.
+<Test />
 
-# {_metadata.title}
+
+I "am" a 'sentence' with an inline `{ code, snippet}` and i do not break either...
 
 Some `code` here
 
@@ -27,26 +26,25 @@ how about this
 </div>
 
 <script>
+  export let num
 
-export let num
-
-function something() {
-  return 'nothing';
-}
+  function something() {
+    return 'nothing';
+  }
 </script>
 
 <style>
-body {
-  background-color: red;
-}
+  body {
+    background-color: red;
+  }
 </style>
 
 <button>a button</button>
 
 <div>
-Dolor dolorem tempora mollitia ratione quidem? Soluta at adipisci quod quaerat sequi
-. Quia explicabo saepe cum cumque natus praesentium? Nobis non saepe commodi quam
-fuga, ut Voluptatem iure doloribus quia
+  Dolor dolorem tempora mollitia ratione quidem? Soluta at adipisci quod quaerat sequi
+  . Quia explicabo saepe cum cumque natus praesentium? Nobis non saepe commodi quam
+  fuga, ut Voluptatem iure doloribus quia
 </div>
 ```
 
@@ -60,8 +58,3 @@ body {
 
 Adipisicing impedit ullam vel similique modi! Vitae veniam labore repudiandae cupiditate ea. Lorem nobis non voluptas beatae esse! Elit vel reprehenderit ullam rerum harum Corporis magnam neque accusantium reprehenderit repellendus
 
-<slot />
-
-{@html text}
-
-<Test />
