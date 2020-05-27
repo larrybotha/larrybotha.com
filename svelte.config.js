@@ -5,13 +5,17 @@ import markdownItPrism from 'markdown-it-prism';
 
 // this is magically inserted into the Prism instance
 import 'prism-svelte';
+import path from 'path';
 
 const production = !process.env.ROLLUP_WATCH;
 const mode = process.env.NODE_ENV;
 const dev = mode === 'development';
 
 const svx = mdsvex({
-  // layout: './src/routes/_layout.svelte',
+  layout: {
+    blog: path.join(__dirname, 'src/routes/blog/_blog-layout.svelte'),
+  },
+
   extension: '.svx',
   parser: md => md.use(markdownItPrism),
 });
