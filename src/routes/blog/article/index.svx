@@ -4,7 +4,6 @@ title: 'some title'
 
 <script>
 import Test from './_test.svelte'
-import NoWrap from './_no-wrap.svelte'
 
 const code = "## variable"
 </script>
