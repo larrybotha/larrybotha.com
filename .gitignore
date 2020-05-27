@@ -6,5 +6,5 @@ yarn-error.log
 /__sapper__/
 
 # ignore blog articles so that Google does not index content on master
-src/routes/blog/*
-!src/routes/blog/*.svelte
+# src/routes/blog/*
+# !src/routes/blog/*.svelte
