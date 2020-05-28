@@ -1,32 +1,12 @@
 <script context="module">
-  import {
-    getContentfulEntriesUrl,
-    findInIncludes,
-  } from '../../helpers/contentful';
-
-  export async function preload({params}) {
-    const articlesRequestUrl = getContentfulEntriesUrl({
-      content_type: 'article',
-      'fields.slug': params.slug,
-    });
-    const res = await this.fetch(articlesRequestUrl);
+  export async function preload({params, query}) {
+    // the `slug` parameter is available because
+    // this file is called [slug].svelte
+    const res = await this.fetch(`blog/${params.slug}.json`);
     const data = await res.json();
 
     if (res.status === 200) {
-      const {items, includes: incs} = data;
-      const {Asset: includes} = incs;
-      const article = items.map(({fields}) => {
-        const bannerImage = fields.bannerImage
-          ? findInIncludes(includes, fields.bannerImage.sys.id)
-          : undefined;
-
-        return {
-          ...fields,
-          bannerImage: bannerImage ? bannerImage.fields : undefined,
-        };
-      })[0];
-
-      return {article};
+      return {post: data};
     } else {
       this.error(res.status, data.message);
     }
@@ -34,8 +14,9 @@
 </script>
 
 <script>
-  export let article;
+  export let post;
   let title;
+  console.log(post);
 </script>
 
 <style>
@@ -71,19 +52,17 @@
 </style>
 
 <svelte:head>
-  <title>{article.title}</title>
+  <title>{post.title}</title>
 </svelte:head>
 
-{#if article.bannerImage}
-  <img
-    src={article.bannerImage.file.url}
-    alt={article.bannerImage.file.fileName} />
+{#if post.bannerImage}
+  <img src={post.bannerImage.file.url} alt={post.bannerImage.file.fileName} />
 {/if}
 
-<h1>{article.title}</h1>
+<h1>{post.title}</h1>
 
-<span>{article.datePublished}</span>
+<span>{post.datePublished}</span>
 
 <div class="content">
-  {@html article.body}
+  {@html post.html}
 </div>

@@ -1,3 +1,9 @@
+<script context="module">
+  export async function preload(page, session) {
+    debugger;
+  }
+</script>
+
 <script>
   export let title;
 </script>
