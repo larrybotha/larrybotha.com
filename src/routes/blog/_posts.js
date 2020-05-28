@@ -18,7 +18,6 @@ async function getFiles(dir) {
 async function getPosts() {
   const dir = resolve(process.cwd(), 'src/routes/blog/_articles');
   const files = await getFiles(dir);
-  debugger;
   const indexFiles = files.filter(filename => {
     return filename.endsWith('index.svx');
   });
@@ -29,7 +28,6 @@ async function getPosts() {
       const parsed = await parser.process({contents, filename});
       const frontMatter = parsed.data.fm || {};
       const slug = filename.split('/').slice(-2)[0];
-      debugger;
 
       return {
         html: parsed.contents,
