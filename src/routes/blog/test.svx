@@ -1,0 +1,5 @@
+<script>
+import Dep from './dep.svelte'
+</script>
+
+<Dep />

@@ -1,0 +1,13 @@
+---
+title: 'some title'
+---
+
+<script>
+import Test from './test.svx'
+</script>
+
+a simple component
+
+<Test />
+
+another
