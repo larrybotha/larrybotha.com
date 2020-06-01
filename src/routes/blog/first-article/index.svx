@@ -1,5 +1,8 @@
 ---
 title: My title
+
+seoTitle: First article title
+seoDescription: An awesome
 ---
 
 <script>
@@ -8,4 +11,30 @@ import Dep from './dep.svelte'
 
 <Dep />
 
-asd
+```css
+body {
+  background-color: hotpink;
+}
+```
+
+And some Javascript
+
+```js
+function coolFunc() {
+  console.log('yeah!')
+}
+```
+
+```svelte
+<script>
+  export let name;
+</script>
+
+<div>
+  Hello, {name}!
+</div>
+```
+
+<div class="test">
+and this
+</div>
