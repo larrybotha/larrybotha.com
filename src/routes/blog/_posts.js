@@ -32,7 +32,7 @@ async function getFiles(dir) {
 }
 
 async function getPosts() {
-  const dir = resolve(process.cwd(), 'src/routes/blog/_articles');
+  const dir = resolve(process.cwd(), 'src/routes/blog');
   const files = await getFiles(dir);
   const indexFiles = files.filter(filename => {
     return filename.endsWith('index.svx');
@@ -45,14 +45,14 @@ async function getPosts() {
       const frontMatter = parsed.data.fm || {};
       const slug = filename.split('/').slice(-2)[0];
 
-      const ppCs = await svelte.preprocess(contents, [svx], {filename});
-      const compileResult = svelte.compile(ppCs.code, {
-        generate: 'ssr',
-      });
+      //const ppCs = await svelte.preprocess(contents, [svx], {filename});
+      //const compileResult = svelte.compile(ppCs.code, {
+      //generate: 'ssr',
+      //});
 
-      const parseResult = svelte.parse(ppCs.code, {
-        generate: 'ssr',
-      });
+      //const parseResult = svelte.parse(ppCs.code, {
+      //generate: 'ssr',
+      //});
 
       return {
         html: parsed.contents,
