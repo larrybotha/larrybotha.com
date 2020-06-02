@@ -2,6 +2,8 @@ import autoprefixer from 'autoprefixer';
 import preprocess from 'svelte-preprocess';
 import {mdsvex} from 'mdsvex';
 import markdownItPrism from 'markdown-it-prism';
+import autoLinkHeadings from 'rehype-autolink-headings';
+import slug from 'rehype-slug';
 
 // this is magically inserted into the Prism instance
 import 'prism-svelte';
@@ -16,8 +18,29 @@ const svx = mdsvex({
     blog: path.join(__dirname, 'src/routes/blog/_blog-layout.svelte'),
   },
 
-  extension: '.svx',
-  parser: md => md.use(markdownItPrism),
+  //extension: '.svx',
+  //parser: md => md.use(markdownItPrism),
+  rehypePlugins: [
+    slug,
+    [
+      autoLinkHeadings,
+      {
+        content: {
+          type: 'element',
+          tagName: 'i',
+          properties: {},
+          depth: 1,
+          children: [
+            {
+              type: 'text',
+              value: '🔗',
+              position: {},
+            },
+          ],
+        },
+      },
+    ],
+  ],
 });
 
 const config = {
