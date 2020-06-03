@@ -29,12 +29,10 @@ const svx = mdsvex({
           type: 'element',
           tagName: 'i',
           properties: {},
-          depth: 1,
           children: [
             {
               type: 'text',
               value: '🔗',
-              position: {},
             },
           ],
         },
