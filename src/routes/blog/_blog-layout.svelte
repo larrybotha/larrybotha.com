@@ -9,10 +9,14 @@
 
   // https://github.com/sveltejs/sapper/issues/904#issuecomment-540536561
   onMount(() => {
-    document.querySelectorAll('a').forEach(a => {
-      if (!a.hash || !document.querySelectorAll(a.hash).length) return;
+    document.querySelectorAll('a').forEach(el => {
+      const {hash} = el;
 
-      a.href = window.location + a.hash;
+      if (!hash || !document.querySelectorAll(hash).length) return;
+
+      const {origin, pathname} = window.location;
+
+      el.href = [origin, pathname, hash].join('');
     });
   });
 </script>
