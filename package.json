@@ -49,6 +49,7 @@
     "sapper": "^0.27.13",
     "sass": "^1.26.5",
     "svelte": "^3.23.0",
+    "svelte-image": "^0.2.3",
     "svelte-preprocess": "^3.7.4"
   },
   "husky": {
