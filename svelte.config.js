@@ -4,6 +4,7 @@ import {mdsvex} from 'mdsvex';
 import markdownItPrism from 'markdown-it-prism';
 import autoLinkHeadings from 'rehype-autolink-headings';
 import slug from 'rehype-slug';
+import svelteImage from 'svelte-image';
 
 // this is magically inserted into the Prism instance
 import 'prism-svelte';
@@ -58,6 +59,7 @@ const config = {
       },
     }),
     svx,
+    svelteImage(),
   ],
 };
 
