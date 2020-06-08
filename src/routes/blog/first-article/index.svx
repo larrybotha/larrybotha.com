@@ -1,6 +1,7 @@
 ---
 title: My title
 
+slug: first-article
 seoTitle: First article title
 seoDescription: An awesome
 ---
