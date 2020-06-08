@@ -2,8 +2,10 @@
   import {onMount} from 'svelte';
 
   export let title;
+  export let slug;
   export let seoTitle;
   export let seoDescription;
+  export let ogImage;
 
   const seoTitleSuffixed = [seoTitle, 'Larry Botha'].join(' | ');
 
@@ -24,6 +26,19 @@
 <svelte:head>
   <title>{seoTitleSuffixed}</title>
   <meta name="description" content={seoDescription} />
+
+  <link rel="canonical" href="https://larrybotha.com/blog/{slug}" />
+
+  <meta property="og:title" content={seoTitle} />
+  <meta property="og:description" content={seoDescription} />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://larrybotha.com/blog/{slug}" />
+
+  {#if ogImage}
+    <meta
+      property="og:image"
+      content="https://larrybotha.com/assets/{ogImage}" />
+  {/if}
 </svelte:head>
 
 <div class="wrap">
