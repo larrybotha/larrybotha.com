@@ -53,10 +53,7 @@ function addDateUpdated() {
 }
 
 (async function() {
-  if (
-    files.length
-    //&& currentBranch === PUBLISH_BRANCH
-  ) {
+  if (files.length && currentBranch === PUBLISH_BRANCH) {
     console.log('******************************************************');
     console.log('evaluating files to inject dates into\n');
 
