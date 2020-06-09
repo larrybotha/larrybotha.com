@@ -34,12 +34,16 @@
     "dotenv-cli": "^3.1.0",
     "highlight.js": "^10.0.3",
     "husky": "^4.2.5",
+    "lint-staged": "^10.2.9",
     "markdown-it-prism": "^2.0.5",
     "mdsvex": "^0.8.0",
     "npm-run-all": "^4.1.5",
     "prism-svelte": "^0.4.6",
     "rehype-autolink-headings": "^3.0.0",
     "rehype-slug": "^3.0.0",
+    "remark-frontmatter": "^2.0.0",
+    "remark-parse": "^8.0.2",
+    "remark-stringify": "^8.1.0",
     "rollup": "^2.14.0",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-commonjs": "^10.1.0",
@@ -50,11 +54,14 @@
     "sass": "^1.26.8",
     "svelte": "^3.23.0",
     "svelte-image": "^0.2.3",
-    "svelte-preprocess": "^3.9.6"
+    "svelte-preprocess": "^3.9.6",
+    "to-vfile": "^6.1.0",
+    "unified": "^9.0.0",
+    "unist-util-find": "^1.0.1"
   },
   "husky": {
     "hooks": {
-      "pre-push": "./scripts/merge-master-into-content.sh"
+      "pre-commit": "lint-staged"
     }
   }
 }
