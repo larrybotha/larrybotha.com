@@ -6,6 +6,8 @@
   export let seoTitle;
   export let seoDescription;
   export let ogImage;
+  export let datePublished;
+  export let dateUpdated;
 
   const seoTitleSuffixed = [seoTitle, 'Larry Botha'].join(' | ');
 
@@ -43,6 +45,19 @@
 
 <div class="wrap">
   <h1>{title}</h1>
+  {#if datePublished}
+    <div>
+      published:
+      <time datetime={datePublished}>{datePublished}</time>
+    </div>
+  {/if}
+
+  {#if dateUpdated && dateUpdated !== datePublished}
+    <div>
+      updated:
+      <time datetime={dateUpdated}>{dateUpdated}</time>
+    </div>
+  {/if}
 
   <slot />
 </div>
