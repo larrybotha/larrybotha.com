@@ -15,7 +15,9 @@ const render = (pages, posts) => `<?xml version="1.0" encoding="UTF-8" ?>
       post => `
     <url>
       <loc>https://larrybotha.com/blog/${post.slug}/</loc>
-      <lastmod>${new Date(post.date || Date.now()).toISOString()}</lastmod>
+      <lastmod>${new Date(
+        post.dateUpdated || post.datePublished,
+      ).toISOString()}</lastmod>
     </url>
   `,
     )
