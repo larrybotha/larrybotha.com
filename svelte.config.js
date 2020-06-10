@@ -5,6 +5,7 @@ import markdownItPrism from 'markdown-it-prism';
 import autoLinkHeadings from 'rehype-autolink-headings';
 import slug from 'rehype-slug';
 import svelteImage from 'svelte-image';
+import visit from 'unist-util-visit';
 
 // this is magically inserted into the Prism instance
 import 'prism-svelte';
@@ -13,6 +14,18 @@ import path from 'path';
 const production = !process.env.ROLLUP_WATCH;
 const mode = process.env.NODE_ENV;
 const dev = mode === 'development';
+
+function wrapCodeBlocks() {
+  return ast => {
+    visit(ast, 'raw', (node, _, parent) => {
+      if (!parent || node.value.indexOf('<pre class="language-') === -1) {
+        return;
+      }
+
+      node.value = `<div class="code-wrap">${node.value}</div>`;
+    });
+  };
+}
 
 const svx = mdsvex({
   layout: {
@@ -39,6 +52,7 @@ const svx = mdsvex({
         },
       },
     ],
+    wrapCodeBlocks,
   ],
 });
 
