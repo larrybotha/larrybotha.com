@@ -1,7 +1,15 @@
 /*------------------------------------*\
     PRISM
 \*------------------------------------*/
+pre[class*="language-"] {
+  display: grid;
+  max-width: calc(100vw - 4rem);
+  padding: 0;
+  @include u-padding--larger--ends;
+  @include u-margin--bottom;
+}
+
 pre[class*="language-"] > code[class*="language-"] {
   display: inline-block;
-  min-width: 100%;
+  width: 100%;
 }
