@@ -1,4 +1,6 @@
 <script context="module">
+  import {getPosts} from 'src/stores/posts';
+
   export async function preload() {
     /**
      * Generate sitemap only on server request, i.e. export
@@ -7,8 +9,7 @@
       await this.fetch('./sitemap.xml');
     }
 
-    const response = await this.fetch(`./blog.json`);
-    const posts = await response.json();
+    const posts = await getPosts(this);
 
     return {posts};
   }
