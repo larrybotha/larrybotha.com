@@ -1,7 +1,8 @@
 <script context="module">
-  export async function preload({params, query}) {
-    const response = await this.fetch(`blog.json`);
-    const posts = await response.json();
+  import {getPosts} from 'src/stores/posts';
+
+  export async function preload() {
+    const posts = await getPosts(this);
 
     return {posts};
   }
