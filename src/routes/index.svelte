@@ -19,10 +19,6 @@
   export let posts = [];
 </script>
 
-<style lang="scss" global>
-  @import '../scss/style.scss';
-</style>
-
 <svelte:head>
   <title>Front end developer | React developer | Larry Botha</title>
 </svelte:head>
