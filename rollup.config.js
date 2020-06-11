@@ -1,5 +1,7 @@
+import path from 'path';
 import resolve from 'rollup-plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
+import alias from '@rollup/plugin-alias';
 import commonjs from 'rollup-plugin-commonjs';
 import svelte from 'rollup-plugin-svelte';
 import babel from 'rollup-plugin-babel';
@@ -21,7 +23,14 @@ const onwarn = (warning, onwarn) =>
 const dedupe = importee =>
   importee === 'svelte' || importee.startsWith('svelte/');
 
-const commonPlugins = [commonjs()];
+const commonPlugins = [
+  alias({
+    entries: {
+      src: path.join(__dirname, 'src'),
+    },
+  }),
+  commonjs(),
+];
 
 export default {
   client: {
