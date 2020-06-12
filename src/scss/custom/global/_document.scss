@@ -6,9 +6,25 @@
  * html
  */
 :root {
-  --s-clr-primary-dk: #{$clr-primary-dk};
-  --s-clr-primary: #{$clr-primary};
-  --s-clr-primary-lt: #{$clr-primary-lt};
+  --s-clr-selection: #{$theme-light-clr-selection};
+  --s-clr-background: #{$theme-light-clr-background};
+  --s-clr-base: #{$theme-light-clr-base};
+  --s-clr-base-dk: #{$theme-light-clr-base-dk};
+  --s-clr-primary-dk: #{$theme-light-clr-primary-dk};
+  --s-clr-primary: #{$theme-light-clr-primary};
+  --s-clr-primary-lt: #{$theme-light-clr-primary-lt};
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-css-theme="light"]) {
+    --s-clr-selection: #{$theme-dark-clr-selection};
+    --s-clr-background: #{$theme-dark-clr-background};
+    --s-clr-base: #{$theme-dark-clr-base};
+    --s-clr-base-dk: #{$theme-dark-clr-base-dk};
+    --s-clr-primary-dk: #{$theme-dark-clr-primary-dk};
+    --s-clr-primary: #{$theme-dark-clr-primary};
+    --s-clr-primary-lt: #{$theme-dark-clr-primary-lt};
+  }
 }
 
 
@@ -30,10 +46,12 @@
 
 html, body, button, input, select, textarea {
   @extend %fix-fatty-fonts;
+  transition: color .3s ease-in-out;
 }
 
 body {
   font-family: $font-base-stack;
+  transition: background-color .3s ease-in-out;
 }
 
 
