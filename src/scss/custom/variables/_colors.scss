@@ -1,30 +1,53 @@
 /*------------------------------------*\
     COLOR VARIABLES
 \*------------------------------------*/
-$clr-brand: #333;
-$clr-selection: $clr-brand;
 
 
 
 
+
+$theme-dark-clr-selection: hotpink;
+$theme-dark-clr-background: #242424;
 
 /**
  * The base color for text, borders, etc.
  */
-$clr-base      : #666;
-$clr-base-lt   : lighten($clr-base, 20%);
-$clr-base-ltr  : lighten($clr-base, 35%);
-$clr-base-ltst : lighten($clr-base, 40%);
-$clr-base-dk   : darken($clr-base, 10%);
+$theme-dark-clr-base      : #f2f2f2;
+$theme-dark-clr-base-lt   : lighten($theme-dark-clr-base, 20%);
+$theme-dark-clr-base-ltr  : lighten($theme-dark-clr-base, 35%);
+$theme-dark-clr-base-ltst : lighten($theme-dark-clr-base, 40%);
+$theme-dark-clr-base-dk   : darken($theme-dark-clr-base, 10%);
 
 /**
  * The primary non-base color
  */
-$clr-primary      : $clr-brand;
-$clr-primary-lt   : lighten($clr-primary, 20%);
-$clr-primary-ltr  : lighten($clr-primary, 35%);
-$clr-primary-ltst : lighten($clr-primary, 40%);
-$clr-primary-dk   : darken($clr-primary, 10%);
+$theme-dark-clr-primary      : hotpink;
+$theme-dark-clr-primary-lt   : lighten($theme-dark-clr-primary, 20%);
+$theme-dark-clr-primary-ltr  : lighten($theme-dark-clr-primary, 35%);
+$theme-dark-clr-primary-ltst : lighten($theme-dark-clr-primary, 40%);
+$theme-dark-clr-primary-dk   : darken($theme-dark-clr-primary, 10%);
+
+
+$theme-light-clr-selection: #333;
+$theme-light-clr-background: #fff;
+
+/**
+ * The base color for text, borders, etc.
+ */
+$theme-light-clr-base      : #666;
+$theme-light-clr-base-lt   : lighten($theme-light-clr-base, 20%);
+$theme-light-clr-base-ltr  : lighten($theme-light-clr-base, 35%);
+$theme-light-clr-base-ltst : lighten($theme-light-clr-base, 40%);
+$theme-light-clr-base-dk   : darken($theme-light-clr-base, 10%);
+
+/**
+ * The primary non-base color
+ */
+$theme-light-clr-primary      : hotpink;
+$theme-light-clr-primary-lt   : lighten($theme-light-clr-primary, 20%);
+$theme-light-clr-primary-ltr  : lighten($theme-light-clr-primary, 35%);
+$theme-light-clr-primary-ltst : lighten($theme-light-clr-primary, 40%);
+$theme-light-clr-primary-dk   : darken($theme-light-clr-primary, 10%);
 
 // neutrals
 $clr-ntrl-min : #fff;                          // white

@@ -6,6 +6,7 @@ import autoLinkHeadings from 'rehype-autolink-headings';
 import slug from 'rehype-slug';
 import svelteImage from 'svelte-image';
 import visit from 'unist-util-visit';
+import postcssCustomProperties from 'postcss-custom-properties';
 
 // this is magically inserted into the Prism instance
 import 'prism-svelte';
@@ -68,7 +69,7 @@ const config = {
       },
 
       postcss: {
-        plugins: [autoprefixer],
+        plugins: [autoprefixer, postcssCustomProperties],
         minimize: production,
       },
     }),
