@@ -1,7 +1,9 @@
 <script>
   import {onMount} from 'svelte';
 
-  import Nav from '../components/Nav.svelte';
+  import SvgSprites from 'src/components/svg-sprites.svelte';
+  import Nav from 'src/components/Nav.svelte';
+  import Icon from 'src/components/icon.svelte'
 
   export let segment;
 
@@ -26,10 +28,16 @@
   @import '../scss/style.scss';
 </style>
 
-<button on:click={cycleTheme}>theme: {themes[themeId]}</button>
-
 <Nav {segment} />
 
 <main>
+<SvgSprites />
+
+<button on:click={cycleTheme}>
+  <Icon id="burger" />
+theme: {themes[themeId]}</button>
+
+
+
   <slot />
 </main>

@@ -40,6 +40,7 @@ const svx = mdsvex({
     [
       autoLinkHeadings,
       {
+        properties: {},
         content: {
           type: 'element',
           tagName: 'i',
