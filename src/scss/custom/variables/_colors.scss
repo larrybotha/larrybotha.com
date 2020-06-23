@@ -6,13 +6,13 @@
 
 
 
-$theme-dark-clr-selection: hotpink;
-$theme-dark-clr-background: #242424;
+$theme-dark-clr-selection: skyblue;
+$theme-dark-clr-background: #222;
 
 /**
  * The base color for text, borders, etc.
  */
-$theme-dark-clr-base      : #f2f2f2;
+$theme-dark-clr-base      : #fff;
 $theme-dark-clr-base-lt   : lighten($theme-dark-clr-base, 20%);
 $theme-dark-clr-base-ltr  : lighten($theme-dark-clr-base, 35%);
 $theme-dark-clr-base-ltst : lighten($theme-dark-clr-base, 40%);
@@ -21,20 +21,20 @@ $theme-dark-clr-base-dk   : darken($theme-dark-clr-base, 10%);
 /**
  * The primary non-base color
  */
-$theme-dark-clr-primary      : hotpink;
+$theme-dark-clr-primary      : skyblue;
 $theme-dark-clr-primary-lt   : lighten($theme-dark-clr-primary, 20%);
 $theme-dark-clr-primary-ltr  : lighten($theme-dark-clr-primary, 35%);
 $theme-dark-clr-primary-ltst : lighten($theme-dark-clr-primary, 40%);
 $theme-dark-clr-primary-dk   : darken($theme-dark-clr-primary, 10%);
 
 
-$theme-light-clr-selection: #333;
+$theme-light-clr-selection: #007fff;
 $theme-light-clr-background: #fff;
 
 /**
  * The base color for text, borders, etc.
  */
-$theme-light-clr-base      : #666;
+$theme-light-clr-base      : #000;
 $theme-light-clr-base-lt   : lighten($theme-light-clr-base, 20%);
 $theme-light-clr-base-ltr  : lighten($theme-light-clr-base, 35%);
 $theme-light-clr-base-ltst : lighten($theme-light-clr-base, 40%);
@@ -43,7 +43,7 @@ $theme-light-clr-base-dk   : darken($theme-light-clr-base, 10%);
 /**
  * The primary non-base color
  */
-$theme-light-clr-primary      : hotpink;
+$theme-light-clr-primary      : #007fff;
 $theme-light-clr-primary-lt   : lighten($theme-light-clr-primary, 20%);
 $theme-light-clr-primary-ltr  : lighten($theme-light-clr-primary, 35%);
 $theme-light-clr-primary-ltst : lighten($theme-light-clr-primary, 40%);
