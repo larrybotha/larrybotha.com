@@ -30,11 +30,9 @@ function wrapCodeBlocks() {
 
 const svx = mdsvex({
   layout: {
-    blog: path.join(__dirname, 'src/routes/blog/_blog-layout.svelte'),
+    '*': path.join(__dirname, 'src/components/layout/article.svelte'),
   },
 
-  //extension: '.svx',
-  //parser: md => md.use(markdownItPrism),
   rehypePlugins: [
     slug,
     [
