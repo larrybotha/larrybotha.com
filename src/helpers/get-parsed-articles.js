@@ -15,8 +15,8 @@ async function getFiles(dir) {
   return Array.prototype.concat(...files);
 }
 
-async function getPosts() {
-  const dir = resolve(process.cwd(), 'src/routes/notes');
+async function getArticles(path = 'src/routes/blog') {
+  const dir = resolve(process.cwd(), path);
   const files = await getFiles(dir);
   const indexFiles = files.filter(filename => {
     return filename.endsWith('index.svx');
@@ -43,4 +43,4 @@ async function getPosts() {
   return sortedPosts;
 }
 
-export {getPosts};
+export {getArticles};

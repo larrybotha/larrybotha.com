@@ -1,13 +1,13 @@
-import {getPosts} from './_posts.js';
+import {getPosts} from './_posts';
 
 let contents;
 
 export async function get(req, res) {
   if (!contents) {
-    const ps = await getPosts();
+    const posts = await getPosts();
 
     contents = JSON.stringify(
-      ps.map(post => {
+      posts.map(post => {
         return {
           title: post.title,
           slug: post.slug,
@@ -16,9 +16,7 @@ export async function get(req, res) {
     );
   }
 
-  res.writeHead(200, {
-    'Content-Type': 'application/json',
-  });
+  res.writeHead(200, {'Content-Type': 'application/json'});
 
   res.end(contents);
 }

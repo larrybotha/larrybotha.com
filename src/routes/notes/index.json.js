@@ -1,24 +1,22 @@
-import {getPosts} from './_posts.js';
+import {getNotes} from './_notes';
 
 let contents;
 
 export async function get(req, res) {
   if (!contents) {
-    const ps = await getPosts();
+    const notes = await getNotes();
 
     contents = JSON.stringify(
-      ps.map(post => {
+      notes.map(note => {
         return {
-          title: post.title,
-          slug: post.slug,
+          title: note.title,
+          slug: note.slug,
         };
       }),
     );
   }
 
-  res.writeHead(200, {
-    'Content-Type': 'application/json',
-  });
+  res.writeHead(200, {'Content-Type': 'application/json'});
 
   res.end(contents);
 }

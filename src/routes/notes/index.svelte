@@ -1,35 +1,28 @@
 <script context="module">
-  import {getPosts} from 'src/stores/posts';
+  import {getArticles} from 'src/stores/articles';
 
   export async function preload() {
-    const posts = await getPosts(this);
+    const {notes} = await getArticles(this);
 
-    return {posts};
+    return {notes};
   }
 </script>
 
 <script>
-  export let posts;
+  export let notes;
 </script>
 
-<style>
-  ul {
-    margin: 0 0 1em 0;
-    line-height: 1.5;
-  }
-</style>
-
 <svelte:head>
-  <title>Blog | Larry Botha</title>
+  <title>Notes | Larry Botha</title>
   <meta name="description" content="Larry Botha's blog" />
 </svelte:head>
 
-<h1>Recent posts</h1>
+<h1>Recent notes</h1>
 
 <ul>
-  {#each posts as post}
+  {#each notes as note}
     <li>
-      <a href="blog/{post.slug}">{post.title}</a>
+      <a href="notes/{note.slug}">{note.title}</a>
     </li>
   {/each}
 </ul>

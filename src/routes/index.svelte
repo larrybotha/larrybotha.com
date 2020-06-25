@@ -1,5 +1,5 @@
 <script context="module">
-  import {getPosts} from 'src/stores/posts';
+  import {getArticles} from 'src/stores/articles';
 
   export async function preload() {
     /**
@@ -9,7 +9,7 @@
       await this.fetch('./sitemap.xml');
     }
 
-    const posts = await getPosts(this);
+    const {posts} = await getArticles(this);
 
     return {posts};
   }
