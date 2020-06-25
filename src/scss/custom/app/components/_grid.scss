@@ -4,7 +4,7 @@
 /**
  * Grid wraps
  */
-//@include grid-wrap;
+@include grid-wrap;
 //@include grid-wrap--no-gutter;
 //@include grid-wrap--middle;
 //@include grid-wrap--bottom;
@@ -15,8 +15,8 @@
 /**
  * Grid column widths
  */
-//@include grid__item;
-//@include grid__item-widths-global;
+@include grid__item;
+@include grid__item-widths-global;
 //@include grid__item-widths-palm;
 //@include grid__item-widths-lap;
 //@include grid__item-widths-portable;
@@ -27,8 +27,8 @@
 /**
  * Grid column modifiers
  */
-//@include grid__item--auto;
-//@include grid__item--shrink-wrap;
+@include grid__item--auto;
+@include grid__item--shrink-wrap;
 //@include grid__item--tall;
 
 /**

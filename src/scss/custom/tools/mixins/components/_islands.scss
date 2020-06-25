@@ -2,6 +2,7 @@
     $ISLAND MIXINS
 \*------------------------------------*/
 $island-pad: px-to-rem($spacing-scalar * $fs-base * 4);
+$island-pad-small: px-to-rem($spacing-scalar * $fs-base * 2);
 
 // @mixin island--large--top { padding-top: $island-pad-large;}
 // @mixin island--large--bottom { padding-bottom: $island-pad-large;}
@@ -19,10 +20,10 @@ $island-pad: px-to-rem($spacing-scalar * $fs-base * 4);
   @include island--bottom;
 }
 
-// @mixin island--small--top { padding-top: $island-pad-small;}
-// @mixin island--small--bottom { padding-bottom: $island-pad-small;}
+@mixin island--small--top { padding-top: $island-pad-small;}
+@mixin island--small--bottom { padding-bottom: $island-pad-small;}
 
-// @mixin island--small {
-//   @include island--small--top;
-//   @include island--small--bottom;
-// }
+@mixin island--small {
+ @include island--small--top;
+ @include island--small--bottom;
+}
