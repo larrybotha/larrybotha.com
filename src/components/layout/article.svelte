@@ -1,6 +1,8 @@
 <script>
   import {onMount} from 'svelte';
 
+  import FormattedDate from 'src/components/formatted-date.svelte';
+
   export let title;
   export let slug;
   export let seoTitle;
@@ -46,17 +48,18 @@
 <div class="island--small">
   <div class="wrap">
     <h1>{title}</h1>
+
     {#if datePublished}
       <div>
         published:
-        <time datetime={datePublished}>{datePublished}</time>
+        <FormattedDate date={datePublished} />
       </div>
     {/if}
 
     {#if dateUpdated && dateUpdated !== datePublished}
       <div>
         updated:
-        <time datetime={dateUpdated}>{dateUpdated}</time>
+        <FormattedDate date={dateUpdated} />
       </div>
     {/if}
 
