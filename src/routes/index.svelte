@@ -3,32 +3,48 @@
 
   export async function preload() {
     /**
-     * Generate sitemap only on server request, i.e. export
+     * Generate sitemap only on server request, i.e. sapper export
      */
     if (typeof window === 'undefined') {
       await this.fetch('./sitemap.xml');
     }
 
-    const {posts} = await getArticles(this);
+    const {posts, notes} = await getArticles(this);
 
-    return {posts};
+    return {posts, notes};
   }
 </script>
 
 <script>
   export let posts = [];
+  export let notes = [];
 </script>
 
 <svelte:head>
   <title>Front end developer | React developer | Larry Botha</title>
 </svelte:head>
 
-<h1>Larry Botha</h1>
+<div class="island">
+  <div class="wrap">
+    <h2>Articles</h2>
+    <ul>
+      {#each posts as post, i}
+        <li>
+          <a href="/blog/{post.slug}">{post.title}</a>
+          <a href="/log/{post.slug}">{post.title}</a>
+        </li>
+      {/each}
+    </ul>
+    <hr />
 
-<ul>
-  {#each posts as post, i}
-    <li>
-      <a href="/blog/{post.slug}">{post.title}</a>
-    </li>
-  {/each}
-</ul>
+    <h2>Notes</h2>
+
+    <ul>
+      {#each notes as note, i}
+        <li>
+          <a href="/notes/{note.slug}">{note.title}</a>
+        </li>
+      {/each}
+    </ul>
+  </div>
+</div>
