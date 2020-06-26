@@ -31,7 +31,6 @@
       {#each posts as post, i}
         <li>
           <a href="/blog/{post.slug}">{post.title}</a>
-          <a href="/log/{post.slug}">{post.title}</a>
         </li>
       {/each}
     </ul>
