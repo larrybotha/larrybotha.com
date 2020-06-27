@@ -51,13 +51,15 @@
 
     {#if datePublished}
       <p>
-        Published:
-        <FormattedDate date={datePublished} />
+        <small>
+          Published:
+          <FormattedDate date={datePublished} />
 
-        {#if dateUpdated && dateUpdated !== datePublished}
-          | Last updated:
-          <FormattedDate date={dateUpdated} />
-        {/if}
+          {#if dateUpdated && dateUpdated !== datePublished}
+            | Last updated:
+            <FormattedDate date={dateUpdated} />
+          {/if}
+        </small>
       </p>
     {/if}
 
