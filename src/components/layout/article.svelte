@@ -50,17 +50,15 @@
     <h1>{title}</h1>
 
     {#if datePublished}
-      <div>
-        published:
+      <p>
+        Published:
         <FormattedDate date={datePublished} />
-      </div>
-    {/if}
 
-    {#if dateUpdated && dateUpdated !== datePublished}
-      <div>
-        updated:
-        <FormattedDate date={dateUpdated} />
-      </div>
+        {#if dateUpdated && dateUpdated !== datePublished}
+          | Last updated:
+          <FormattedDate date={dateUpdated} />
+        {/if}
+      </p>
     {/if}
 
     <slot />
