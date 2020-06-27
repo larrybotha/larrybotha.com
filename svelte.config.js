@@ -6,7 +6,10 @@ import autoLinkHeadings from 'rehype-autolink-headings';
 import slug from 'rehype-slug';
 import svelteImage from 'svelte-image';
 import visit from 'unist-util-visit';
+import find from 'unist-util-find';
 import postcssCustomProperties from 'postcss-custom-properties';
+import rehypeParse from 'rehype-parse';
+import unified from 'unified';
 
 // this is magically inserted into the Prism instance
 import 'prism-svelte';
@@ -15,6 +18,23 @@ import path from 'path';
 const production = !process.env.ROLLUP_WATCH;
 const mode = process.env.NODE_ENV;
 const dev = mode === 'development';
+
+const linkIcon = `
+  <i class="icon">
+    <i class="icon__inner">
+      <svg role="img">
+        <title>link icon</title>
+        <use href="#icon-link" />
+      </svg>
+    </i>
+  </i>
+`;
+let linkIconAst = find(
+  unified()
+    .use(rehypeParse)
+    .parse(linkIcon),
+  {type: 'element', tagName: 'i'},
+);
 
 function wrapCodeBlocks() {
   return ast => {
@@ -35,23 +55,15 @@ const svx = mdsvex({
 
   rehypePlugins: [
     slug,
+
     [
       autoLinkHeadings,
       {
-        properties: {},
-        content: {
-          type: 'element',
-          tagName: 'i',
-          properties: {},
-          children: [
-            {
-              type: 'text',
-              value: '🔗',
-            },
-          ],
-        },
+        properties: {class: 'heading-anchor'},
+        content: linkIconAst,
       },
     ],
+
     wrapCodeBlocks,
   ],
 });
