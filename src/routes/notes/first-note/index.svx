@@ -28,17 +28,3 @@ function coolFunc() {
   console.log('yeah!')
 }
 ```
-
-```svelte
-<script>
-  export let name;
-</script>
-
-<div>
-  Hello, {name}!
-</div>
-```
-
-<div class="test">
-and this
-</div>
