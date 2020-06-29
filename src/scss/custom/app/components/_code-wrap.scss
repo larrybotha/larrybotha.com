@@ -9,16 +9,23 @@
 .code-wrap {
   position: relative;
 
-  &:before {
+  &:before,
+  &:after {
     content: '';
     display: block;
-    background-color: #111;
-    width: 100vw;
+    width: calc(100vw - 2rem);
     left: 50%;
     top: 0;
     height: 100%;
     transform: translateX(-50%);
     position: absolute;
     z-index: -1;
+  }
+
+  &:before { background-color: #111;}
+  &:after {
+    height: calc(100% - 2rem);
+    outline: 1rem solid #111;
+    top: 1rem;
   }
 }
