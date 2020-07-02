@@ -12,8 +12,9 @@ import rehypeParse from 'rehype-parse';
 import unified from 'unified';
 
 // this is magically inserted into the Prism instance
-import 'prism-svelte';
 import path from 'path';
+import 'prismjs';
+import 'prism-svelte';
 
 const production = !process.env.ROLLUP_WATCH;
 const mode = process.env.NODE_ENV;
