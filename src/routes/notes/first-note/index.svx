@@ -4,6 +4,7 @@ title: First note
 slug: first-note
 seoTitle: First article title
 seoDescription: An awesome
+datePublished: Mon Jun 08 2020 22:58:11 GMT-0500 (Eastern Standard Time)
 ---
 
 ## heading
