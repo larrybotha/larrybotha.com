@@ -15,41 +15,44 @@ const currentBranch = execSync('git rev-parse --abbrev-ref HEAD', {
 }).trim();
 const date = new Date();
 
-function addDatePublished() {
+function addDateFrontmatter() {
   return (ast, vfile) => {
     const yamlNode = find(ast, {type: 'yaml'});
 
     if (yamlNode) {
       const {value} = yamlNode;
-      const field = 'datePublished';
-      const hasPublishDate = value.indexOf(field) > -1;
+      const isPublished = value.indexOf('datePublished') > -1;
 
-      if (!hasPublishDate) {
-        console.log(`setting datePublished: ${vfile.history[0]}`);
-
-        yamlNode.value = value.concat(`\n${field}: ${date}`);
-      }
+      return isPublished
+        ? addDateUpdated(yamlNode, vfile)
+        : addDatePublished(yamlNode, vfile);
     }
   };
 }
 
-function addDateUpdated() {
-  return (ast, vfile) => {
-    const yamlNode = find(ast, {type: 'yaml'});
+function addDatePublished(yamlNode, vfile) {
+  const {value} = yamlNode;
+  const field = 'datePublished';
+  const hasPublishDate = value.indexOf(field) > -1;
 
-    if (yamlNode) {
-      const {value} = yamlNode;
-      const field = 'dateUpdated';
+  if (!hasPublishDate) {
+    console.log(`setting datePublished: ${vfile.history[0]}`);
 
-      console.log(`setting dateUpdated: ${vfile.history[0]}`);
+    yamlNode.value = value.concat(`\n${field}: ${date}`);
+  }
+}
 
-      yamlNode.value = value
-        .split('\n')
-        .filter(v => !v.startsWith(field))
-        .concat(`${field}: ${date}`)
-        .join('\n');
-    }
-  };
+function addDateUpdated(yamlNode, vfile) {
+  const {value} = yamlNode;
+  const field = 'dateUpdated';
+
+  console.log(`setting dateUpdated: ${vfile.history[0]}`);
+
+  yamlNode.value = value
+    .split('\n')
+    .filter(v => !v.startsWith(field))
+    .concat(`${field}: ${date}`)
+    .join('\n');
 }
 
 (async function() {
@@ -63,8 +66,7 @@ function addDateUpdated() {
           .use(parse)
           .use(stringify)
           .use(frontmatter)
-          .use(addDatePublished)
-          .use(addDateUpdated)
+          .use(addDateFrontmatter)
           .process(vfile.readSync(file), async (err, resultFile) => {
             if (err) {
               return console.error(err);
