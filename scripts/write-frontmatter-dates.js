@@ -12,7 +12,7 @@ const PUBLISH_BRANCH = 'noindex';
 const files = process.argv.slice(2);
 const currentBranch = execSync('git rev-parse --abbrev-ref HEAD', {
   encoding: 'utf-8',
-});
+}).trim();
 const date = new Date();
 
 function addDatePublished() {
