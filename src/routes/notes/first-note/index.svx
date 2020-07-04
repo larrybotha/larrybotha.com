@@ -7,12 +7,6 @@ seoDescription: An awesome
 datePublished: Mon Jun 08 2020 22:58:11 GMT-0500 (Eastern Standard Time)
 ---
 
-<script>
-  import Dep from './dep.svelte'
-</script>
-
-<Dep />
-
 ## heading
 
 ```css
