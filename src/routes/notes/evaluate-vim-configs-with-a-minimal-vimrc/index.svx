@@ -3,21 +3,22 @@ title: Evaluate Vim configs with a minimal vimrc
 
 seoTitle: Evaluate Vim configs with a minimal vimrc
 seoDescription: Use a minimal vimrc to evaluate configs without affecting your main vimrc
+datePublished: Mon Jul 13 2020 23:55:53 GMT-0500 (Eastern Standard Time)
 ---
 
-As one's `.vimrc` grows it can become daunting to try new settings out, or
-determine where you may have an issue in your existing config.
+As one's `.vimrc` grows it can become daunting to try new settings out, or to
+debug an issue in your existing config.
 
-Vim has a useful feature that allows you to start a session with a specified config:
+To address this, we can use a feature in Vim that allows us to start a session with
+a different config:
 
 ```bash
 $ vim -u [path/to/config]
 ```
 
-You can easily try out different themes, configs, and commands with a clean
-config separate from your existing `.vimrc`.
+Now we can easily evaluate Vim configs without touching our existing `.vimrc`.
 
-For example, to quickly see how highlighting trailing whitespace would appear, you
+For example, to quickly see how highlighting trailing whitespace would look, you
 could create a `.minivim` containing the following:
 
 ```vim
