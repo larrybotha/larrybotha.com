@@ -1,6 +1,18 @@
 import {getPosts} from './blog/_posts.js';
 import {getNotes} from './notes/_notes.js';
 
+const renderLastModTag = ({dateUpdated, datePublished}) => {
+  const date = dateUpdated || datePublished;
+
+  return date
+    ? `
+    <lastmod>
+      ${new Date(date).toISOString()}
+    </lastmod>
+  `
+    : '';
+};
+
 const render = ({
   pages,
   posts,
@@ -20,9 +32,7 @@ const render = ({
       post => `
     <url>
       <loc>https://larrybotha.com/blog/${post.slug}/</loc>
-      <lastmod>${new Date(
-        post.dateUpdated || post.datePublished,
-      ).toISOString()}</lastmod>
+      ${renderLastModTag(post)}
     </url>
   `,
     )
@@ -33,9 +43,7 @@ const render = ({
       note => `
     <url>
       <loc>https://larrybotha.com/blog/${note.slug}/</loc>
-      <lastmod>${new Date(
-        note.dateUpdated || note.datePublished,
-      ).toISOString()}</lastmod>
+      ${renderLastModTag(note)}
     </url>
   `,
     )
