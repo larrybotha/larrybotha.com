@@ -2,7 +2,7 @@ import {getNotes} from './_notes';
 
 let contents;
 
-export async function get(req, res) {
+export async function get(_, res) {
   if (!contents) {
     const notes = await getNotes();
 
