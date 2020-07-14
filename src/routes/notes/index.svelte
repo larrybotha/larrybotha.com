@@ -20,7 +20,7 @@
 </svelte:head>
 
 <ArticleList>
-  <h1>Recent notes</h1>
+  <h1>Notes</h1>
 
   <ul>
     {#each notes as note}
