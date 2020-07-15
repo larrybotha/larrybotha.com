@@ -3,7 +3,7 @@ title: Automatically set environment variables in Postman
 
 seoTitle: Automatically set environment variables in Postman
 seoDescription: Automatically set an environment variable when a request completes in Postman
-datePublished: Wed Jul 15 2020 00:25:29 GMT-0500 (Eastern Standard Time)
+datePublished: Wed Jul 15 2020 00:27:49 GMT-0500 (Eastern Standard Time)
 ---
 
 Manually saving server responses to environment variables in Postman is tedious,
