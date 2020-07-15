@@ -3,6 +3,8 @@ title: Automatically set environment variables in Postman
 
 seoTitle: Automatically set environment variables in Postman
 seoDescription: Automatically set an environment variable when a request completes in Postman
+datePublished: Wed Jul 15 2020 00:24:43 GMT-0500 (Eastern Standard Time)
+dateUpdated: Wed Jul 15 2020 00:25:06 GMT-0500 (Eastern Standard Time)
 ---
 
 Manually saving server responses to environment variables in Postman is tedious,
@@ -11,9 +13,9 @@ completes.
 
 To do this:
 
-1. configure your environment in Postman with the necessary variables
-2. open the *Tests* tab on the request that will receive the variable to persist
-3. add the following:
+1.  configure your environment in Postman with the necessary variables
+2.  open the _Tests_ tab on the request that will receive the variable to persist
+3.  add the following:
 
 ```javascript
 // as of Postman 7.x.x
