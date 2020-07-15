@@ -1,0 +1,13 @@
+---
+title: Automatically set environment variables in Postman
+
+seoTitle: Automatically set environment variables in Postman
+seoDescription: Automatically set an environment variable when a request completes in Postman
+---
+
+If you're making any sort of authenticated requests, you're going to need to
+prove who you are, and if you're evaluating requests in Postman the repetition of
+requesting a token and then manually updating your environment gets tedious quickly.
+
+But Postman allows you to easily eliminate this repetition using the *Test* tab
+inside a request, along with the `response`
