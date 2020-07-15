@@ -1,0 +1,35 @@
+---
+title: Automatically set environment variables in Postman
+
+seoTitle: Automatically set environment variables in Postman
+seoDescription: Automatically set an environment variable when a request completes in Postman
+---
+
+Manually saving server responses to environment variables in Postman is tedious,
+but Postman makes it easy enough to automatically set them when a request
+completes.
+
+To do this:
+
+1. configure your environment in Postman with the necessary variables
+2. open the *Tests* tab on the request that will receive the variable to persist
+3. add the following:
+
+```javascript
+// as of Postman 7.x.x
+const response = pm.response.json();
+
+pm.environment.set('myVariable', response.myVariable);
+```
+
+Every time you get a response from this request, your environment will be
+updated!
+
+[Postman's global `pm` object](https://learning.postman.com/docs/writing-scripts/script-references/postman-sandbox-api-reference/#pm)
+is pretty extensive, and forms the basis of writing tests in Postman.
+
+If you're looking to dive deeper into Postman and using it to test APIs,
+Valentin Despa has an excellent course on Udemy:
+[Postman: The Complete Guide - REST API Testing](https://www.udemy.com/course/postman-the-complete-guide/)
+
+I learned a boat-load, and added my notes to Github: [Postman REST API testing](https://github.com/larrybotha/postman-rest-api-testing)
