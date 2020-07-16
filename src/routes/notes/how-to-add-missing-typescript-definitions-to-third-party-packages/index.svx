@@ -3,6 +3,7 @@ title: How to add missing TypeScript definitions to third party packages
 
 seoTitle: How to add missing TypeScript definitions to third party packages
 seoDescription: A quick note on how to add missing TypeScript definitions to third party packages
+datePublished: Wed Jul 15 2020 23:29:55 GMT-0500 (Eastern Standard Time)
 ---
 
 You've just updated to the latest release of `some-awesome-lib`. `some-awesome-lib`
@@ -51,19 +52,19 @@ declare module 'informed' {
 
 A few things to note here:
 
-- this is called an [_ambient module_](https://www.typescriptlang.org/docs/handbook/modules.html#working-with-other-javascript-libraries),
-    which is signified by the `.d.ts` extension.  It's never compiled to Javascript,
-    and is generally used to create definitions for code not originally written
-    in TypeScript
-- for clarity, we're using a `typings` folder with a filename that's the same name as
-    the module we're adding missing definitions to. We don't need to use
-    `src/typings` specifically; TypeScript will traverse your project files for definitions
-    based on its [module resolution rules](https://www.typescriptlang.org/docs/handbook/module-resolution.html)
-- we need to declare the module using the same name as the package we're
-    extending
-- we only provide the properties we're concerned with. All of the original
-    properties will still be available - we're only extending what's already in
-    those definitions
+-   this is called an [_ambient module_](https://www.typescriptlang.org/docs/handbook/modules.html#working-with-other-javascript-libraries),
+      which is signified by the `.d.ts` extension.  It's never compiled to Javascript,
+      and is generally used to create definitions for code not originally written
+      in TypeScript
+-   for clarity, we're using a `typings` folder with a filename that's the same name as
+      the module we're adding missing definitions to. We don't need to use
+      `src/typings` specifically; TypeScript will traverse your project files for definitions
+      based on its [module resolution rules](https://www.typescriptlang.org/docs/handbook/module-resolution.html)
+-   we need to declare the module using the same name as the package we're
+      extending
+-   we only provide the properties we're concerned with. All of the original
+      properties will still be available - we're only extending what's already in
+      those definitions
 
 Now we can safely use `validationSchema` on our form components without
 triggering TypeScript errors:
