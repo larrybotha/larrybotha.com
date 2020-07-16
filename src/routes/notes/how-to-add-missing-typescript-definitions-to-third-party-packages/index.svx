@@ -1,0 +1,95 @@
+---
+title: How to add missing TypeScript definitions to third party packages
+
+seoTitle: How to add missing TypeScript definitions to third party packages
+seoDescription: A quick note on how to add missing TypeScript definitions to third party packages
+---
+
+You've just updated to the latest release of `some-awesome-lib`. `some-awesome-lib`
+isn't written in TypeScript, but that's ok, they've got type definitions...
+well, most of them anyway...
+
+You try out that new feature you need, and unable to find definitions for that feature,
+TypeScript starts spitting out errors all over your editor.
+
+I've recently experienced this with [`informed`](https://www.npmjs.com/package/informed),
+an awesome form library for React.
+
+`informed` added a feature allowing one to pass a [`yup`](https://www.npmjs.com/package/yup)
+schema as the validation mechanism at the form and field level. The definitions
+were not updated, so TypeScript started telling me all about it.
+
+## Extending third party TypeScript definitions
+
+To fix this, I extended `informed`'s definitions:
+
+```typescript
+// src/typings/informed/index.d.ts
+
+/**
+ * These are the types missing the property
+ */
+import {BaseFieldProps, BasicFormProps} from 'informed';
+
+import {Schema} from 'yup';
+
+type ValidationSchema = Schema<any>;
+
+/**
+ * Add the missing validationSchema property to the types
+ */
+declare module 'informed' {
+  interface BasicFormProps {
+    validationSchema?: ValidationSchema;
+  }
+
+  interface BaseFieldProps {
+    validationSchema?: ValidationSchema;
+  }
+}
+```
+
+A few things to note here:
+
+- this is called an [_ambient module_](https://www.typescriptlang.org/docs/handbook/modules.html#working-with-other-javascript-libraries),
+    which is signified by the `.d.ts` extension.  It's never compiled to Javascript,
+    and is generally used to create definitions for code not originally written
+    in TypeScript
+- for clarity, we're using a `typings` folder with a filename that's the same name as
+    the module we're adding missing definitions to. We don't need to use
+    `src/typings` specifically; TypeScript will traverse your project files for definitions
+    based on its [module resolution rules](https://www.typescriptlang.org/docs/handbook/module-resolution.html)
+- we need to declare the module using the same name as the package we're
+    extending
+- we only provide the properties we're concerned with. All of the original
+    properties will still be available - we're only extending what's already in
+    those definitions
+
+Now we can safely use `validationSchema` on our form components without
+triggering TypeScript errors:
+
+```jsx
+import React from 'react'
+import {Form} from 'informed'
+
+import {myValidationSchema} from './schema'
+
+export const MyForm: React.FC = () => {
+  return (
+    <Form validationSchema={myValidationSchema}>
+      {/* ... */}
+    </Form>
+  )
+}
+```
+
+## Cleaning up
+
+Since we've fixed the issue on our side, let's make a PR on that package with our
+additions to show some love for the author's efforts, and help anyone else who may
+hit the same stumbling block!
+
+Once package authors update their type definitions, its easy enough for us to
+remove our definitions and get the full benefit of their package.
+
+Enjoy!
