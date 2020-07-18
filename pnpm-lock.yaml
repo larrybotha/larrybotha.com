@@ -37,6 +37,8 @@ devDependencies:
   remark-stringify: 8.1.1
   rollup: 2.22.0
   rollup-plugin-babel: 4.4.0_@babel+core@7.10.5+rollup@2.22.0
+  rollup-plugin-commonjs: 10.1.0_rollup@2.22.0
+  rollup-plugin-node-resolve: 5.2.0_rollup@2.22.0
   rollup-plugin-svelte: 5.2.3_rollup@2.22.0+svelte@3.24.0
   rollup-plugin-svg-import: 1.5.1_rollup@2.22.0
   rollup-plugin-terser: 6.1.0_rollup@2.22.0
@@ -1546,6 +1548,12 @@ packages:
     dev: true
     resolution:
       integrity: sha512-1HcDas8SEj4z1Wc696tH56G8OlRaH/sqZOynNNB+HF0WOeXPaxTtbYzJY2oEfiUxjSKjhCKr+MvR7dCHcEelug==
+  /@types/resolve/0.0.8:
+    dependencies:
+      '@types/node': 14.0.23
+    dev: true
+    resolution:
+      integrity: sha512-auApPaJf3NPfe18hSoJkp8EbZzer2ISk7o8mCC3M9he/a04+gbMF97NkpD2S8riMGvm4BMRI59/SZQSaLTKpsQ==
   /@types/resolve/1.17.1:
     dependencies:
       '@types/node': 14.0.23
@@ -5602,6 +5610,34 @@ packages:
       rollup: '>=0.60.0 <3'
     resolution:
       integrity: sha512-Lek/TYp1+7g7I+uMfJnnSJ7YWoD58ajo6Oarhlex7lvUce+RCKRuGRSgztDO3/MF/PuGKmUL5iTHKf208UNszw==
+  /rollup-plugin-commonjs/10.1.0_rollup@2.22.0:
+    dependencies:
+      estree-walker: 0.6.1
+      is-reference: 1.2.1
+      magic-string: 0.25.7
+      resolve: 1.17.0
+      rollup: 2.22.0
+      rollup-pluginutils: 2.8.2
+    deprecated: This package has been deprecated and is no longer maintained. Please use @rollup/plugin-commonjs.
+    dev: true
+    peerDependencies:
+      rollup: '>=1.12.0'
+    resolution:
+      integrity: sha512-jlXbjZSQg8EIeAAvepNwhJj++qJWNJw1Cl0YnOqKtP5Djx+fFGkp3WRh+W0ASCaFG5w1jhmzDxgu3SJuVxPF4Q==
+  /rollup-plugin-node-resolve/5.2.0_rollup@2.22.0:
+    dependencies:
+      '@types/resolve': 0.0.8
+      builtin-modules: 3.1.0
+      is-module: 1.0.0
+      resolve: 1.17.0
+      rollup: 2.22.0
+      rollup-pluginutils: 2.8.2
+    deprecated: This package has been deprecated and is no longer maintained. Please use @rollup/plugin-node-resolve.
+    dev: true
+    peerDependencies:
+      rollup: '>=1.11.0'
+    resolution:
+      integrity: sha512-jUlyaDXts7TW2CqQ4GaO5VJ4PwwaV8VUGA7+km3n6k6xtOEacf61u0VXwN80phY/evMcaS+9eIeJ9MOyDxt5Zw==
   /rollup-plugin-svelte/5.2.3_rollup@2.22.0+svelte@3.24.0:
     dependencies:
       require-relative: 0.8.7
@@ -7057,6 +7093,8 @@ specifiers:
   remark-stringify: ^8.1.1
   rollup: ^2.21.0
   rollup-plugin-babel: ^4.4.0
+  rollup-plugin-commonjs: ^10.1.0
+  rollup-plugin-node-resolve: ^5.2.0
   rollup-plugin-svelte: ^5.2.3
   rollup-plugin-svg-import: ^1.5.1
   rollup-plugin-terser: ^6.1.0
