@@ -1,9 +1,12 @@
 .DS_Store
-/node_modules/
+node_modules
 /src/node_modules/@sapper/
 yarn-error.log
 /cypress/screenshots/
 /__sapper__/
+
+# ignore since we're using pnpm
+package-lock.json
 
 static/g
 static/build
