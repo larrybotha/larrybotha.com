@@ -37,7 +37,7 @@ async function getArticles(path = 'src/routes/blog') {
     }),
   );
   const sortedPosts = posts.sort((a, b) =>
-    a.publishDate > b.publishDate ? 1 : -1,
+    new Date(a.datePublished) < new Date(b.datePublished) ? 1 : -1,
   );
 
   return sortedPosts;
