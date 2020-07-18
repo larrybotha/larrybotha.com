@@ -1,13 +1,13 @@
 import path from 'path';
-import resolve from 'rollup-plugin-node-resolve';
-import replace from '@rollup/plugin-replace';
 import alias from '@rollup/plugin-alias';
-import commonjs from 'rollup-plugin-commonjs';
-import svelte from 'rollup-plugin-svelte';
-import babel from 'rollup-plugin-babel';
-import {terser} from 'rollup-plugin-terser';
+import babel from '@rollup/plugin-babel';
+import commonjs from '@rollup/plugin-commonjs';
 import config from 'sapper/config/rollup.js';
+import replace from '@rollup/plugin-replace';
+import resolve from '@rollup/plugin-node-resolve';
+import svelte from 'rollup-plugin-svelte';
 import svgImport from 'rollup-plugin-svg-import';
+import {terser} from 'rollup-plugin-terser';
 
 import pkg from './package.json';
 
