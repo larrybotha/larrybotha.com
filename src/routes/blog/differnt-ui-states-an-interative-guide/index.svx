@@ -1,0 +1,62 @@
+---
+title: The different UI states - an interactive guide
+
+slug: the-different-ui-states-an-interactive-guide
+title: The different UI states - an interactive guide
+seoDescription: An interactive guide for non-developers that helps explain the magic of what goes on in the background during different UI states
+---
+
+intro: who this is for, why
+
+## On the surface
+
+### what happens when a web page loads
+
+- restaurant analogy
+
+#### content loads
+
+- waiter brings table and chairs and some decorations
+
+##### content may be empty
+
+- waiter brings an empty table
+
+##### content may not be empty
+
+- waiter brings empty table
+
+#### there is an error
+
+- waiter brings back a note
+- waiter comes from kitchen with fire on him
+
+## Different types of websites
+
+### traditional server-rendered websites
+
+- show waiter bringing entire table of contents on every order
+
+### applications that load information dynamically
+
+- show waiter bringing entire table at first, then only specific items
+
+## understanding requests and responses
+
+### types of responses
+
+#### success
+
+##### empty response
+
+##### non-empty response
+
+#### redirect
+
+#### client error
+
+#### server error
+
+### the request response cycle
+
+## implications for the UI and UX
