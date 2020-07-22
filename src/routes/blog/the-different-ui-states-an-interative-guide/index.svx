@@ -1,0 +1,86 @@
+---
+title: The different UI states - an interactive guide
+
+seoTitle: The different UI states - an interactive guide
+seoDescription: An interactive guide for non-developers that helps explain the magic
+  of what goes on in the background during different UI states
+---
+
+We all know what it's like to be confronted with an ominous loading spinner.
+Maybe some effort has been put into its design, but we're still left staring at this
+thing that's blocking us from seeing any content. Or maybe it's a button we clicked,
+and the text is briefly replaced with a little spinner.
+
+What's going on here? Maybe you've wondered, or maybe it's never crossed your mind.
+If you're curious as to why you're confronted with loading spinners, or why you
+need to consider them when designing an app, then I'm going to help demystify
+the magic.
+
+## First, an analogy
+
+Things could get technical quickly, so let's use an analogy to make things more
+familiar. I'll use the scenario of ordering food at a restaurant, as it
+ties in nicely with UI states.
+
+There are four words we'll get familiar with in this article:
+
+- **client** - picture yourself as a customer at a restaurant when you see
+    this word
+- **server** - with this analogy, picture the kitchen when you _server_. Why
+    is the waitron not the server, since traditionally they _serve_ you at
+    restaurants? We'll get there soon.
+- **request** - as a customer, you're going to ask the waitron for food, drinks,
+    and other restauranty things
+- **response** - after you've asked for things, you're going to expect to
+    receive something from the kitchen
+
+## What happens when a web page loads
+
+- restaurant analogy
+
+#### content loads
+
+- waiter brings table and chairs and some decorations
+
+##### content may be empty
+
+- waiter brings an empty table
+
+##### content may not be empty
+
+- waiter brings empty table
+
+#### there is an error
+
+- waiter brings back a note
+- waiter comes from kitchen with fire on him
+
+## Different types of websites
+
+### traditional server-rendered websites
+
+- show waiter bringing entire table of contents on every order
+
+### applications that load information dynamically
+
+- show waiter bringing entire table at first, then only specific items
+
+## understanding requests and responses
+
+### types of responses
+
+#### success
+
+##### empty response
+
+##### non-empty response
+
+#### redirect
+
+#### client error
+
+#### server error
+
+### the request response cycle
+
+## implications for the UI and UX
