@@ -22,21 +22,44 @@ Things could get technical quickly, so let's use an analogy to make things more
 familiar. I'll use the scenario of ordering food at a restaurant, as it
 ties in nicely with UI states.
 
-There are four words we'll get familiar with in this article:
+There are four words we'll see frequently in this article:
 
-- **client** - picture yourself as a customer at a restaurant when you see
-    this word
-- **server** - with this analogy, picture the kitchen when you _server_. Why
-    is the waitron not the server, since traditionally they _serve_ you at
-    restaurants? We'll get there soon.
+- **client** - picture yourself as a customer at your favourite restaurant when you
+    see this word. As a customer you ask for things, and the waitrons run back
+    and forth between you and the kitchen.
+- **server** - with this analogy, think of the kitchen when you see _server_.  The
+    kitchen is the heart of the restaurant; where all the hard work is done before
+    that delicious meal is presented to you.
 - **request** - as a customer, you're going to ask the waitron for food, drinks,
     and other restauranty things
-- **response** - after you've asked for things, you're going to expect to
-    receive something from the kitchen
+- **response** - after you've asked for something, you're going to expect to
+    receive something from the kitchen; sometimes you'll get what you want
+    quickly, sometimes your blood will boil as you wait for longer than you
+    expected, and other times you won't get what you want at all!
+
+Now, because our restaurant is an analogy for UI states work, it's going to be a
+little different from the real world, and a little more formal.
 
 ## What happens when a web page loads
 
-- restaurant analogy
+Firstly, we need a basic understanding of how a web page loads.
+
+When we first visit our restaurant, we need to first ask for a table. We don't
+arrive with a table; we get a table when we arrive.
+
+At our example restaurant, once we arrive, we ask for a table, and because it's
+a fancy restaurant, our table is brought to us! It just so happens that the
+kitchen is where all the tables are stored... weird...
+
+// illustration of getting a table
+
+What a lovely table with cutlery, napkins, and flowers.
+
+This is similar to what happens when you visit a website. You click a link, or
+enter a URL into your address bar, telling your browser to get you the website.
+Your browser communicates with the computer where the website is hosted (the
+server), which then loads all the HTML, CSS, and Javascript that make the
+website. All of these things that make up the website came from the server.
 
 #### content loads
 
