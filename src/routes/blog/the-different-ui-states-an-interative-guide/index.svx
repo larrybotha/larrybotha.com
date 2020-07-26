@@ -57,28 +57,81 @@ What a lovely table with cutlery, napkins, and flowers.
 
 This is similar to what happens when you visit a website. You click a link, or
 enter a URL into your address bar, telling your browser to get you the website.
-Your browser communicates with the computer where the website is hosted (the
-server), which then loads all the HTML, CSS, and Javascript that make the
-website. All of these things that make up the website came from the server.
+Your browser makes a _request_ to the computer where the website is hosted (the
+server), and the server _responds_ with all the HTML, CSS, and Javascript that make
+the website. All of these things that make up the website came from the server.
 
-#### content loads
+// illustrate how browser requests data from server
 
-- waiter brings table and chairs and some decorations
+### When things go wrong
 
-##### content may be empty
+Now, things aren't always hunky-dory at our restaurant. Are you asking for a
+delicious bowl of ramen at an Italian restaurant? What about the kitchen - maybe
+they're fighting fires back there and your waiter is all smiles...
 
-- waiter brings an empty table
+What we have here is two ways your order can go wrong - you request something
+that the kitchen can't fulfill for one reason or another, or you request
+something and there's something massively wrong in the kitchen that has nothing
+to do with you.
 
-##### content may not be empty
+#### Sorry, you can't have that
 
-- waiter brings empty table
+The first type of problem is specifically to do with your request. You want
+ramen? Sorry, we don't serve that here. You want grandmas secret pizza-dough
+recipe? Sorry, you're not privy to such information.
 
-#### there is an error
+// illustrate waiter returning with nothing after requesting ramen, and table disappears
 
-- waiter brings back a note
-- waiter comes from kitchen with fire on him
+You'll notice that your table disappeared... what the? We'll get to that when we
+learn about different types of websites a little later.
 
-## Different types of websites
+Now what happens? You've asked for something, and the kitchen can't do anything
+about it until you ask for something else. You're free to ask for the same thing
+again, but the kitchen isn't going to change that they can't help you. You need
+to change what you're asking for. Ok fine... I'll have a Margarita pizza then!
+
+// illustrate ordering pizza
+
+These are called _client-side_ errors, and we're all familiar with them.
+You've asked for ramen at an Italian restaurant: **404 Not Found**.
+You want to see grandma's recipe? No!: *403 Forbidden*.
+
+There are a whole lot of these errors for different scenarios. They all start with
+the number 4, and all of them mean you've requested something that you can't have,
+and that you need to change what you're asking for.
+
+#### Sorry, the kitchen is experiencing trouble at the moment
+
+The second type of problem lies with the kitchen. If the restaurant's kitchen suddenly
+burst into flames, no matter how many times, and how nicely you asked for pizza,
+they're probably not going to serve you until they get that fire under control.
+
+// illustrate ordering something, waiter returning with fire on back
+
+These are called _server-side_ errors - there's not much you can do, because
+what's wrong is the kitchen is on fire.
+
+Although not as common as 404 errors, you've likely seen a 500 error. This can
+mean that a database is down, or a bug in the code on the server prevented the
+webpage from being returned, to name a few. Just as _client-side_ errors always
+start with a 4, _server-side_ errors always start with a 5.
+
+### How a server can respond to a request
+
+This is the gist of how client-server communication works - a _client_ makes a
+_reqest_ to a _server_, and that _server_ _responds_ in one of three ways:
+
+- you get what you asked for
+- you can't get what you asked for because of either what you asked for, or how
+    you asked for it - please change your request
+- you can't get what you asked for because something is not working properly,
+    and asking differently is probably not going to help
+
+## Different types of UIs
+
+Now we'll deal with those mysterious disappearing tables.
+
+// illustration of requesting a new fork and table is replaced
 
 ### traditional server-rendered websites
 
@@ -95,6 +148,15 @@ website. All of these things that make up the website came from the server.
 #### success
 
 ##### empty response
+
+##### content may be empty
+
+- waiter brings an empty table
+
+##### content may not be empty
+
+- waiter brings empty table
+
 
 ##### non-empty response
 
