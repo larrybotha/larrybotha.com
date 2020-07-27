@@ -59,7 +59,8 @@ This is similar to what happens when you visit a website. You click a link, or
 enter a URL into your address bar, telling your browser to get you the website.
 Your browser makes a _request_ to the computer where the website is hosted (the
 server), and the server _responds_ with all the HTML, CSS, and Javascript that make
-the website. All of these things that make up the website came from the server.
+the website. That HTML, CSS, and Javascript is the same as the kitchen bringing
+us our table with all of its adornments.
 
 // illustrate how browser requests data from server
 
@@ -96,9 +97,9 @@ These are called _client-side_ errors, and we're all familiar with them.
 You've asked for ramen at an Italian restaurant: **404 Not Found**.
 You want to see grandma's recipe? No!: *403 Forbidden*.
 
-There are a whole lot of these errors for different scenarios. They all start with
-the number 4, and all of them mean you've requested something that you can't have,
-and that you need to change what you're asking for.
+There are a whole lot of these responses, and they describe different errors. All of
+them use a number in the 400s, and all of them mean you've requested something that
+you can't have. To fix a 400 error, you need to change what you're asking for.
 
 #### Sorry, the kitchen is experiencing trouble at the moment
 
@@ -114,12 +115,16 @@ what's wrong is the kitchen is on fire.
 Although not as common as 404 errors, you've likely seen a 500 error. This can
 mean that a database is down, or a bug in the code on the server prevented the
 webpage from being returned, to name a few. Just as _client-side_ errors always
-start with a 4, _server-side_ errors always start with a 5.
+use a number in the 400s, _server-side_ errors are always in the 500s.
+
+And for completeness, when you what you want, this called a success response,
+and all success responses are given numbers in the 200s.
 
 ### How a server can respond to a request
 
-This is the gist of how client-server communication works - a _client_ makes a
-_reqest_ to a _server_, and that _server_ _responds_ in one of three ways:
+This is the gist of how client-server communication works, and what is
+responsible for the different UI states - a _client_ makes a _reqest_ to a _server_,
+and that _server_ _responds_ in one of three ways:
 
 - you get what you asked for
 - you can't get what you asked for because of either what you asked for, or how
@@ -131,21 +136,82 @@ _reqest_ to a _server_, and that _server_ _responds_ in one of three ways:
 
 Now we'll deal with those mysterious disappearing tables.
 
+The interactions we saw between the customer and the kitchen above appear odd to
+us, but they represent how the web worked for many years before dynamic
+interfaces came about - you would visit a website, the entire page would load,
+and when you clicked on a link or submitted a form, your current page would be
+entirely replaced by a new page:
+
 // illustration of requesting a new fork and table is replaced
 
-### traditional server-rendered websites
+Then, as Javascript became more powerful, developers started doing fancy things
+where they could choose what gets loaded in the page at different times, and all
+without reloading the rest of the page:
 
-- show waiter bringing entire table of contents on every order
+// illustration of requesting a new fork, and only fork is replaced
 
-### applications that load information dynamically
+This improvement allowed interfaces to be dynamic, to choose only the pieces of information
+to load when they made sense to load, and this approach aligns more realistically
+with how a restaurant actually works. This is the heart and soul of what makes
+applications feel like _apps_.
 
-- show waiter bringing entire table at first, then only specific items
+You'll notice that our waitron still brings us a table at the beginning - we need
+somewhere to have our food and drinks delivered to - and once we have our table, the
+waitron can add and remove items from the table at our request.
 
-## understanding requests and responses
+In terms of websites or apps, this is the same as the initial request to the
+server to get the basic structure of the UI. Once we have that basic structure,
+the UI can start requesting only the things which are important for where the
+user is, or what the user is doing.
 
-### types of responses
+Going forward we'll focus on dynamic UIs.
 
-#### success
+## Working with data
+
+What I've just revealed to you is how an app communicates with an API. You want
+a new fork? Here you go, a new fork! You'd like the menu? Here you go! You don't
+need a new table every time you ask for something. How absurd!
+
+In terms of dynamic UIs, an API is a server that only gives you data, and doesn't
+give you any of the HTML, CSS, or Javascript that makes your UI look like it
+does. Our restaurant's kitchen gives us a table, but once we've got our table
+then all we need is
+
+An API has no knowledge of how the information it provides is presented. Its
+only job is to handle your requests, and give you the appropriate responses.
+Whether your table is made of wood, glass, or marble, the API is not concerned.
+
+And in much the same way that you can ask for something that the kitchen doesn't
+have, or you ask for some water while the kitchen is on fire, an API will use those
+same 400 and 500 errors to tell you when there's a problem.
+
+### Types of requests
+
+There are a few things we can do when we ask for something at a restaurant. We
+can ask for something that already exists to be brought to us, such as the menu. We
+can ask for a meal to be made for us. We can ask for our meal to be changed in
+some way - perhaps our ramen needs to be heated. We could also ask for our meal
+to be taken away if we're not satisfied.
+
+You may have heard of CRUD, which sounds pretty rubbish, but it's actually an
+acronym for the following things
+
+### Types of success responses
+
+So what's the big deal - you ask for something at the restaurant, and either you
+get it, or the kitchen tells you you're going to need to ask for something else.
+
+Well... it's not quite that simple. Our kitchen is quite formal, and sometimes
+they want you to be very specific about what you want. If you ask for a fork,
+the kitchen is likely going to say, "Well, which fork do you want? I can't just
+give you any fork. What kind of operation do you think we're running here?".
+
+You're going to have to ask for that fork by name, or they may end up giving all
+of the forks:
+
+// illustrate getting a fork vs getting all forks
+
+
 
 ##### empty response
 
@@ -156,7 +222,6 @@ Now we'll deal with those mysterious disappearing tables.
 ##### content may not be empty
 
 - waiter brings empty table
-
 
 ##### non-empty response
 
