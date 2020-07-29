@@ -204,33 +204,62 @@ get it, or the kitchen tells you you're going to need to ask for something else.
 Well... it's not quite that simple. Our kitchen is quite formal, and sometimes
 they want you to be very specific about what you want. If you ask for a fork,
 the kitchen is likely going to say, "Well, which fork do you want? I can't just
-give you any fork. What kind of operation do you think we're running here?".
+give you any fork."
 
 You're going to have to ask for that fork by name, or they may end up giving all
 of the forks:
 
 // illustrate getting a fork vs getting all forks
 
+This is generally how apps interact with their servers, and the most familiar
+example of this is on a blog. When you visit a website's blog, you're either
+viewing a list of items, or a specific article. The way that you request any
+specific blog is by visiting its URL - essentially, its name.
 
+And what happens if you ask for an article by a name that doesn't exist? You get
+a 404 error - the server can't find an article that doesn't exist, you need to
+change the URL if you want a different result.
 
-##### empty response
+// illustrate requesting a fork that doesn't exist
 
-##### content may be empty
+It's important to remember that there are different ways to request something
+that doesn't exist. A user may visit a link that used to work but no longer exists;
+perhaps a user created something in your app, and some other user deleted it,
+and it's no longer available; or perhaps your user is sneaky, and is trying to
+see if something exists by guessing a URL. 404s are not errors to avoid - they
+are meaningful parts of applications that rightly indicate that something is not
+available.
 
-- waiter brings an empty table
+##### Empty responses
 
-##### content may not be empty
+So, we can ask for an item by name, or we can ask for all of an item. But what
+happens if you ask for something that there are none of?
 
-- waiter brings empty table
+// illustrate requesting all the carrots, but there are none
 
-##### non-empty response
+Isn't this an error? Well, a website that has a blog, but no articles is a
+legitimate state for the website to be in, so it's important to indicate to a
+user that we're not yet able to show anything to them.
 
-#### redirect
+## Implications for the UI and UX
 
-#### client error
+It's been quite a journey, but hopefully the mystery of how it is that these different
+states come to be.
 
-#### server error
+So what does this mean for building or designing interfaces? We can summarise
+everything as follows:
 
-### the request response cycle
+### UI states for users that are getting things
 
-## implications for the UI and UX
+#### Is the user getting a specific item?
+
+- how does the interface appear if the item exists?
+- how does the interface appear if the item doesn't exist?
+- is this item restricted from specific users, and what do we do when users are
+    restricted?
+
+#### Is the user getting a list of items?
+
+- how does the interface appear if there are no items?
+- how does the interface appear if there are a few items?
+- how does the interface appear if there happen to be hundreds of items?
