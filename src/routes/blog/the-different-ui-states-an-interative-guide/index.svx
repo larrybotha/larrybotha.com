@@ -6,6 +6,10 @@ seoDescription: An interactive guide for non-developers that helps explain the m
   of what goes on in the background during different UI states
 ---
 
+- make a request
+- request is pending
+- response is either success or error
+
 We all know what it's like to be confronted with an ominous loading spinner.
 Maybe some effort has been put into its design, but we're still left staring at this
 thing that's blocking us from seeing any content. Or maybe it's a button we clicked,
