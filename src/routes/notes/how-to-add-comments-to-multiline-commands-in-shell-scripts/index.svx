@@ -1,0 +1,80 @@
+---
+title: How to add comments to multiline commands in shell scripts
+
+seotitle: How to add comments to multiline commands in shell scripts
+seoDescription: A quick note on how to add comments to multiline shell or bash commands
+---
+
+You're writing a shell script, and you've got a long command that you're splitting
+up over multiple lines, but you don't expect yourself or anyone else to remember what
+each of those commands means.
+
+How about adding a comment above each command? Well... this unfortunately
+doesn't work:
+
+```shell
+# my awesome bash script
+rsync -avz ⧵
+  # don't preserve owner, don't preserve group
+  --no-o --no-g ⧵
+  source ⧵
+  destination
+```
+
+This doesn't work since the backslash merges the lines, and a comment in the
+middle of the command would kill the remainder of your command. Try this out:
+
+```bash
+$ echo "one" #two "three"
+one
+
+$ echo "one" "three"
+one  three
+```
+
+## Multiline commands using command substitution
+
+To get `echo` to ignore the comment in the simple demonstration above, we can use
+[command substitution](https://www.gnu.org/software/bash/manual/html_node/Command-Substitution.html):
+
+```bash
+$ echo "one" `#two` "three"
+one  three
+```
+
+Command substitution ensures that `#two` is executed in a subshell and returned
+to `echo` before it is executed.
+
+This means we can do the same in our multiline command:
+
+```shell
+# my awesome bash script
+rsync -avz ⧵
+  --no-o --no-g `# don't preserve owner, don't preserve group` ⧵
+  source ⧵
+  destination
+```
+
+## Using arrays
+
+Another alternative is to build our command using an array:
+
+```bash
+rsync_args=(
+  -avz
+  # don't preserve owner, don't preserve group
+  --no-o --no-g
+  source
+  destination
+)
+
+rsync "${rsync_args[@]}"
+```
+
+A benefit of this approach is that it's easy to comment out specific
+arguments, which we can see is not possible from our first example.
+
+Arrays in shell scripts are pretty versatile - here's an excellent [guide on how
+to use bash arrays](https://www.shell-tips.com/bash/arrays/).
+
+Enjoy!
