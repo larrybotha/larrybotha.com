@@ -1,3 +1,6 @@
+[build]
+    command = "pnpm run build"
+
 # Skip Netlify's `npm install` command so that we can use our own `prebuild`
 # script that runs pnpm
 [build.environment]
