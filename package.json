@@ -8,7 +8,7 @@
     "dev": "run-p dev:sapper dev:svg:icons",
     "dev:svg:icons": "nodemon -w src/img/svg-sprites/icons/ -e svg --exec 'npm run svg:icons:build'",
     "dev:sapper": "dotenv -- node --inspect node_modules/sapper/dist/cli.js dev --ext '.svx .svelte'",
-    "prebuild": "[[ $CI = true ]] && npx pnpm install --store=node_modules/.pnpm-store || echo skiping pnpm install",
+    "prebuild": "test \"$CI\" = true && npx pnpm install -r --store=node_modules/.pnpm-store || echo skiping pnpm install",
     "build": "sapper build --legacy",
     "export:local": "dotenv -- sapper export --legacy --ext '.svx .svelte'",
     "preexport": "npm run svg:icons:build",
