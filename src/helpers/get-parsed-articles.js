@@ -1,11 +1,11 @@
 const {resolve} = require('path');
 const {readdir, readFile} = require('fs').promises;
-const {transform} = require('mdsvex');
+const {compile} = require('mdsvex');
 
 async function getFiles(dir) {
   const dirents = await readdir(dir, {withFileTypes: true});
   const files = await Promise.all(
-    dirents.map(dirent => {
+    dirents.map((dirent) => {
       const res = resolve(dir, dirent.name);
 
       return dirent.isDirectory() ? getFiles(res) : res;
@@ -18,14 +18,14 @@ async function getFiles(dir) {
 async function getArticles(path = 'src/routes/blog') {
   const dir = resolve(process.cwd(), path);
   const files = await getFiles(dir);
-  const indexFiles = files.filter(filename => {
+  const indexFiles = files.filter((filename) => {
     return filename.endsWith('index.svx');
   });
-  const parser = transform();
   const posts = await Promise.all(
-    indexFiles.map(async filename => {
+    indexFiles.map(async (filename) => {
       const contents = await readFile(filename, 'utf-8');
-      const parsed = await parser.process({contents, filename});
+      const parsed = await compile(contents, {filename});
+      // TODO: parse frontmatter from original contents
       const frontMatter = parsed.data.fm || {};
       const slug = filename.split('/').slice(-2)[0];
 
