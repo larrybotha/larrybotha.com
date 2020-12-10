@@ -3,6 +3,7 @@ title: How to add comments to multiline commands in shell scripts
 
 seotitle: How to add comments to multiline commands in shell scripts
 seoDescription: A quick note on how to add comments to multiline shell or bash commands
+datePublished: Thu Dec 10 2020 22:35:21 GMT+0200 (South Africa Standard Time)
 ---
 
 You're writing a shell script, and you've got a long command that you're splitting
@@ -21,8 +22,8 @@ rsync -avz ⧵
   destination
 ```
 
-This doesn't work since the backslash merges the lines, and a comment in the
-middle of the command would kill the remainder of your command. Try this out:
+The backslash merges the lines, and a comment in the middle of the command would kill
+the remainder of your command. We can see this happening with a simple `echo`:
 
 ```bash
 $ echo "one" #two "three"
@@ -57,7 +58,7 @@ rsync -avz ⧵
 
 ## Using arrays
 
-Another alternative is to build our command using an array:
+An alternative is to build our command using an array:
 
 ```bash
 rsync_args=(
