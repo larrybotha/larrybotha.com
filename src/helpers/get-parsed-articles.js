@@ -1,3 +1,4 @@
+const parseFrontmatter = require('gray-matter');
 const {resolve} = require('path');
 const {readdir, readFile} = require('fs').promises;
 const {compile} = require('mdsvex');
@@ -25,8 +26,7 @@ async function getArticles(path = 'src/routes/blog') {
     indexFiles.map(async (filename) => {
       const contents = await readFile(filename, 'utf-8');
       const parsed = await compile(contents, {filename});
-      // TODO: parse frontmatter from original contents
-      const frontMatter = parsed.data.fm || {};
+      const frontMatter = parseFrontmatter(contents).data;
       const slug = filename.split('/').slice(-2)[0];
 
       return {

@@ -39,6 +39,7 @@
     "cypress": "^4.10.0",
     "doctoc": "^1.4.0",
     "dotenv-cli": "^3.2.0",
+    "gray-matter": "^4.0.2",
     "highlight.js": "^10.1.1",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
