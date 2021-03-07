@@ -17,7 +17,8 @@
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "test": "run-p --race dev cy:run",
-    "svg:icons:build": "node ./scripts/svg/generate-symbols.js"
+    "svg:icons:build": "node ./scripts/svg/generate-symbols.js",
+    "prepare": "husky install"
   },
   "dependencies": {
     "compression": "^1.7.4",
