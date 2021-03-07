@@ -73,10 +73,5 @@
     "unified": "^9.2.1",
     "unist-util-find": "^1.0.2",
     "unist-util-visit": "^2.0.3"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   }
 }
