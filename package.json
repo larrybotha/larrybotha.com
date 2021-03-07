@@ -7,7 +7,7 @@
     "predev": "npm run svg:icons:build",
     "dev": "run-p dev:sapper dev:svg:icons",
     "dev:svg:icons": "nodemon -w src/img/svg-sprites/icons/ -e svg --exec 'npm run svg:icons:build'",
-    "dev:sapper": "dotenv -- node --inspect node_modules/sapper/dist/cli.js dev --ext '.svx .svelte'",
+    "dev:sapper": "dotenv -- node --inspect node_modules/sapper/dist/cli.js dev --ext '.svx .svelte .md'",
     "prebuild": "test \"$CI\" = true && npx pnpm install -r --store=node_modules/.pnpm-store || echo skiping pnpm install",
     "build": "npm run export",
     "preexport": "npm run svg:icons:build",
