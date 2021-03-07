@@ -30,15 +30,13 @@ const linkIcon = `
     </i>
   </i>
 `;
-let linkIconAst = find(
-  unified()
-    .use(rehypeParse)
-    .parse(linkIcon),
-  {type: 'element', tagName: 'i'},
-);
+let linkIconAst = find(unified().use(rehypeParse).parse(linkIcon), {
+  type: 'element',
+  tagName: 'i',
+});
 
 function wrapCodeBlocks() {
-  return ast => {
+  return (ast) => {
     visit(ast, 'raw', (node, _, parent) => {
       if (!parent || node.value.indexOf('<pre class="language-') === -1) {
         return;
@@ -67,11 +65,12 @@ const svx = mdsvex({
 
     wrapCodeBlocks,
   ],
+
+  extensions: ['.svx', '.md'],
 });
 
 const config = {
   extensions: ['.svelte', '.md', '.svx'],
-  dev,
 
   preprocess: [
     preprocess({

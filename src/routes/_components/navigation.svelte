@@ -71,29 +71,27 @@
 <nav class="gw">
   <div class="g g--auto">
     <ul>
-      <li>
-        <a class:selected={segment === undefined} href=".">home</a>
-      </li>
+      <li><a class:selected={segment === undefined} href=".">home</a></li>
 
       <li>
-        <a rel="prefetch" class:selected={segment === 'blog'} href="blog">
+        <a sapper:prefetch class:selected={segment === 'blog'} href="blog">
           blog
         </a>
       </li>
 
       <li>
-        <a rel="prefetch" class:selected={segment === 'notes'} href="notes">
+        <a sapper:prefetch class:selected={segment === 'notes'} href="notes">
           notes
         </a>
       </li>
     </ul>
-
   </div>
 
   <div class="g g--shrink-wrap">
     <button on:click={cycleTheme}>
       <Icon id="burger" />
-      theme: {themes[themeId]}
+      theme:
+      {themes[themeId]}
     </button>
   </div>
 </nav>
