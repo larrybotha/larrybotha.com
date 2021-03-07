@@ -1,10 +1,10 @@
 import path from 'path';
 import alias from '@rollup/plugin-alias';
-import babel from 'rollup-plugin-babel';
-import commonjs from 'rollup-plugin-commonjs';
+import babel from '@rollup/plugin-babel';
+import commonjs from '@rollup/plugin-commonjs';
 import config from 'sapper/config/rollup.js';
 import replace from '@rollup/plugin-replace';
-import resolve from 'rollup-plugin-node-resolve';
+import resolve from '@rollup/plugin-node-resolve';
 import svelte from 'rollup-plugin-svelte';
 import svgImport from 'rollup-plugin-svg-import';
 import {terser} from 'rollup-plugin-terser';
@@ -18,10 +18,11 @@ const dev = mode === 'development';
 const legacy = !!process.env.SAPPER_LEGACY_BUILD;
 
 const onwarn = (warning, onwarn) =>
+  (warning.code === 'MISSING_EXPORT' && /'preload'/.test(warning.message)) ||
   (warning.code === 'CIRCULAR_DEPENDENCY' &&
     /[/\\]@sapper[/\\]/.test(warning.message)) ||
   onwarn(warning);
-const dedupe = importee =>
+const dedupe = (importee) =>
   importee === 'svelte' || importee.startsWith('svelte/');
 
 const commonPlugins = [
@@ -52,9 +53,15 @@ export default {
         'process.env.CONTENTFUL_MANAGEMENT_ACCESS_TOKEN': JSON.stringify(
           process.env.CONTENTFUL_MANAGEMENT_ACCESS_TOKEN,
         ),
+
+        preventAssignment: true,
       }),
 
-      svelte({hydratable: true, emitCss: true, ...svelteConfig}),
+      svelte({
+        compilerOptions: {hydratable: true},
+        emitCss: true,
+        ...svelteConfig,
+      }),
 
       resolve({browser: true, dedupe}),
 
@@ -88,6 +95,7 @@ export default {
     ],
 
     onwarn,
+    preserveEntrySignatures: false,
   },
 
   server: {
@@ -97,9 +105,11 @@ export default {
       replace({
         'process.browser': false,
         'process.env.NODE_ENV': JSON.stringify(mode),
+
+        preventAssignment: true,
       }),
 
-      svelte({generate: 'ssr', ...svelteConfig}),
+      svelte({compilerOptions: {generate: 'ssr'}, ...svelteConfig}),
 
       resolve({dedupe}),
 
@@ -121,6 +131,8 @@ export default {
       replace({
         'process.browser': true,
         'process.env.NODE_ENV': JSON.stringify(mode),
+
+        preventAssignment: true,
       }),
       commonjs(),
       !dev && terser(),
