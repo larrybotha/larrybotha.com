@@ -11,7 +11,7 @@
     "prebuild": "test \"$CI\" = true && npx pnpm install -r --store=node_modules/.pnpm-store || echo skiping pnpm install",
     "build": "npm run export",
     "preexport": "npm run svg:icons:build",
-    "export": "sapper export --legacy --ext '.svx .svelte'",
+    "export": "sapper export --legacy --ext '.svx .svelte .md'",
     "export:local": "dotenv -- npm run export",
     "start": "node __sapper__/build",
     "cy:open": "cypress open",
