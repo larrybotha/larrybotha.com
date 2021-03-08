@@ -10,3 +10,5 @@ package-lock.json
 
 static/g
 static/build
+
+.env
